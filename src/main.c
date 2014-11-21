@@ -67,6 +67,7 @@ void decode_value(const char *key, char *value, int size)
 		if(j < size) value[j] = '\0';
 		else value[size-1] = '\0';
 		// Frnaz easier value[length] = '\0';
+
 	}
 }
 

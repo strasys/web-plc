@@ -16,38 +16,6 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-<script type="text/javascript">
-var sST;
-   
-    function setSystemTime()
-    {
-
-		// We bind the FormData object and the form element
-   // var FD=new FormData(form);
-    	
-   var hh = document.forms["formTime"]["hhinput"].value;
-   var mm = document.forms["formTime"]["mminput"].value;
-   var ss = document.forms["formTime"]["ssinput"].value;
-   
-   	sST = new XMLHttpRequest();
-
-    sST.open("POST","setgetTime.php", true);
-	
-    sST.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-    sST.send("hh=10&mm=20&ss=30");
-    sST.onreadystatechange = auswerten();
-    } 
-    
-    function auswerten()
-    {
-      if(sST.readyState == 4 && sST.status == 200)
-        {
-        document.getElementById("meindiv").innerHTML = sST.responseText;
-        }
-    }
-
-</script>
-	
   </head>
   <body>
   <!-- Fixed navbar -->
@@ -126,10 +94,8 @@ var sST;
 					<label class="sr-only" for="ssNew">ss</label>
 					<input type="text" class="form-control" name="ssinput" placeholder="ss">
 				</div>
-				<button type="submit" class="btn btn-default">Submit</button>
-				<button type="reset" class="btn btn-default">löschen</button>
 			</form>	
-
+			<button class="btn btn-default" onclick="setSystemTime()">setzen</button>
 				</div>	
 			</div>
   	
@@ -138,7 +104,7 @@ var sST;
 						<h3><span class="glyphicon glyphicon-calendar"></span><b> System Datum</b></h3>
 					</div>
 					<div class="panel-body">
-          <button class="btn btn-default" onclick="setSystemTime()">setzen</button>
+         
           <p><h3><div id=meindiv></div></h3> </p>	
 					<h3><div id="curDate"></div></h3>
 				</div>

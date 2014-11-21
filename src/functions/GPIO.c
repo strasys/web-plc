@@ -76,7 +76,7 @@ int gpio_export(int gpio) {
 		fclose(f);
 		return 0;
 	}
-	perror(GPIO_DIR"/gpio/export");
+	perror("/gpio/export");
 	return 0;
 }
 // Set if pin is an Input = "in" or an Output = "out"
@@ -103,7 +103,7 @@ int gpio_set_direction(int gpio, int direction) {
 		fclose(f);
 		return 0;
 	}
-	perror(GPIO_DIR"/gpio/direction");
+	perror("/gpio/direction");
 	return 0;
 }
 
@@ -139,7 +139,7 @@ int gpio_get_value(int gpio) {
 			return atoi(value_buffer);
 		}
 	}
-	perror(GPIO_DIR "/gpio/value");
+	perror("/gpio/value");
 	return 0;
 }
 

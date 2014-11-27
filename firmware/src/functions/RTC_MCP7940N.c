@@ -162,15 +162,15 @@ int RTC_set_hours(int hours) {
 	int handler, reg = 0x02;
 	unsigned char buf[2] = { reg, 0 };
 
-	if (hours > 59) {
+	if (hours > 24) {
 		printf("ERROR hours: %i/n", hours);
 		return (-1);
 	}
 
 	div_t hoursten;
 	hoursten = div(hours, 10);
-	buf[1] = ((hoursten.quot & 0b00000111) << 4)
-			| ((hours - hoursten.quot * 10) & 0b00001111); //To simplify set will only done in 24h mode Bit 7 = 0
+	buf[1] = ((hoursten.quot & 0b00000011) << 4)
+			| ((hours - hoursten.quot * 10) & 0b00001111); //To simplify set will only done in 24h mode Bit 6 = 0
 
 	handler = i2c_open(I2C2_path, addr_RTC_MCP7940N);
 	i2c_write(handler, buf, 2);

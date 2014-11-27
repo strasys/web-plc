@@ -5,10 +5,9 @@
 
 var offsetTime;
 	
-	function getSystemTime(){
+	function getSystemTimeDate(){
 		if (!document.all && !document.getElementById)
 		return
-	    timeElement=document.getElementById("curTime");
 		var SystemTime = new Date();
 		var clientTime = new Date();
 		var sST = new XMLHttpRequest();
@@ -22,6 +21,12 @@ var offsetTime;
 	    		var hh = parseInt(getTime.hh);
 	    		var mm = parseInt(getTime.mm);
 	    		var ss = parseInt(getTime.ss);
+	    		var Day = parseInt(getTime.Day);
+	    		var Month = parseInt(getTime.Month);
+	    		var Year = parseInt(getTime.Year);
+	    		SystemTime.setDate(Day);
+	    		SystemTime.setMonth(Month-1);
+	    		SystemTime.setFullYear(Year);
 	    		SystemTime.setHours(hh);
 	    		SystemTime.setMinutes(mm);
 	    		SystemTime.setSeconds(ss);
@@ -29,25 +34,18 @@ var offsetTime;
 	    		var client = clientTime.getTime();
 	    		offsetTime = client - system;
 	    		DisplayTime();
+	    		DisplayDate();
 	    	}	
 	    }
-		
 		}
-	
+
 	function DisplayTime(){
 		if (!document.all && !document.getElementById)
 		return
 		timeElement=document.getElementById("curTime");
 		var clientTime = new Date();
 		clientTime.setTime(clientTime.getTime() - offsetTime);
-		var hours = clientTime.getHours();
-		var minutes = clientTime.getMinutes();
-		var seconds = clientTime.getSeconds();
-		if (hours<=9) hours="0"+hours;
-		if (minutes<=9) minutes="0"+minutes;
-		if (seconds<=9) seconds="0"+seconds;
-		var currentTime=hours+":"+minutes+":"+seconds;
-		timeElement.innerHTML=currentTime;
+		timeElement.innerHTML=clientTime.toLocaleTimeString();
 		t = setTimeout(function(){DisplayTime()}, 1000);
 		}
 	
@@ -55,36 +53,23 @@ var offsetTime;
 		if (!document.all && !document.getElementById)
 		return
 		dateElement=document.getElementById("curDate");
-		var CurrentDatum=new Date();
-		var day=CurrentDatum.getDate();
-		var month=CurrentDatum.getMonth() + 1;
-		var year=CurrentDatum.getFullYear();
-		if (day<=9) day="0"+day;
-		if (month<=9) month="0"+month;
-		var currentDate=day+"."+month+"."+year;
-		dateElement.innerHTML=currentDate;
+		var clientDate = new Date();
+		clientDate.setTime(clientDate.getTime() - offsetTime);
+		dateElement.innerHTML=clientDate.toLocaleDateString();
 		}
 
-
-    function startatLoad(){
-				DisplayDate();
-				getSystemTime();
-				//DisplayTime();
-		}
-		window.onload=startatLoad;
 		
 		var sST;
 		   
 	    function setSystemTime()
 	    { 
-	    var hh = document.forms["formTime"]["hhinput"].value;
-	    var mm = document.forms["formTime"]["mminput"].value;
-	    var ss = document.forms["formTime"]["ssinput"].value;
-	
+	    var hh = document.getElementById("inputhh").value;
+	    var mm = document.getElementById("inputmm").value;
+	    var ss = document.getElementById("inputss").value;
 	   	sST = new XMLHttpRequest();
 	    sST.open("post","setgetTime.php", true);
 	    sST.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-	    sST.send("hh="+hh+"&mm="+mm+"&ss="+ss);
+	    sST.send("td=t&hh="+hh+"&mm="+mm+"&ss="+ss);
 	    sST.onreadystatechange = auswerten; 
 	    } 
 	    
@@ -92,11 +77,68 @@ var offsetTime;
 	    {
 	      if(sST.readyState == 4 && sST.status == 200)
 	        {
-	        document.forms["formTime"].reset();
-	        getSystemTime();
+	    	getSystemTimeDate();
 	        }
 	    }
-
-	
+	    
+	    function setSystemDate()
+	    { 
+	    var Day = document.getElementById("inputDD").value;
+	    var Month = document.getElementById("inputMM").value;
+	    var Year = document.getElementById("inputYY").value;
+	    Year = Year - 2000;
+	   	sST = new XMLHttpRequest();
+	    sST.open("post","setgetTime.php", true);
+	    sST.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	    sST.send("td=d&Day="+Day+"&Month="+Month+"&Year=" + Year);
+	    sST.onreadystatechange = auswerten; 
+	    } 
+	    
+	    function auswerten()
+	    {
+	      if(sST.readyState == 4 && sST.status == 200)
+	        {
+	    	  getSystemTimeDate();
+	        }
+	    }
+	    
+	    function setSelectMenues(min, max, idName){
+	    	for(i=min; i <= max; i++){
+	    	var x = document.getElementById(idName);
+	    	var option = document.createElement("option");
+	    	option.text = i;
+	    	x.options.add(option);
+	    	}
+	    }
+	    
+	    
+	    function startatLoad(){
+    		getSystemTimeDate();
+    		
+		}
+		window.onload=startatLoad;
 		
+		 $(document).ready(function(){
+		  	  $("#showSetSystemTime").click(function(){
+		  	    $("#timeDiv").load("setTime.html", function(){
+		  	    setSelectMenues(0, 23, "inputhh");
+		    	setSelectMenues(0, 59, "inputmm");
+		    	setSelectMenues(0, 59, "inputss");  
+		    	$("#showSetSystemTime").hide();
+		  	    });
+		  	  });
+		  	});
+		 
+		 $(document).ready(function(){
+		  	  $("#showSetSystemDate").click(function(){
+		  		 $("#dateDiv").load("setDate.html", function(){
+				  setSelectMenues(1, 31, "inputDD");
+				  setSelectMenues(1, 12, "inputMM");
+				  setSelectMenues(2010, 2025, "inputYY");
+				  $("#showSetSystemDate").hide();
+				 });
+		  	  });
+		  	});
+		 
+	
 

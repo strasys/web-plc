@@ -1,17 +1,36 @@
 <?php
+	$td;
+	$ausgabe;
+	$arr;
+	unset($td);
+	unset($ausgabe);
+	unset($arr);
+	$td = 0;
+	$td = $_POST["td"];
 	$hh = $_POST["hh"];
 	$mm = $_POST["mm"];
 	$ss = $_POST["ss"];
-	$ausgabe;
-	unset($ausgabe);
+	$Day = $_POST["Day"];
+	$Month = $_POST["Month"];
+	$Year = $_POST["Year"];
+	$t = "t";
+	$d = "d";
 	
-	if ($hh == !null){
+	if ($td == $t){
 		exec("./cgi-bin/RTChandler s t $hh $mm $ss", &$ausgabe);
-		$arr = array('hh' => $ausgabe[4],'mm' => $ausgabe[5],'ss' => $ausgabe[6]);
-		echo json_encode($arr);
+		}
+	elseif ($td == $d){
+		exec("./cgi-bin/RTChandler s d $Day $Month $Year", &$ausgabe);
+		}
+	elseif ($td == 0) {
+	exec("./cgi-bin/RTChandler", &$ausgabe);	
 	}
 	
-	exec("./cgi-bin/RTChandler", &$ausgabe);
-		$arr = array('hh' => $ausgabe[4],'mm' => $ausgabe[5],'ss' => $ausgabe[6]);
-		echo json_encode($arr);
+	$arr = array(	'Day' => $ausgabe[0],
+					'Month' => $ausgabe[1],
+					'Year' => $ausgabe[2],
+					'hh' => $ausgabe[3],
+					'mm' => $ausgabe[4],
+					'ss' => $ausgabe[5]);
+	echo json_encode($arr);
 ?>

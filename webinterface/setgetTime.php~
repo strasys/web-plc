@@ -1,3 +1,0 @@
-<?php
-	echo $_POST["hh"] . " : " . $_POST["mm"] . " : " . $_POST["ss"];
-?>

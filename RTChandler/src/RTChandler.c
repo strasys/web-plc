@@ -43,13 +43,13 @@ int main(int argc, char *argv[], char *env[]){
 	}
 
 	if	((setget == 's')&&(timedate == 'd')){
-			RTC_set_dayOfWeek(atoi(argv[3]));
-			RTC_set_day(atoi(argv[4]));
-			RTC_set_month(atoi(argv[5]));
-			RTC_set_year(atoi(argv[6]));
+		//	RTC_set_dayOfWeek(atoi(argv[3]));
+			RTC_set_day(atoi(argv[3]));
+			RTC_set_month(atoi(argv[4]));
+			RTC_set_year(atoi(argv[5]));
 		}
 
-	printf("%d\n", RTC_get_dayOfWeek());
+	//printf("%d\n", RTC_get_dayOfWeek());
 	printf("%d\n", RTC_get_day());
 	printf("%d\n", RTC_get_month());
 	printf("%d\n", RTC_get_year());

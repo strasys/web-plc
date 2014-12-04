@@ -17,7 +17,7 @@
 
 int main(int argc, char *argv[], char *env[]) {
 	char setget, timedate;
-	char[13] datetime;
+	char datetime[13];
 
 	if (argv[1] != 0) {
 		sscanf(argv[1], "%c", &setget);

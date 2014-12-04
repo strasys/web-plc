@@ -38,8 +38,10 @@ int main(int argc, char *argv[], char *env[]){
 
 //	if ((setget == 'g')) {
 	if (timedate == 'f') {
-		printf("%4.4d%2.2d%2.2d%2.2d%2.2d%2.2d", RTC_get_year(),RTC_get_month(),RTC_get_day()
-				                               , RTC_get_hours(),RTC_get_minutes(),RTC_get_seconds());
+		// formate for date -u
+		printf("%2.2d%2.2d%2.2d%2.2d%4.4d", RTC_get_month(),RTC_get_day()
+				                          , RTC_get_hours(),RTC_get_minutes()
+										  , RTC_get_year());
 	} else {
 	printf("%2.2d\n", RTC_get_day());
 	printf("%2.2d\n", RTC_get_month());

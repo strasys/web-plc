@@ -15,9 +15,17 @@
 #include "/home/johannes/git/firmware/src/functions/I2C-handler.h"
 #include "/home/johannes/git/firmware/src/functions/RTC_MCP7940N.h"
 
+void getFormatForDate(char * pDateTime) {
+	// formats for date -u
+	// date --universal $(/www/pages/cgi-bin/RTChandler g f)
+	sprintf(pDateTime, "%2.2d%2.2d%2.2d%2.2d%4.4d", RTC_get_month(),
+			RTC_get_day(), RTC_get_hours(), RTC_get_minutes(), RTC_get_year());
+}
+
+
 int main(int argc, char *argv[], char *env[]) {
 	char setget, timedate;
-	char datetime[13];
+	char dateTime[13];
 
 	if (argv[1] != 0) {
 		sscanf(argv[1], "%c", &setget);
@@ -57,10 +65,4 @@ int main(int argc, char *argv[], char *env[]) {
 	return 0;
 }
 
-void getFormatForDate(char * pDateTime) {
-	// formats for date -u
-	// date --universal $(/www/pages/cgi-bin/RTChandler g f)
-	sprintf(pDateTime, "%2.2d%2.2d%2.2d%2.2d%4.4d", RTC_get_month(),
-			RTC_get_day(), RTC_get_hours(), RTC_get_minutes(), RTC_get_year());
-}
 

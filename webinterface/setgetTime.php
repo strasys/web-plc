@@ -17,10 +17,10 @@
 	$d = "d";
 	
 	if ($td == $t){
-		exec("./cgi-bin/RTChandler s t $hh $mm $ss", &$ausgabe);
+		exec("flock /tmp/flockRTChandler ./cgi-bin/RTChandler s t $hh $mm $ss", &$ausgabe);
 		}
 	elseif ($td == $d){
-		exec("./cgi-bin/RTChandler s d $Day $Month $Year", &$ausgabe);
+		exec("flock /tmp/flockRTChandler ./cgi-bin/RTChandler s d $Day $Month $Year", &$ausgabe);
 		}
 	elseif ($td == 0) {
 	exec("./cgi-bin/RTChandler", &$ausgabe);	

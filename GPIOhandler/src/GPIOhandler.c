@@ -16,9 +16,10 @@
 
 int main(int argc, char *argv[], char *env[]){
 	int i = 0;
-	int Num, Value;
+	int Num = 0, Value = 0;
 	int GPIOstatval[8];
-	char setget, GPIOvalue, GPIOnum;
+	char setget;
+
 
 	if (argv[1] != 0){
 	sscanf(argv[1], "%c", &setget);
@@ -26,10 +27,13 @@ int main(int argc, char *argv[], char *env[]){
 
 
 	if ((setget == 's')){
-		sscanf(argv[2], "%c", &GPIOnum);
-		sscanf(argv[3], "%c", &GPIOvalue);
-		Num = atoi(&GPIOnum);
-		Value = atoi(&GPIOvalue);
+		Num = atoi(argv[2]);
+		Value = atoi(argv[3]);
+
+		//Num = GPIOnum;
+		//Value = GPIOvalue;
+		printf("Num=%d Value=%d\n",Num, Value);
+		printf("Value=%d\n", Value);
 		gpio_set_value(IN_OUT[Num][0], Value);
 		for (i = 0; i < 8; i++){
 				GPIOstatval[i] = gpio_get_value(IN_OUT[i][0]);

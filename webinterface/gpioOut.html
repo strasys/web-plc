@@ -21,7 +21,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-		expanded="false" aria-controls="navbar">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -39,7 +39,7 @@
 								<span class="glyphicon glyphicon-th"></span> Funktionen<span class="caret"></span>
 							</a>
               <ul class="dropdown-menu" role="menu">
-                <li class="active"><a href="gpio-out.html">Digitale Ausgänge</a></li>
+                <li class="active"><a href="gpioOut.html">Digitale Ausgänge</a></li>
 								<li><a href="#">Digitale Eingänge</a></li>
                 <li><a href="#">Analoge Ein-/Ausgänge</a></li>
 								<li><a href="#">Temperatur (PT100)</a></li>
@@ -51,7 +51,7 @@
 								<span class="glyphicon glyphicon-cog"></span> Set <span class="caret"></span>
 							</a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="timeanddate.html"><span class="glyphicon glyphicon-time"></span> Zeit/Datum</a></li>
+                <li><a href="timeanddate.html">Zeit/Datum</a></li>
                 <li><a href="#">IP-Addresse</a></li>
 								<li><a href="#">Gerätename</a></li>
               </ul>
@@ -71,71 +71,117 @@
     </nav>
 
 	<div style = "padding-top:70px;" class="container">
-		<div class="row">
-			<div class = "col-md-4">
-			
-				<h3>
-				<button class="btn btn-primary" type="button" id="buttonOut1">
- 	 				Ausgang 1 <span class="badge" id="badgeOut1"></span>
-				</button>
-				<span class="label label-info">Küchenlicht</span>
-				</h3>
-			
-			</div>
-			
-			<div class = "col-md-4">
-				<h3>
-				<button class="btn btn-primary" type="button" id="buttonOut2">
- 	 				Ausgang 2 <span class="badge">EIN</span>
-				</button>
-				</h3>
-			</div>
-			<div class = "col-md-4">
-				<h3>
-				<button class="btn btn-primary" type="button" id="buttonOut3">
- 	 				Ausgang 3 <span class="badge">EIN</span>
-				</button>
-				</h3>
-			</div>
-			<div class = "col-md-4">
-				<h3>
-				<button class="btn btn-primary" type="button" id="buttonOut4">
- 	 				Ausgang 4 <span class="badge">EIN</span>
-				</button>
-				</h3>
-			</div>
-			<div class = "col-md-4">
-				<h3>
-				<button class="btn btn-primary" type="button" id="buttonOut5">
- 	 				Ausgang 5 <span class="badge">EIN</span>
-				</button>
-				</h3>
-			</div>
-			<div class = "col-md-4">
-				<h3>
-				<button class="btn btn-primary" type="button" id="buttonOut6">
- 	 				Ausgang 6 <span class="badge">EIN</span>
-				</button>
-				</h3>
-			</div>
-			<div class = "col-md-4">	
-				<h3>
-				<button class="btn btn-primary" type="button" id="buttonOut7">
- 	 				Ausgang 7 <span class="badge">EIN</span>
-				</button>
-				</h3>
-			</div>
-			<div class = "col-md-4">
-				<h3>
-				<button class="btn btn-primary" type="button" id="buttonOut8">
- 	 				Ausgang 8 <span class="badge">EIN</span>
-				</button>
-				</h3>
-				<h1 id="test"></h1>
-			</div>
-			
-		</div>
+	
+	<div id="setButtonNameDiv">
+ 		<!-- Load setButtonName.html on button click showSetButtonName -->
 	</div>
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<h3><b>Status Digitale Ausgänge</b></h3>
+		</div>
+  	<div class="panel-body">
+  		<h3><button class="btn btn-default" id="showSetButtonName">Button Beschriftung ändern</button></h3>
+  		
+		<div class="row">
+			<div class = "col-md-6">
+			
+				<h3>
+				<button class="btn " type="button" id="buttonOut0" onclick="setOutstatus(0)" style = "width:100%;">
+ 	 				<h4> 
+ 	 					<strong id="buttonOutText0"></strong>
+ 	 					<span class="badge" id="badgeOut0"></span>
+ 	 				</h4>
+				</button>
+				</h3>
+			
+			</div>
+			
+			<div class = "col-md-6">
+				<h3>
+				<button class="btn" type="button" id="buttonOut1" onclick="setOutstatus(1)" style = "width:100%;">
+					<h4>
+						<strong id="buttonOutText1"></strong>
+ 	 					<span class="badge" id="badgeOut1"></span>
+					</h4>
+				</button>
+				</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class = "col-md-6">
+				<h3>
+				<button class="btn" type="button" id="buttonOut2" onclick="setOutstatus(2)" style = "width:100%;">
+					<h4>
+						<strong id="buttonOutText2"></strong>
+ 	 					<span class="badge" id="badgeOut2"></span>
+					</h4>
+				</button>
+				</h3>
+			</div>
+			
+			<div class = "col-md-6">
+				<h3>
+				<button class="btn" type="button" id="buttonOut3" onclick="setOutstatus(3)" style = "width:100%;">
+					<h4>	
+						<strong id="buttonOutText3"></strong>
+ 	 					<span class="badge" id="badgeOut3"></span>
+					</h4>
+				</button>
+				</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class = "col-md-6">
+				<h3>
+				<button class="btn" type="button" id="buttonOut4" onclick="setOutstatus(4)" style = "width:100%;">
+					<h4>	
+						<strong id="buttonOutText4"></strong>
+ 	 					<span class="badge" id="badgeOut4"></span>
+					</h4>
+				</button>
+				</h3>
+			</div>
+			<div class = "col-md-6">
+				<h3>
+				<button class="btn" type="button" id="buttonOut5" onclick="setOutstatus(5)" style = "width:100%;">
+					<h4>	
+						<strong id="buttonOutText5"></strong>
+ 	 					<span class="badge" id="badgeOut5"></span>
+					</h4>
+				</button>
+				</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class = "col-md-6">	
+				<h3>
+				<button class="btn" type="button" id="buttonOut6" onclick="setOutstatus(6)" style = "width:100%;">
+					<h4>	
+						<strong id="buttonOutText6"></strong>
+ 	 					<span class="badge" id="badgeOut6"></span>
+					</h4>
+				</button>
+				</h3>
+			</div>
+			<div class = "col-md-6">
+				<h3>
+				<button class="btn" type="button" id="buttonOut7" onclick="setOutstatus(7)" style = "width:100%;">
+					<h4>	
+						<strong id="buttonOutText7"></strong>
+ 	 					<span class="badge" id="badgeOut7"></span>
+					</h4>
+				</button>
+				</h3>
+			</div>
+		</div>
+		<h1 id="test0"></h1>
+		<h1 id="test1"></h1>
+		
+	</div>
+	</div>
+	</div>
+		
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

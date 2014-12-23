@@ -37,7 +37,7 @@ unsigned int RESET_4D[2] = { 61, 0 }; //P8_26 "in" Pin on Sub - connector for Re
 
 unsigned int TX_434MHz[2] = { 60, 1 }; //P9_12 "out" Signal generator for 434 MHz Funkmodul
 
-unsigned int initStatusOut = 0b11111111; // Defines the initial value set of the Output Pins
+unsigned int initStatusOut = 0b00000000; // Defines the initial value set of the Output Pins
 
 //GPIO gpio;
 

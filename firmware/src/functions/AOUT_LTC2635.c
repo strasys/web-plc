@@ -21,6 +21,12 @@ int dacALLaddr = 0b00001111;
 int dacOUT1 = 1;
 int dacOUT2 = 2;
 
+void init_AOUT(){
+	AOUT_set_internal_reference();
+	AOUT_set_value_DACn(dacOUT1,0);
+	AOUT_set_value_DACn(dacOUT2,0);
+}
+
 void AOUT_set_internal_reference() {
 	int file, numByte;
 	unsigned char buf[3];
@@ -29,12 +35,12 @@ void AOUT_set_internal_reference() {
 	buf[2] = 0;
 	file = i2c_open(I2C2_path, addr_AOUT_LTC2635);
 	numByte = i2c_write(file, buf, 3);
-	printf("AOUT Number of bytes written: %d", numByte);
+	printf("AOUT Number of bytes written: %d\n", numByte);
 	i2c_close(file);
 }
 
 // DACchannel is DAC_A or DAC_B
-/*
+
  void AOUT_set_value_DACn(int DACchl, int value){
  int file, numByte;
  unsigned char buf[3];
@@ -42,10 +48,30 @@ void AOUT_set_internal_reference() {
  buf[1] = 0;
  buf[2] = 0;
 
- file = i2c_open(I2C2_path, addr_AOUT_LTC2635);
-
- i2c_close(file);
-
+ if (DACchl == 1){
+	 buf[0] = buf[0] | dacOUT1addr;
+	 printf("buf 0 %x\n",buf[0]);
+	 aout.dacValueOut1 = value;
  }
- */
+ if (DACchl == 2){
+	 buf[0] = buf[0] | dacOUT2addr;
+	 aout.dacValueOut2 = value;
+ }
+
+if ((value < 0) | (value > 1024)){
+	printf("Error: DAC value < 0 or > 1023\n");
+}
+else {
+	buf[1] = (value >> 2) & 0xFF;
+	printf("buf 1 %x\n",buf[1]);
+	buf[2] = (value << 6) & 0xFF;
+	printf("buf 2 %x\n",buf[2]);
+}
+
+ file = i2c_open(I2C2_path, addr_AOUT_LTC2635);
+ numByte = i2c_write(file, buf, 3);
+ printf("AOUT Number of bytes written: %d\n", numByte);
+ i2c_close(file);
+ }
+
 

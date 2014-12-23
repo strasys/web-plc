@@ -21,7 +21,7 @@
 #include "I2C-handler.h"
 
 int addr_RTC_MCP7940N = 0b01101111;  // = 0x6F I2C address of the RTC (MCP7940N)
-int addr_AOUT_LTC2635 = 0b00100000; // = 0x20 I2C address of the Analog Out (AOUT) LTC2635
+int addr_AOUT_LTC2635 = 0b0010000; // = 0x20 I2C address of the Analog Out (AOUT) LTC2635
 
 int i2c_open(unsigned char bus, unsigned char addr) {
 	int file;

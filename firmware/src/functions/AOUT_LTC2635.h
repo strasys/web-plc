@@ -19,6 +19,8 @@ typedef struct {
 	int dacValueOut2;
 } AOUT;
 
+void init_AOUT();
+
 void AOUT_set_internal_reference();
 
 void AOUT_set_value_DACn(int DACchl, int value);

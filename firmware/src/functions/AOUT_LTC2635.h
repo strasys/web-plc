@@ -25,4 +25,6 @@ void AOUT_set_internal_reference();
 
 void AOUT_set_value_DACn(int DACchl, int value);
 
+int AOUT_get_value_DACn(unsigned int channel);
+
 #endif /* AOUT_LTC2635_H_ */

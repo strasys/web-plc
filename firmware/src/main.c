@@ -35,11 +35,29 @@ void init(void){
 
 int main(int argc, char *argv[], char *env[])
 {
-	int AOUTval, AOUTchannel;
-	init();
-	AOUTval = atoi(argv[1]);
-	AOUTchannel = atoi(argv[2]);
-	AOUT_set_value_DACn(AOUTchannel, AOUTval);
+	int AOUTval1, AOUTchannel1;
+	char setgetinit;
+
+	if (argv[1] != 0){
+	sscanf(argv[1], "%c", &setgetinit);
+	}
+
+	if (argv[2] != 0)
+	AOUTchannel1 = atoi(argv[2]);
+
+	if (argv[3] != 0)
+	AOUTval1 = atoi(argv[3]);
+
+	if (setgetinit == 's'){
+	AOUT_set_value_DACn(AOUTchannel1, AOUTval1);
+	}
+	if (setgetinit == 'i'){
+		init();
+	}
+	if (setgetinit == 'g'){
+		printf("Channel: %d \n", AOUTchannel1);
+		printf("value: %d \n", AOUT_get_value_DACn(AOUTchannel1));
+	}
 
 	return (0);
 }

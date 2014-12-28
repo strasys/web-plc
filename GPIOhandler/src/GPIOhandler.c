@@ -12,7 +12,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "/home/johannes/git/firmware/src/functions/GPIO.h"
+#include "GPIO.h"
 
 int main(int argc, char *argv[], char *env[]){
 	int i = 0;

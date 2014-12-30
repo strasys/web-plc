@@ -74,6 +74,5 @@ int main(int argc, char *argv[], char *env[]){
 	printf("12 - bit value of channel %i: Temp: %.2f offset: %.2f\n",channel, temperature, offsetTemp);
 
 
-
 	return 0;
 }

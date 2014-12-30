@@ -25,9 +25,9 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>src/firmwarefunctions</name>
+			<name>src/functions</name>
 			<type>2</type>
-			<location>/home/johannes/git/firmware/src/functions</location>
+			<location>/home/johannes/web-plc/firmware/src/functions</location>
 		</link>
 	</linkedResources>
 </projectDescription>

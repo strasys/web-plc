@@ -43,6 +43,8 @@ double getTempOffset(){
 	double calResistor, wireArea, length, wireOffset, circuitOffset, specResistance,
 	wireRes;
 	int calBitvalue;
+	FILE *f = NULL;
+	char DIR_PT100offset[16] = "PT100offset.txt";
 
 	specResistance = 0.0175; //Coper at 20°C
 	calResistor = 99.5;	//example channel 0
@@ -55,6 +57,9 @@ double getTempOffset(){
 	circuitOffset = getPT100temp(calResistor)-getCircuitTemp(calBitvalue);
 	printf("wireOffset Temp %.2f\n circuitOffset %.2f\n wireRes %.3f\n", wireOffset, circuitOffset,
 			wireRes);
+	f = fopen(DIR_PT100offset, "r+" );
+	fprintf(f,"PT100_1:\n offsetWire = %0.2f\n offestCircuit = %0.2f\n",wireOffset, circuitOffset);
+	fclose(f);
 	return (circuitOffset - wireOffset);
 
 }

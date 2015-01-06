@@ -12,6 +12,7 @@
 // TODO rename
 extern int addr_RTC_MCP7940N;   // = 0x6F I2C address of the RTC (MCP7940N)
 extern int addr_AOUT_LTC2635; // = 0x20 I2C address of the Analog Out (AOUT) LTC2635
+extern int addr_EEPROM;		// = 0x54 I2C address of the EEPROM (Cap 1)
 
 //bus 1 = I2C2 at BBB
 int i2c_open(unsigned char bus, unsigned char addr);

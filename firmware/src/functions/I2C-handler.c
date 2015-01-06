@@ -22,6 +22,8 @@
 
 int addr_RTC_MCP7940N = 0b01101111;  // = 0x6F I2C address of the RTC (MCP7940N)
 int addr_AOUT_LTC2635 = 0b0010000; // = 0x20 I2C address of the Analog Out (AOUT) LTC2635
+int addr_EEPROM = 0b1010100;  // = 0x54 I2C address of the 24AA256-EEPROM
+
 
 int i2c_open(unsigned char bus, unsigned char addr) {
 	int file;

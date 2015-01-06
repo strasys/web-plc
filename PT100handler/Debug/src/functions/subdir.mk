@@ -4,6 +4,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+/home/johannes/git/firmware/src/functions/24AA256-EEPROM.c \
 /home/johannes/git/firmware/src/functions/AIN-handler.c \
 /home/johannes/git/firmware/src/functions/AOUT_LTC2635.c \
 /home/johannes/git/firmware/src/functions/GPIO.c \
@@ -12,6 +13,7 @@ C_SRCS += \
 /home/johannes/git/firmware/src/functions/common.c 
 
 OBJS += \
+./src/functions/24AA256-EEPROM.o \
 ./src/functions/AIN-handler.o \
 ./src/functions/AOUT_LTC2635.o \
 ./src/functions/GPIO.o \
@@ -20,6 +22,7 @@ OBJS += \
 ./src/functions/common.o 
 
 C_DEPS += \
+./src/functions/24AA256-EEPROM.d \
 ./src/functions/AIN-handler.d \
 ./src/functions/AOUT_LTC2635.d \
 ./src/functions/GPIO.d \
@@ -29,6 +32,13 @@ C_DEPS += \
 
 
 # Each subdirectory must supply rules for building sources it contributes
+src/functions/24AA256-EEPROM.o: /home/johannes/git/firmware/src/functions/24AA256-EEPROM.c
+	@echo 'Building file: $<'
+	@echo 'Invoking: Cross GCC Compiler'
+	arm-linux-gnueabi-gcc -I/usr/arm-linux-gnueabi/include -I/home/johannes/git/firmware/src/functions -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
 src/functions/AIN-handler.o: /home/johannes/git/firmware/src/functions/AIN-handler.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross GCC Compiler'

@@ -12,6 +12,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <errno.h>
 #include "AIN-handler.h"
 #include "24AA256-EEPROM.h"
 
@@ -71,7 +72,7 @@ void setCircuitOffset(int calResistor, int calBitvalue, int channel){
 	EEPROMwriteblock64(EEPROMregister, transferData);
 }
 
-double getTempOffset(){
+double getTempOffset(int channel){
 	double calResistor, wireArea, length, wireOffset, specResistance,
 	wireRes;
 	int calBitvalue, i;
@@ -109,20 +110,50 @@ double getTempOffset(){
 }
 
 int main(int argc, char *argv[], char *env[]){
-	int channel, bitVal;
+	int channel, calbitValue, calResistor, lengthWire, areaWire ;
 	double temperature, offsetTemp;
+	char setget[2] = {};
 
-	channel = atoi(argv[1]);
-	bitVal = get_iio_value_n(channel);
-	temperature = getCircuitTemp(bitVal);
-	offsetTemp = getTempOffset();
-	temperature = temperature + offsetTemp;
+	if (argv[1] != 0){
+		channel = atoi(argv[1]);
 
-	if (argv[2] != 0){
+		if (argv[2] != 0){
+			setget[0] = argv[2];					// Set argument necessary to set the circuit and wire length offset.
+
+			if ((setget[0] == 's') && ((argv[3] && argv[4] && argv[5]) != 0)){
+				setget[1] = argv[3];
+				if (setget[1] == 'c'){				// c = circuit offset argument.
+					calResistor = atoi(argv[4]);
+					calbitValue = atoi(argv[5]);
+					setCircuitOffset(calResistor, calbitValue, channel);
+					//todo: add getCircuitOffset to read back
+				}
+				if (setget[1] == 'w'){				// w = wire offset of wire length
+					lengthWire = atoi(argv[4]);		// value in meter
+					areaWire = atoi(argv[5]);		// value in mm²
+					//todo: add setWireOffset incl. file write
+					//todo: add getWireOffset
+				}
+			} else {
+				fprintf(stderr, "Arguments mismatch: %s\n", strerror( errno ));
+			}
+
+			if (setget[0] == 'g'){
+
+				setget[1] = argv[2];
+
+				temperature=getCircuitTemp(get_iio_value_n(channel)) + getTempOffset();
+				printf("temperature (channel %i) = %d",channel, temperature);
+
+			} else {
+				fprintf(stderr, "Arguments mismatch: %s\n", strerror( errno ));
+			}
+		}
 
 
+	}else {
+			fprintf(stderr, "No arguments added: %s\n", strerror( errno ));
 	}
-
 
 	printf("12 - bit value of channel %i: Temp: %.2f offset: %.2f\n",channel, temperature, offsetTemp);
 

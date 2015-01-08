@@ -16,5 +16,5 @@
 void EEPROMinit(int I2Cchannel, int address);
 int EEPROMwriteblock64(unsigned int EEPROMregister, char *EEPROMdata);
 int EEPROMwritebyte(unsigned int EEPROMregister, char EEPROMdata);
-void EEPROMreadbytes(unsigned int EEPROMregister, unsigned char *EEPROMdata, int length);
+void EEPROMreadbytes(unsigned int EEPROMregister, char *EEPROMdata, int length);
 #endif /* SRC_FUNCTIONS_24AA256_EEPROM_H_ */

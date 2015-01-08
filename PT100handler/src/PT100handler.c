@@ -42,16 +42,15 @@ double getCircuitTemp(int bitvalue){
 }
 
 // The following function writes the circuit related offset to the cap EEPROM.
-void setCircuitOffset(int calResistor, int calBitvalue, int channel){
-	double specResistance = 0.0175; //Coper at 20°C
+void setCircuitOffset(double calResistor, int calBitvalue, int channel){
+	//double specResistance = 0.0175; //Coper at 20°C
 	double circuitOffset;
-	unsigned int EEPROMregister = 0, i;
+	unsigned int EEPROMregister = 0;
 	char datatoEEPROM[64] = {};
-	unsigned char transferData[64] = {};
 
 	circuitOffset = getPT100temp(calResistor)-getCircuitTemp(calBitvalue);
 
-	sprintf(datatoEEPROM, "R%5.1fPT100temp%6.2fCircuitTemp%6.2fCircuitOffset%5.2f",
+	sprintf(datatoEEPROM, "R=%5.1f:PT100temp=%6.2f:CircuitTemp=%6.2f:CircuitOffset=%5.2f",
 										calResistor,
 										getPT100temp(calResistor),
 										getCircuitTemp(calBitvalue),
@@ -65,13 +64,50 @@ void setCircuitOffset(int calResistor, int calBitvalue, int channel){
 		EEPROMregister = 192;
 	}
 
-	for(i = 0; i<=(strlen(datatoEEPROM));i++){
-		transferData[i] = datatoEEPROM[i];
-	}
-
-	EEPROMwriteblock64(EEPROMregister, transferData);
+	EEPROMwriteblock64(EEPROMregister, datatoEEPROM);
 }
 
+void getCircuitOffsetData(int channel, double data[]){
+	unsigned int EEPROMaddressPT100_1 = 138;
+	unsigned int EEPROMaddressPT100_2 = 192, address;
+	//int EEPROMoffsetR = 0, EEPROMoffsetPT100temp = 15, EEPROMoffsetCircuitTemp = 32, EEPROMoffsetCircuitOffset = 51;
+	char EEPROMdata[255] = {};
+	char *token = NULL;
+	char Rcal[6], PT100temp[7], CircuitTemp[7], CircuitOffset[6];
+
+	if (channel == 1){
+		address = EEPROMaddressPT100_1;
+		EEPROMreadbytes(address, EEPROMdata, 64);
+
+	}
+	if (channel == 2){
+		address = EEPROMaddressPT100_2;
+		EEPROMreadbytes(address, EEPROMdata, 64);
+
+	} else {
+		fprintf(stderr, "Channel Number error: %s\n", strerror( errno ));
+	}
+
+	token = strtok(EEPROMdata,"=");
+	token = strtok(NULL, ":");
+	strcpy(Rcal, token);
+	token = strtok(NULL, "=");
+	token = strtok(NULL, ":");
+	strcpy(PT100temp, token);
+	token = strtok(NULL, "=");
+	token = strtok(NULL, ":");
+	strcpy(CircuitTemp, token);
+	token = strtok(NULL, "=");
+	token = strtok(NULL, ":");
+	strcpy(CircuitOffset, token);
+
+
+	data[0] = atof(Rcal);
+	data[1] = atof(PT100temp);
+	data[2] = atof(CircuitTemp);
+	data[3] = atof(CircuitOffset);
+}
+/*
 double getTempOffset(int channel){
 	double calResistor, wireArea, length, wireOffset, specResistance,
 	wireRes;
@@ -99,38 +135,50 @@ double getTempOffset(int channel){
 	printf("EEPROMdataSet value: %s\n", EEPROMdataSet);
 
 	EEPROMwritebyte(65,'A');
-	/*EEPROMreadbytes(0, EEPROMdataGet, 64);
+	EEPROMreadbytes(0, EEPROMdataGet, 64);
 	printf("EEPROMdataGet:\n");
 	for(i=0; i<=64; i++){
 	printf("%c", EEPROMdataGet[i]);
 	}
 	printf("\n");
-	*/
+
 	return (circuitOffset - wireOffset);
 }
+*/
 
 int main(int argc, char *argv[], char *env[]){
-	int channel, calbitValue, calResistor, lengthWire, areaWire ;
-	double temperature, offsetTemp;
+	int channel, calbitValue;
+	double temperature, calResistor, lengthWire, areaWire;
+	double tempOffsetCircuitdata[4];
 	char setget[2] = {};
+	char init[1] = {};
 
 	if (argv[1] != 0){
-		channel = atoi(argv[1]);
+		//Helper process to check the EEPROM init function!
+		sscanf(argv[1], "%c", &init[0]);
+		if (init[0] == 'i'){
+			EEPROMinit(1, 0x54);
+		} else {
+			channel = atoi(argv[1]);
+		}
+
 
 		if (argv[2] != 0){
-			setget[0] = argv[2];					// Set argument necessary to set the circuit and wire length offset.
+			sscanf(argv[2], "%c", &setget[0]);				// Set argument necessary to set the circuit and wire length offset.
 
 			if ((setget[0] == 's') && ((argv[3] && argv[4] && argv[5]) != 0)){
-				setget[1] = argv[3];
+				sscanf(argv[3], "%c", &setget[1]);
+
 				if (setget[1] == 'c'){				// c = circuit offset argument.
-					calResistor = atoi(argv[4]);
+					calResistor = atol(argv[4]);
 					calbitValue = atoi(argv[5]);
 					setCircuitOffset(calResistor, calbitValue, channel);
-					//todo: add getCircuitOffset to read back
+					getCircuitOffsetData(channel, tempOffsetCircuitdata);
+					printf("Offset temperature of channel %d set to %5.2f", channel, tempOffsetCircuitdata[3]);
 				}
 				if (setget[1] == 'w'){				// w = wire offset of wire length
-					lengthWire = atoi(argv[4]);		// value in meter
-					areaWire = atoi(argv[5]);		// value in mm²
+					lengthWire = atol(argv[4]);		// value in meter
+					areaWire = atol(argv[5]);		// value in mm²
 					//todo: add setWireOffset incl. file write
 					//todo: add getWireOffset
 				}
@@ -139,10 +187,9 @@ int main(int argc, char *argv[], char *env[]){
 			}
 
 			if (setget[0] == 'g'){
+				sscanf(argv[2], "%c", &setget[1]);
 
-				setget[1] = argv[2];
-
-				temperature=getCircuitTemp(get_iio_value_n(channel)) + getTempOffset();
+				temperature = getCircuitTemp(get_iio_value_n(channel)) + getTempOffset();
 				printf("temperature (channel %i) = %d",channel, temperature);
 
 			} else {
@@ -154,9 +201,6 @@ int main(int argc, char *argv[], char *env[]){
 	}else {
 			fprintf(stderr, "No arguments added: %s\n", strerror( errno ));
 	}
-
-	printf("12 - bit value of channel %i: Temp: %.2f offset: %.2f\n",channel, temperature, offsetTemp);
-
 
 	return 0;
 }

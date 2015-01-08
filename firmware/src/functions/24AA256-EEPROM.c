@@ -14,7 +14,7 @@
 
 void EEPROMinit(int I2Cchannel, int address){
 	char I2CBusDir[255] = {};
-	int f;
+	FILE *f;
 	sprintf(I2CBusDir, "/sys/bus/i2c/devices/%i-00%i/driver/%i-00%i",I2Cchannel,address,I2Cchannel,address);
 	f = fopen(I2CBusDir,"w");
 	if(f != 0){
@@ -80,7 +80,7 @@ int EEPROMwritebyte(unsigned int EEPROMregister, char EEPROMdata){
 
 	return 0;
 }
-void EEPROMreadbytes(unsigned int EEPROMregister, unsigned char *EEPROMdata, int length){
+void EEPROMreadbytes(unsigned int EEPROMregister, char *EEPROMdata, int length){
 	int f, i;
 	unsigned char buf[255] = {};
 	char bufdata[255] = {};
@@ -97,7 +97,11 @@ void EEPROMreadbytes(unsigned int EEPROMregister, unsigned char *EEPROMdata, int
 
 	f = i2c_open(I2C2_path, addr_EEPROM);
 	i2c_write(f, buf, 2);
-	i2c_read(f, EEPROMdata, length);
+	i2c_read(f, buf, length);
 	i2c_close(f);
+
+	for (i = 0; i <= (sizeof(buf)); i++){
+		EEPROMdata[i] = buf[i];
+	}
 }
 

@@ -12,8 +12,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "/home/johannes/git/firmware/src/functions/I2C-handler.h"
-#include "/home/johannes/git/firmware/src/functions/RTC_MCP7940N.h"
+#include "I2C-handler.h"
+#include "RTC_MCP7940N.h"
 
 void getFormatForDate(char * pDateTime) {
 	// formats for date -u

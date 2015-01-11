@@ -15,10 +15,10 @@
 void EEPROMinit(int I2Cchannel, int address){
 	char I2CBusDir[255] = {};
 	FILE *f;
-	sprintf(I2CBusDir, "/sys/bus/i2c/devices/%i-00%i/driver/%i-00%i",I2Cchannel,address,I2Cchannel,address);
+	sprintf(I2CBusDir, "/sys/devices/ocp.2/4819c000.i2c/i2c-%i/%i-00%i/driver/unbind",I2Cchannel,I2Cchannel,address);
 	f = fopen(I2CBusDir,"w");
 	if(f != 0){
-		fprintf(f,"%s","unbind");
+		fprintf(f,"%i-00%i",I2Cchannel,address);
 		fclose(f);
 	} else {
 		fprintf(stderr, "EEPROMinit: %s\n", strerror(errno));
@@ -27,12 +27,13 @@ void EEPROMinit(int I2Cchannel, int address){
 }
 
 int EEPROMwriteblock64(unsigned int EEPROMregister, char *EEPROMdata){
-	int f, length, i;
+	int f, i;
+	unsigned int length;
 	unsigned char buf[255] = {};
 	char bufdata[255] = {};
 
 	length = strlen(EEPROMdata);
-	printf("length EEPROMdata = %i", length);
+	printf("length EEPROMdata = %i\n", length);
 	if (length <= 64){
 
 		//split EEPROMregister address in two bytes
@@ -80,7 +81,7 @@ int EEPROMwritebyte(unsigned int EEPROMregister, char EEPROMdata){
 
 	return 0;
 }
-void EEPROMreadbytes(unsigned int EEPROMregister, char *EEPROMdata, int length){
+void EEPROMreadbytes(unsigned int EEPROMregister, char *EEPROMdata, unsigned int length){
 	int f, i;
 	unsigned char buf[255] = {};
 	char bufdata[255] = {};

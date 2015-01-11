@@ -29,7 +29,13 @@ void init(void){
 	init_RTC();
 	init_GPIO();
 	init_AOUT();
-	//RTC_print_status();
+}
+
+void getFormatForDate(char * pDateTime) {
+	// formats for date -u
+	// date --universal $(/www/pages/cgi-bin/RTChandler g f)
+	sprintf(pDateTime, "%2.2d%2.2d%2.2d%2.2d%4.4d", RTC_get_month(),
+			RTC_get_day(), RTC_get_hours(), RTC_get_minutes(), RTC_get_year());
 }
 
 
@@ -37,6 +43,14 @@ int main(int argc, char *argv[], char *env[])
 {
 
 		init();
+
+		//set time on beaglebone according to RTC time
+		// at start up.
+			char command[128];
+			char dateTime[13];
+			getFormatForDate(dateTime);
+					sprintf(command,"date -u %s",dateTime);
+					system(command);
 
 	return (0);
 }

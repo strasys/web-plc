@@ -49,15 +49,15 @@ void setWireOffset(int channel, double length, double wireArea){
 	//write wire offset to PT100wireOffset.txt
 	if (channel == 1){
 		f = fopen(DIR_PT100wireOffset, "w" );
-		rewind(f);
-		fprintf(f,"PT100_1:TempOffsetWire=%5.2f:WireLength=%6.2f:WireArea=%4.2f:R-wire=%5.2f\n",wireOffset,length,wireArea,wireRes);
+		//rewind(f);
+		fprintf(f,"PT100_1:TempOffsetWire=%5.2f:WireLength=%6.2f:WireArea=%4.2f:R-wire=%5.2f",wireOffset,length,wireArea,wireRes);
 		fclose(f);
 	}
 	else if (channel == 2) {
 		f = fopen(DIR_PT100wireOffset, "w" );
-		rewind(f);
+		//rewind(f);
 		//todo: Positioning could be more automated to prevent manual counting.
-		fprintf(f,"\nPT100_2:TempOffsetWire=%5.2f:WireLength=%6.2f:WireArea=%4.2f:R-wire=%5.2f\n",wireOffset,length,wireArea,wireRes);
+		fprintf(f,"PT100_2:TempOffsetWire=%5.2f:WireLength=%6.2f:WireArea=%4.2f:R-wire=%5.2f",wireOffset,length,wireArea,wireRes);
 		fclose(f);
 	}
 	else {

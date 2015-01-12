@@ -24,7 +24,7 @@
 								<option id="gnu.c.compiler.option.debugging.level.1620455489" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.350279762" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="/usr/arm-linux-gnueabi/include"/>
-									<listOptionValue builtIn="false" value="/home/johannes/git/firmware/src/functions"/>
+									<listOptionValue builtIn="false" value="/home/johannes/web-plc/firmware/src/functions"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.711296966" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>

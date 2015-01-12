@@ -40,29 +40,77 @@ double getWireResistanceCopper(double length, double area){
 void setWireOffset(int channel, double length, double wireArea){
 	double wireOffset, wireRes;
 	FILE *f = NULL;
-	char DIR_PT100wireOffset[21] = "PT100wireOffset.txt";
-	//fpos_t pos;
+	char DIR_PT100wireOffset[255] = {};
+	char fopenModus[2] = {};
 
 	wireRes = getWireResistanceCopper(length, wireArea);
 	wireOffset = getPT100temp(wireRes+100);
 
 	//write wire offset to PT100wireOffset.txt
-	if (channel == 1){
-		f = fopen(DIR_PT100wireOffset, "w" );
-		//rewind(f);
-		fprintf(f,"PT100_1:TempOffsetWire=%5.2f:WireLength=%6.2f:WireArea=%4.2f:R-wire=%5.2f",wireOffset,length,wireArea,wireRes);
-		fclose(f);
+
+
+	if ((channel == 1) || (channel ==2)) {
+		sprintf(DIR_PT100wireOffset, "PT100_%iwireOffset.txt", channel );
+
+		if (access(DIR_PT100wireOffset, (R_OK | W_OK)) != -1){
+			sprintf(fopenModus, "r+");
+		}
+		else
+		{
+			sprintf(fopenModus, "w");
+		}
 	}
-	else if (channel == 2) {
-		f = fopen(DIR_PT100wireOffset, "w" );
-		//rewind(f);
-		//todo: Positioning could be more automated to prevent manual counting.
-		fprintf(f,"PT100_2:TempOffsetWire=%5.2f:WireLength=%6.2f:WireArea=%4.2f:R-wire=%5.2f",wireOffset,length,wireArea,wireRes);
-		fclose(f);
+	else
+	{
+		fprintf(stderr, "setWireOffset: Invalid channel No. : %i\n", channel);
 	}
-	else {
-		fprintf(stderr, "setWireOffset: Could not write wire offset to file! : %s\n", strerror( errno ));
+
+	f = fopen(DIR_PT100wireOffset, fopenModus );
+				fprintf(f,"PT100_%i:TempOffsetWire=%5.2f:WireLength=%6.2f:WireArea=%4.2f:R-wire=%5.2f",
+													channel,
+													wireOffset,
+													length,
+													wireArea,
+													wireRes);
+				fclose(f);
+}
+
+int getWireOffsetData(int channel, double data[]){
+	FILE *f = NULL;
+	char DIR_PT100wireOffset[255] = {};
+	float TempOffsetWire, WireLength, WireArea, R_wire;
+	int i;
+
+
+	if ((channel == 1) || (channel == 2)){
+		sprintf(DIR_PT100wireOffset, "PT100_%iwireOffset.txt", channel );
+
+		if (access(DIR_PT100wireOffset, (R_OK | W_OK)) != -1){
+			f = fopen(DIR_PT100wireOffset,"r");
+			fscanf(f, "PT100_%i:TempOffsetWire=%f:WireLength=%f:WireArea=%f:R-wire=%f",
+					&i,
+					&TempOffsetWire,
+					&WireLength,
+					&WireArea,
+					&R_wire
+					);
+			fclose(f);
+					data[0] = TempOffsetWire;
+					data[1] = WireLength;
+					data[2] = WireArea;
+					data[3] = R_wire;
+		}
+		else
+		{
+			fprintf(stderr, "setWireOffsetData: File %s does not exist!\n", DIR_PT100wireOffset);
+			return -1;
+		}
 	}
+	else
+	{
+		fprintf(stderr, "setWireOffset: Invalid channel No. : %i\n", channel);
+	}
+	return 0;
 }
 
 /*
@@ -78,11 +126,15 @@ double getCircuitTempSimu(int bitvalue){
 
 // The following function writes the circuit
 // related offset to the cap EEPROM.
-void setCircuitOffset(double calResistor, int calBitvalue, int channel){
+void setCircuitOffset(double calResistor, int channel){
 	double circuitOffset;
 	unsigned int EEPROMregister = 0;
 	char datatoEEPROM[65] = {};
+	int calBitvalue;
 
+	if ((channel == 1) || (channel == 2)){
+	//Attention: Beaglebone AIN channels start counting at 0 !
+	calBitvalue = get_iio_value_n(channel-1);
 	circuitOffset = getPT100temp(calResistor)-getCircuitTempSimu(calBitvalue);
 
 	sprintf(datatoEEPROM, "R=%5.1f:PT100temp=%6.2f:CircuitTemp=%6.2f:CircuitOffset=%5.2f",
@@ -91,6 +143,7 @@ void setCircuitOffset(double calResistor, int calBitvalue, int channel){
 										getCircuitTempSimu(calBitvalue),
 										circuitOffset
 										);
+	}
 	//printf("datatoEEPROM: %s\n",datatoEEPROM);
 
 	if (channel == 1){
@@ -146,51 +199,29 @@ void getCircuitOffsetData(int channel, double data[]){
 	data[3] = atof(CircuitOffset);
 
 }
-/*
-double getTempOffset(int channel){
-	double calResistor, wireArea, length, wireOffset, specResistance,
-	wireRes;
-	int calBitvalue, i;
-	FILE *f = NULL;
-	char DIR_PT100offset[16] = "PT100offset.txt";
-	char EEPROMdataSet[255] = {};
-	unsigned char EEPROMdataGet[255] = {};
 
+double getTemp(int channel){
+	double circuitOffsetData[4];
+	double wireOffsetData[4];
+	double PT100temp;
 
-	calResistor = 99.5;	//example channel 0
-	calBitvalue = 1293;
-	wireArea = 0.22;
-	length = 1;
+	getCircuitOffsetData(channel, circuitOffsetData);
+	getWireOffsetData(channel, wireOffsetData);
+	//attention beaglebone channel 1 = 0!
+	PT100temp = getCircuitTempSimu(get_iio_value_n(channel-1))
+			+ circuitOffsetData[3]
+			- wireOffsetData[0];
 
-	wireRes = getWireResistance(specResistance, length, wireArea);
-	wireOffset = getPT100temp(wireRes+100);
-
-
-
-	f = fopen(DIR_PT100offset, "r+" );
-	fprintf(f,"PT100_1:\n offsetWire = %0.2f\n offestCircuit = %0.2f\n",wireOffset, circuitOffset);
-	fclose(f);
-	sprintf(EEPROMdataSet,"calResistor=%6.2f",calResistor);
-	printf("EEPROMdataSet value: %s\n", EEPROMdataSet);
-
-	EEPROMwritebyte(65,'A');
-	EEPROMreadbytes(0, EEPROMdataGet, 64);
-	printf("EEPROMdataGet:\n");
-	for(i=0; i<=64; i++){
-	printf("%c", EEPROMdataGet[i]);
-	}
-	printf("\n");
-
-	return (circuitOffset - wireOffset);
+	return (PT100temp);
 }
-*/
+
 
 /*
  * PT100handler functions:
  * EEPROM init:
  * it is needed to unbind the relevant EEPROM to read and write with this program
  * set circuit offset (= op-amp circuit on the strasys board):
- * ./PT100handler 1(=channel-number) s(=set) c(=circuit) 100.1(=calibration Resistor) 1650(=Bit value only for testing)
+ * ./PT100handler 1(=channel-number) s(=set) c(=circuit) 100.1(=calibration Resistor) 1(=int Number)
  * set wire offset (= compensation of resistance of 2 wire PT100 sensors):
  * ./PT100handler 1(=channel-number) s(=set) w(=wire) 10.0(=length of wire in meter) 0.25(= area of wire in mm²)
  * get temperature:
@@ -202,9 +233,10 @@ double getTempOffset(int channel){
  */
 
 int main(int argc, char *argv[], char *env[]){
-	int channel, calbitValue;
-	double temperature, calResistor, lengthWire = 0, areaWire = 0;
-	double tempOffsetCircuitdata[4];
+	int channel;
+	double calResistor, lengthWire = 0, areaWire = 0;
+	double tempOffsetCircuitData[4];
+	double tempOffsetWireData[4];
 	char setget[2] = {};
 	char init[1] = {};
 
@@ -226,46 +258,40 @@ int main(int argc, char *argv[], char *env[]){
 
 				if (setget[1] == 'c'){				// c = circuit offset argument.
 					calResistor = atof(argv[4]);
-					//todo: calbitValue is only needed for testing!
-					//=> In the future the cal. Resistor will be connected and the setup starts.
-					calbitValue = atoi(argv[5]);
-					setCircuitOffset(calResistor, calbitValue, channel);
-					sleep(1);
-					getCircuitOffsetData(channel, tempOffsetCircuitdata);
-					printf("Calibration information of PT100 channel %i:\n\n", channel);
-					printf("R = %5.1f Ohm\n", tempOffsetCircuitdata[0]);
-					printf("PT100 element temperature at R = %6.2f °C\n", tempOffsetCircuitdata[1]);
-					printf("Temperature based on simulated / ideal el. circuit = %6.2f °C\n", tempOffsetCircuitdata[2]);
-					printf("Offset temperature of channel %d set to %5.2f °C\n", channel, tempOffsetCircuitdata[3]);
+					setCircuitOffset(calResistor, channel);
 				}
-			 else if (setget[1] == 'w'){				// w = wire offset of wire length
+				else if (setget[1] == 'w'){			// w = wire offset of wire length
 					lengthWire = atof(argv[4]);		// value in meter
 					areaWire = atof(argv[5]);		// value in mm²
 					setWireOffset(channel,lengthWire, areaWire);
-					//todo: add getWireOffset
 				}
-			 else {
-				fprintf(stderr, "Arguments mismatch: %s\n", strerror( errno ));
-				return EXIT_FAILURE;
-			 }
+				else
+				{
+					fprintf(stderr, "Arguments mismatch: %s\n", strerror( errno ));
+					return EXIT_FAILURE;
+				}
 			}
 			else if (setget[0] == 'g'){
 				sscanf(argv[3], "%c", &setget[1]);;
 
 				if (setget[1] == 't'){
-					temperature = getCircuitTempSimu(get_iio_value_n(channel)); // + getTempOffset();
-					printf("temperature (channel %i) = %.1f",channel, temperature);
+					printf("temperature (channel %i) = %.1f\n",channel, getTemp(channel));
 				}
 				else if (setget[1] == 'c') {
-					getCircuitOffsetData(channel, tempOffsetCircuitdata);
+					getCircuitOffsetData(channel, tempOffsetCircuitData);
 					printf("Calibration information of PT100 channel %i:\n\n", channel);
-					printf("R = %5.1f Ohm\n", tempOffsetCircuitdata[0]);
-					printf("PT100 element temperature at R = %6.2f °C\n", tempOffsetCircuitdata[1]);
-					printf("Temperature based on simulated / ideal el. circuit = %6.2f °C\n", tempOffsetCircuitdata[2]);
-					printf("Offset temperature of channel %d set to %5.2f °C\n", channel, tempOffsetCircuitdata[3]);
+					printf("R = %5.1f Ohm\n", tempOffsetCircuitData[0]);
+					printf("PT100 element temperature at R = %6.2f °C\n", tempOffsetCircuitData[1]);
+					printf("Temperature based on simulated / ideal el. circuit = %6.2f °C\n", tempOffsetCircuitData[2]);
+					printf("Offset temperature of channel %d set to %5.2f °C\n", channel, tempOffsetCircuitData[3]);
 				}
 				else if (setget[1] == 'w'){
-
+					getWireOffsetData(channel, tempOffsetWireData);
+					printf("Wire offset information of PT100 channel %i:\n\n",channel);
+					printf("Wire based offset temperature = %5.2f °C\n",tempOffsetWireData[0]);
+					printf("Wire length = %6.2f m\n", tempOffsetWireData[1]);
+					printf("Wire area = %4.2f mm²\n", tempOffsetWireData[2]);
+					printf("Calculated wire resistance = %5.2f Ohm\n", tempOffsetWireData[3]);
 				}
 				else {
 					fprintf(stderr, "Arguments mismatch: %s\n", strerror( errno ));
@@ -278,10 +304,11 @@ int main(int argc, char *argv[], char *env[]){
 			}
 		}
 
-
-	} else {
-			fprintf(stderr, "No arguments added: %s\n", strerror( errno ));
-			return EXIT_FAILURE;
+	}
+	else
+	{
+		fprintf(stderr, "No arguments added: %s\n", strerror( errno ));
+		return EXIT_FAILURE;
 	}
 
 	return 0;

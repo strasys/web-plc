@@ -4,13 +4,13 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-/home/johannes/git/firmware/src/functions/24AA256-EEPROM.c \
-/home/johannes/git/firmware/src/functions/AIN-handler.c \
-/home/johannes/git/firmware/src/functions/AOUT_LTC2635.c \
-/home/johannes/git/firmware/src/functions/GPIO.c \
-/home/johannes/git/firmware/src/functions/I2C-handler.c \
-/home/johannes/git/firmware/src/functions/RTC_MCP7940N.c \
-/home/johannes/git/firmware/src/functions/common.c 
+/home/johannes/web-plc/firmware/src/functions/24AA256-EEPROM.c \
+/home/johannes/web-plc/firmware/src/functions/AIN-handler.c \
+/home/johannes/web-plc/firmware/src/functions/AOUT_LTC2635.c \
+/home/johannes/web-plc/firmware/src/functions/GPIO.c \
+/home/johannes/web-plc/firmware/src/functions/I2C-handler.c \
+/home/johannes/web-plc/firmware/src/functions/RTC_MCP7940N.c \
+/home/johannes/web-plc/firmware/src/functions/common.c 
 
 OBJS += \
 ./src/functions/24AA256-EEPROM.o \
@@ -32,52 +32,52 @@ C_DEPS += \
 
 
 # Each subdirectory must supply rules for building sources it contributes
-src/functions/24AA256-EEPROM.o: /home/johannes/git/firmware/src/functions/24AA256-EEPROM.c
+src/functions/24AA256-EEPROM.o: /home/johannes/web-plc/firmware/src/functions/24AA256-EEPROM.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross GCC Compiler'
-	arm-linux-gnueabi-gcc -I/usr/arm-linux-gnueabi/include -I/home/johannes/git/firmware/src/functions -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	arm-linux-gnueabi-gcc -I/usr/arm-linux-gnueabi/include -I/home/johannes/web-plc/firmware/src/functions -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
-src/functions/AIN-handler.o: /home/johannes/git/firmware/src/functions/AIN-handler.c
+src/functions/AIN-handler.o: /home/johannes/web-plc/firmware/src/functions/AIN-handler.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross GCC Compiler'
-	arm-linux-gnueabi-gcc -I/usr/arm-linux-gnueabi/include -I/home/johannes/git/firmware/src/functions -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	arm-linux-gnueabi-gcc -I/usr/arm-linux-gnueabi/include -I/home/johannes/web-plc/firmware/src/functions -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
-src/functions/AOUT_LTC2635.o: /home/johannes/git/firmware/src/functions/AOUT_LTC2635.c
+src/functions/AOUT_LTC2635.o: /home/johannes/web-plc/firmware/src/functions/AOUT_LTC2635.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross GCC Compiler'
-	arm-linux-gnueabi-gcc -I/usr/arm-linux-gnueabi/include -I/home/johannes/git/firmware/src/functions -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	arm-linux-gnueabi-gcc -I/usr/arm-linux-gnueabi/include -I/home/johannes/web-plc/firmware/src/functions -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
-src/functions/GPIO.o: /home/johannes/git/firmware/src/functions/GPIO.c
+src/functions/GPIO.o: /home/johannes/web-plc/firmware/src/functions/GPIO.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross GCC Compiler'
-	arm-linux-gnueabi-gcc -I/usr/arm-linux-gnueabi/include -I/home/johannes/git/firmware/src/functions -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	arm-linux-gnueabi-gcc -I/usr/arm-linux-gnueabi/include -I/home/johannes/web-plc/firmware/src/functions -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
-src/functions/I2C-handler.o: /home/johannes/git/firmware/src/functions/I2C-handler.c
+src/functions/I2C-handler.o: /home/johannes/web-plc/firmware/src/functions/I2C-handler.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross GCC Compiler'
-	arm-linux-gnueabi-gcc -I/usr/arm-linux-gnueabi/include -I/home/johannes/git/firmware/src/functions -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	arm-linux-gnueabi-gcc -I/usr/arm-linux-gnueabi/include -I/home/johannes/web-plc/firmware/src/functions -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
-src/functions/RTC_MCP7940N.o: /home/johannes/git/firmware/src/functions/RTC_MCP7940N.c
+src/functions/RTC_MCP7940N.o: /home/johannes/web-plc/firmware/src/functions/RTC_MCP7940N.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross GCC Compiler'
-	arm-linux-gnueabi-gcc -I/usr/arm-linux-gnueabi/include -I/home/johannes/git/firmware/src/functions -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	arm-linux-gnueabi-gcc -I/usr/arm-linux-gnueabi/include -I/home/johannes/web-plc/firmware/src/functions -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
-src/functions/common.o: /home/johannes/git/firmware/src/functions/common.c
+src/functions/common.o: /home/johannes/web-plc/firmware/src/functions/common.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross GCC Compiler'
-	arm-linux-gnueabi-gcc -I/usr/arm-linux-gnueabi/include -I/home/johannes/git/firmware/src/functions -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	arm-linux-gnueabi-gcc -I/usr/arm-linux-gnueabi/include -I/home/johannes/web-plc/firmware/src/functions -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

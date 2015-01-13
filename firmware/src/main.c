@@ -24,11 +24,15 @@
 #include "GPIO.h"
 #include "AOUT_LTC2635.h"
 
-void init(void){
 
+void init(void){
+	char command[255];
 	init_RTC();
 	init_GPIO();
 	init_AOUT();
+	//unbind EEPROM from
+	sprintf(command, "./www/pages/cgi-bin/PT100handler i");
+	system(command);
 }
 
 void getFormatForDate(char * pDateTime) {

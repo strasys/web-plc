@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GPIOout>
-	<OUT>
-		<ButtonName>Out 1</ButtonName>
-		
-	</OUT>
-	<OUT>
-		<ButtonName>Aus 2</ButtonName>
-	</OUT>
-	<OUT>
-		<ButtonName>Out 3</ButtonName>
-	</OUT>
-	<OUT>
-		<ButtonName>Out 4</ButtonName>
-	</OUT>
-	<OUT>
-		<ButtonName>Out 5</ButtonName>
-	</OUT>
-	<OUT>
-		<ButtonName>Out 6</ButtonName>
-	</OUT>
-	<OUT>
-		<ButtonName>Out 7</ButtonName>
-	</OUT>
-	<OUT>
-		<ButtonName>Out 8</ButtonName>
-	</OUT>
+<OUT>
+<ButtonName>Out 1</ButtonName>
+</OUT>
+<OUT>
+<ButtonName>Aus 2</ButtonName>
+</OUT>
+<OUT>
+<ButtonName>Out 3</ButtonName>
+</OUT>
+<OUT>
+<ButtonName>Out 4</ButtonName>
+</OUT>
+<OUT>
+<ButtonName>Out 5</ButtonName>
+</OUT>
+<OUT>
+<ButtonName>Out 6</ButtonName>
+</OUT>
+<OUT>
+<ButtonName>Out 7</ButtonName>
+</OUT>
+<OUT>
+<ButtonName>Out 8</ButtonName>
+</OUT>
 </GPIOout>

@@ -157,7 +157,7 @@ function setGPIOoutXMLDataInput(){
 
 // load functions ad webpage opening
 function startatLoad(){
-	
+	loadNavbar();
 	getGPIOoutXMLData();
 	getOutstatus();	
 }
@@ -199,3 +199,15 @@ $(document).ready(function(){
 		  $("#showSetButtonName").show();
 	    });
 	});
+
+//Load the top fixed navigation bar and highlight the 
+//active site roots.
+function loadNavbar(){
+	$(document).ready(function(){
+		$("#mainNavbar").load("navbar.html", function(){
+			$("#navbarFunction").addClass("active");
+			$("#navbarItemDigiOut").addClass("active");
+		
+		  });
+		});
+	}

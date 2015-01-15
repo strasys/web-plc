@@ -113,8 +113,8 @@ var offsetTime;
 	    
 	    
 	    function startatLoad(){
-    		getSystemTimeDate();
-    		
+	    	loadNavbar();
+    		getSystemTimeDate();	
 		}
 		window.onload=startatLoad;
 		
@@ -140,5 +140,15 @@ var offsetTime;
 		  	  });
 		  	});
 		 
-	
+		//Load the top fixed navigation bar and highlight the 
+		//active site roots.
+		 function loadNavbar(){
+			 $(document).ready(function(){
+			 	$("#mainNavbar").load("navbar.html", function(){
+			 		$("#navbarSet").addClass("active");
+			 		$("#navbarItemTimeDate").addClass("active");
+			 	
+			 	  });
+			 	});
+			 }
 

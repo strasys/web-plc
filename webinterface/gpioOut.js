@@ -4,7 +4,7 @@
  * 
  * Johannes Strasser
  * www.strasys.at
- * 18.12.2014
+ * 24.01.2015
  */
 
 var OUT;
@@ -134,80 +134,69 @@ function setGPIOoutXMLDataInput(){
 	                  ];
 	                  
 	
-	
-	ButtonNameSave.send("ButtonText0="+ButtonText[0]+
-						"&ButtonText1="+ButtonText[1]+
-						"&ButtonText2="+ButtonText[2]+
-						"&ButtonText3="+ButtonText[3]+
-						"&ButtonText4="+ButtonText[4]+
-						"&ButtonText5="+ButtonText[5]+
-						"&ButtonText6="+ButtonText[6]+
-						"&ButtonText7="+ButtonText[7]+
-						"&ButtonFlag=1");
 
 	ButtonNameSave.onreadystatechange = function(){
-    	
+			
     	if(ButtonNameSave.readyState == 4 && ButtonNameSave.status == 200)
     	{	
-    		startatLoad();
-    	}	
+    		getGPIOoutXMLData();
+    	}
     }
 	
+	
+	ButtonNameSave.send("ButtonText0="+ButtonText[0]+
+			"&ButtonText1="+ButtonText[1]+
+			"&ButtonText2="+ButtonText[2]+
+			"&ButtonText3="+ButtonText[3]+
+			"&ButtonText4="+ButtonText[4]+
+			"&ButtonText5="+ButtonText[5]+
+			"&ButtonText6="+ButtonText[6]+
+			"&ButtonText7="+ButtonText[7]+
+			"&ButtonFlag=1");
+	
 }
 
-// load functions ad webpage opening
-function startatLoad(){
-	loadNavbar();
-	getGPIOoutXMLData();
-	getOutstatus();	
+//Show input fields to change Button Names
+function SetButtonName(){
+	 $(document).ready(function(){
+		$("#setButtonNameDiv").load("setButtonName.html", function(){
+			getGPIOoutXMLDataInput();
+			$("#setButtonNameButtonSave").click(function(){
+				  setGPIOoutXMLDataInput();
+			});
+			$("#setButtonNameButtonCancle").click(function(){
+				  getGPIOoutXMLDataInput();
+			});
+			$("#setButtonNameButtonBack").click(function(){
+				  $("#setButtonNameDiv").hide();
+				  $("#showSetButtonName").show();
+				  reload();
+			});
+		});
+	 });
 }
-window.onload=startatLoad();
 
 // JQUERY functions.
-
-// Show input fields to change Button Names
-$(document).ready(function(){
-	  $("#showSetButtonName").click(function(){
-	    $("#setButtonNameDiv").load("setButtonName.html", function(){
-	    	getGPIOoutXMLDataInput();
-	    	$("#showSetButtonName").hide();
-	    	$("#setButtonNameDiv").show();
-	    });
-	  });
-	});
-
-// Save changes of the input fields (Button Name) on the server.
-$(document).ready(function(){
-	  $("#setButtonNameButtonSave").click(function(){
-	
-		  setGPIOoutXMLDataInput();
-	  });
-	});
-
-// Cancels the changes in the input fields and loads again the set data's.
-$(document).ready(function(){
-	  $("#setButtonNameButtonCancle").click(function(){
-	
-		  getGPIOoutXMLDataInput();
-	  });
-	});
-
-// Hide the button change input.
-$(document).ready(function(){
-	  $("#setButtonNameButtonBack").click(function(){
-		  $("#setButtonNameDiv").hide();
-		  $("#showSetButtonName").show();
-	    });
-	});
 
 //Load the top fixed navigation bar and highlight the 
 //active site roots.
 function loadNavbar(){
-	$(document).ready(function(){
-		$("#mainNavbar").load("navbar.html", function(){
-			$("#navbarFunction").addClass("active");
-			$("#navbarItemDigiOut").addClass("active");
-		
-		  });
-		});
-	}
+	 $(document).ready(function(){
+	 	$("#mainNavbar").load("navbar.html", function(){
+	 		$("#navbarFunction").addClass("active");
+	 		$("#navbarItemDigiOut").addClass("active");
+	 	  });
+	 	});
+	 }
+
+function reload(){
+	location.reload();
+}
+
+//load functions ad webpage opening
+window.onload=function(){
+	loadNavbar();
+	getGPIOoutXMLData();
+	getOutstatus();
+};
+

@@ -140,6 +140,7 @@ function setGPIOoutXMLDataInput(){
     	if(ButtonNameSave.readyState == 4 && ButtonNameSave.status == 200)
     	{	
     		getGPIOoutXMLData();
+  
     	}
     }
 	
@@ -159,21 +160,27 @@ function setGPIOoutXMLDataInput(){
 //Show input fields to change Button Names
 function SetButtonName(){
 	 $(document).ready(function(){
-		$("#setButtonNameDiv").load("setButtonName.html", function(){
+		$("#setButtonNameDiv").load("setButtonName.html?ver=2", function(){
 			getGPIOoutXMLDataInput();
-			$("#setButtonNameButtonSave").click(function(){
-				  setGPIOoutXMLDataInput();
-			});
-			$("#setButtonNameButtonCancle").click(function(){
-				  getGPIOoutXMLDataInput();
-			});
-			$("#setButtonNameButtonBack").click(function(){
-				  $("#setButtonNameDiv").hide();
-				  $("#showSetButtonName").show();
-				  reload();
-			});
+			$("#setButtonNameDiv").show();
+			$("#showSetButtonName").hide();
+			
 		});
 	 });
+}
+
+function SaveSetButtonName(){
+		  setGPIOoutXMLDataInput();
+}
+
+function CancelSetButtonName(){
+		  getGPIOoutXMLDataInput();
+}
+
+function CollapseSetButtonName(){
+		  $("#setButtonNameDiv").hide();
+		  $("#showSetButtonName").show();
+		  reload();
 }
 
 // JQUERY functions.
@@ -182,7 +189,7 @@ function SetButtonName(){
 //active site roots.
 function loadNavbar(){
 	 $(document).ready(function(){
-	 	$("#mainNavbar").load("navbar.html", function(){
+	 	$("#mainNavbar").load("navbar.html?ver=0", function(){
 	 		$("#navbarFunction").addClass("active");
 	 		$("#navbarItemDigiOut").addClass("active");
 	 	  });

@@ -1,4 +1,5 @@
 <?php
+
 $ausgabe;
 $arr;
 $ButtonFlag = 0;
@@ -38,6 +39,11 @@ $xml=simplexml_load_file("GPIOout.xml") or die("Error: Cannot create object");
 	}
 	echo $xml->asXML("GPIOout.xml");
 }
+/*
+for ($i=0; $i<8; $i++){
+	$ausgabe[i] = utf8_encode($ausgabe[i]);
+}
+*/
 
 $arr = array(	'OUT1' => $ausgabe[0],
 				'OUT2' => $ausgabe[1],
@@ -48,6 +54,7 @@ $arr = array(	'OUT1' => $ausgabe[0],
 				'OUT7' => $ausgabe[6],
 				'OUT8' => $ausgabe[7]
 			);
+
 
 echo json_encode($arr);
 

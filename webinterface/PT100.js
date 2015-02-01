@@ -18,27 +18,34 @@ function getPT100Data(setget, url, cfunc, senddata){
 
 
 function getPT100values(callback1){
-//		if (!document.all && !document.getElementById)
-//		return
 		getPT100Data("post","PT100handler.php",function()
 		{
 			if (xhttp.readyState==4 && xhttp.status==200)
 			{
 			var getPT100 = JSON.parse(xhttp.responseText); 
 			
-			OUT = [parseInt(getPT100.channel1),
-		           parseInt(getPT100.channel2),
-		           ];
-			if (callback1){
+			PT100temperaturevalues = [(getPT100.temperature1),
+			                          (getPT100.temperature2)
+			                          ];
+				if (callback1){
 				callback1();
+				}
 			}
-			}
-		},"setgetGPIO=g");		
+		},"setgetPT100handler=g");		
+}
+
+function showPT100values(){
+	getPT100values(function(){
+		$("#badgePT1001").text(PT100temperaturevalues[0]+" °C");
+		$("#badgePT1002").text(PT100temperaturevalues[1]+" °C");
+	});
+	setTimeout(function(){showPT100values()}, 10000);
 }
 
 // load functions ad webpage opening
 function startatLoad(){
 	loadNavbar();
+	showPT100values();
 }
 window.onload=startatLoad();
 

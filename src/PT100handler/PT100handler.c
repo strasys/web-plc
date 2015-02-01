@@ -72,10 +72,12 @@ int main(int argc, char *argv[], char *env[]){
 				}
 			}
 			else if (setget[0] == 'g'){
-				sscanf(argv[3], "%c", &setget[1]);;
+				sscanf(argv[3], "%c", &setget[1]);
 
 				if (setget[1] == 't'){
-					printf("temperature (channel %i) = %.1f\n",channel, getTemp(channel));
+
+					printf("%.01f\n",getTemp(channel));
+
 				}
 				else if (setget[1] == 'c') {
 					getCircuitOffsetData(channel, tempOffsetCircuitData);

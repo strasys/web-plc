@@ -31,7 +31,7 @@
 				<h3><b>Status Digitale Eingänge</b></h3>
 			</div>
 			<div class="panel-body">
-				<h3><button class="btn btn-default" id="showSetInputName" onclick="SetButtonName()">Eingangsbezeichnung ändern</button></h3>	
+				<h3><button class="btn btn-default" id="showSetInputName" onclick="SetInputName()">Eingangsbezeichnung ändern</button></h3>	
 				<div class="row">	
 					<div class="col-md-12">
 						<table class="table">
@@ -39,25 +39,25 @@
 								<td style = "width:50px;"> 
 								<h3 id="Input" class="led-blue" style="margin-top: 20px;"></h3>
 								</td>
-								<td align = "left"><h3>Eingang 1</h3></td>
+								<td align = "left"><h3><strong id="InputInText0">Eingang 1</strong></h3></td>
 							</tr>
 							<tr>
 								<td style = "width:50px;"> 
 								<h3 class="led-blue-off" style="margin-top: 20px;"></h3>
 								</td>
-								<td align = "left"><h3>Eingang 2</h3></td>
+								<td align = "left"><h3><strong id="InputInText1">Eingang 2</strong></h3></td>
 							</tr>
 							<tr>
 								<td style = "width:50px;"> 
 								<h3 class="led-blue-off" style="margin-top: 20px;"></h3>
 								</td>
-								<td align = "left"><h3>Eingang 3</h3></td>
+								<td align = "left"><h3><strong id="InputInText2">Eingang 3</strong></h3></td>
 							</tr>
 							<tr>
 								<td style = "width:50px;"> 
 								<h3 class="led-blue-off" style="margin-top: 20px;"></h3>
 								</td>
-								<td align = "left"><h3>Eingang 4</h3></td>
+								<td align = "left"><h3><strong id="InputInText3">Eingang 4</strong></h3></td>
 							</tr>
 						</table>
 					</div>	
@@ -70,7 +70,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-    <script src="gpioIN.js?ver=0"></script>
+    <script src="gpioIN.js?ver=1"></script>
   </body>
 </html>
   

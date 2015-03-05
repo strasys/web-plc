@@ -1,16 +1,24 @@
 sortoutcache = new Date();
 
+function getGPIOinXMLDa(setget, url, cfunc, senddata){
+	xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = cfunc;
+	xhttp.open(setget,url,true);
+	xhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	xhttp.send(senddata);
+}
+
 // This function will be called once at start and after
-// set of the button naming.
-// The names of the button are stored in a XML file on the server.
+// set of the input naming.
+// The names of the inputs are stored in a XML file on the server.
 function getGPIOinXMLData(callback2){
 	getGPIOinXMLDa("GET","GPIOin.xml?sortoutcache="+sortoutcache.valueOf(),function()
 			{
 				if (xhttp.readyState==4 && xhttp.status==200)
 					{
 					var getGPIOinXML = xhttp.responseXML;
-					var w = getGPIOinXML.getElementsByTagName("ButtonName");
-					var z = getGPIOinXML.getElementsByTagName("ButtonName");
+					var w = getGPIOinXML.getElementsByTagName("InputName");
+					var z = getGPIOinXML.getElementsByTagName("InputName");
 					var i = 0;
 					for (i=0; i<w.length; i++){
 						document.getElementById("InputInText"+i).innerHTML=z[i].childNodes[0].nodeValue;	
@@ -23,16 +31,16 @@ function getGPIOinXMLData(callback2){
 			});		
 }
 
-// This function is called after pressing the "Button Beschriftung ändern" button.
-// The function loads the actual button naming form the XML - file on the server
+// This function is called after pressing the "Eingang Beschriftung ändern" button.
+// The function loads the actual input naming form the XML - file on the server
 // into the input fields.
 
 function getGPIOinXMLDataInput(){
-	getGPIOoutXMLDa("GET", "GPIOin.xml?sortoutcache="+sortoutcache.valueOf(),function()
+	getGPIOinXMLDa("GET", "GPIOin.xml?sortoutcache="+sortoutcache.valueOf(),function()
 	{
 		if (xhttp.readyState==4 && xhttp.status==200)
 			{
-				var getGPIOoutXML = xhttp.responseXML;
+				var getGPIOinXML = xhttp.responseXML;
 				var x = getGPIOinXML.getElementsByTagName("InputName");
 				var y = getGPIOinXML.getElementsByTagName("InputName");
 		
@@ -45,12 +53,12 @@ function getGPIOinXMLDataInput(){
 }
 
 
-// After pressing the button "Änderungen speichern" in the button name change menue.
+// After pressing the button "Änderungen speichern" in the input name change menue.
 // This function transfers the data to the server where it will be saved with the 
 // help of a php function.
 function setGPIOinXMLDataInput(callback3){
 	
-		var ButtonText = [document.getElementById("setInputNameInputIn0").value,
+		var InputText = [document.getElementById("setInputNameInputIn0").value,
 		                  document.getElementById("setInputNameInputIn1").value,
 		                  document.getElementById("setInputNameInputIn2").value,
 		                  document.getElementById("setInputNameInputIn3").value
@@ -73,29 +81,29 @@ function setGPIOinXMLDataInput(callback3){
 }
 
 //Show input fields to change Button Names
-function SetButtonName(){
+function SetInputName(){
 	 $(document).ready(function(){
 		$("#setInputNameDiv").load("setInputName.html?ver=0", function(){
-			//getGPIOoutXMLDataInput();
+			getGPIOinXMLDataInput();
 			$("#setInputNameDiv").show();
 			$("#showSetInputName").hide();	
 		});
 	 });
 }
 
-function SaveSetButtonName(){
-		  setGPIOoutXMLDataInput(function(){
-				getGPIOoutXMLData();
+function SaveSetInputName(){
+		  setGPIOinXMLDataInput(function(){
+				getGPIOinXMLData();
 		  });
 }
 
-function CancelSetButtonName(){
-		  getGPIOoutXMLDataInput();
+function CancelSetInputName(){
+		  getGPIOinXMLDataInput();
 }
 
-function CollapseSetButtonName(){
-		  $("#setButtonNameDiv").hide();
-		  $("#showSetButtonName").show();
+function CollapseSetInputName(){
+		  $("#setInputNameDiv").hide();
+		  $("#showSetInputName").show();
 		 
 }
 
@@ -103,6 +111,7 @@ function CollapseSetButtonName(){
 //load functions ad webpage opening
 function startatLoad(){
 	loadNavbar();
+	getGPIOinXMLData();
 }
 window.onload=startatLoad();
 
@@ -113,7 +122,7 @@ $(document).ready(function(){
 	$("#mainNavbar").load("navbar.html", function(){
 		$("#navbarFunction").addClass("active");
 		$("#navbarItemDigiIn").addClass("active");
-	
 	  });
 	});
 }
+

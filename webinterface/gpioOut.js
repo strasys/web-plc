@@ -44,7 +44,8 @@ function getOutstatus(callback1){
 				callback1();
 			}
 			}
-		},"setgetGPIO=g");		
+		}, "setgetGPIO=g" +
+		   "&InOut=o");		
 }
 
 

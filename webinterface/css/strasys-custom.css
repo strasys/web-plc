@@ -1,0 +1,46 @@
+/*!
+* strasys.at
+* CSS cusomisation
+* Johannes Strasser
+* March 2015 -
+*/
+
+@CHARSET "UTF-8";
+
+
+
+.led-yellow {
+    margin: 20px auto;
+    width: 25px;
+    height: 25px;
+    background-color: #A90;
+    border-radius: 50%;
+    box-shadow: #000 0 -1px 7px 1px, inset #660 0 -1px 9px, #DD0 0 2px 12px;
+}
+
+.led-green {
+    margin: 20px auto;
+    width: 25px;
+    height: 25px;
+    background-color: #690;
+    border-radius: 50%;
+    box-shadow: #000 0 -1px 7px 1px, inset #460 0 -1px 9px, #7D0 0 2px 12px;
+}
+
+.led-blue {
+    margin: 20px auto;
+    width: 25px;
+    height: 25px;
+    background-color: #1919FF;
+    border-radius: 50%;
+    box-shadow: #000 0 -1px 7px 1px, inset #4D4FFF 0 -1px 9px, #0F0FFF 0 2px 25px;
+}
+
+.led-blue-off {
+    margin: 20px auto;
+    width: 25px;
+    height: 25px;
+    background-color: #FFF;
+    border-radius: 50%;
+    border:solid 1px black
+}

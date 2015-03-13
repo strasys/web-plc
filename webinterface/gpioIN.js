@@ -1,5 +1,8 @@
 sortoutcache = new Date();
 
+
+
+
 function getGPIOinXMLDa(setget, url, cfunc, senddata){
 	xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = cfunc;
@@ -7,6 +10,46 @@ function getGPIOinXMLDa(setget, url, cfunc, senddata){
 	xhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 	xhttp.send(senddata);
 }
+
+// Get Digital In status
+
+function getGPIOinStatus(callback1){
+		getGPIOinXMLDa("post","setGPIO.php",function()
+		{
+			if (xhttp.readyState==4 && xhttp.status==200)
+			{
+			var getIN = JSON.parse(xhttp.responseText); 
+			
+			IN =  [parseInt(getIN.IN1),
+		           parseInt(getIN.IN2),
+		           parseInt(getIN.IN3),
+		           parseInt(getIN.IN4)
+		        ];
+			
+			if (callback1){
+				callback1();
+			}
+			}
+		}, "setgetGPIO=g" +
+		   "&InOut=i");		
+}
+
+
+function setInputStatusHMI(){
+	getGPIOinStatus(function()
+	{
+	for (i=0; i<4; i++){
+		if((IN[i]) = 0){
+			document.getElementById("InputStatusLED"+i).className = "led-blue";
+		}
+		else if ((IN[i]) = 1)
+		{
+			document.getElementById("InputStatusLED"+i).className = "led-blue-off";
+		}
+		
+	}
+	});
+
 
 // This function will be called once at start and after
 // set of the input naming.
@@ -103,15 +146,17 @@ function CancelSetInputName(){
 
 function CollapseSetInputName(){
 		  $("#setInputNameDiv").hide();
-		  $("#showSetInputName").show();
-		 
+		  $("#showSetInputName").show();	 
 }
 
 
 //load functions ad webpage opening
 function startatLoad(){
-	loadNavbar();
-	getGPIOinXMLData();
+	loadNavbar(function(){
+//			getGPIOinXMLData(function(){
+//					setInputStatusHMI();
+//		});
+	});
 }
 window.onload=startatLoad();
 
@@ -125,4 +170,11 @@ $(document).ready(function(){
 	  });
 	});
 }
+/*
+function refreshStatus(){
+	setInputStatusHMI();
+	}
+	setTimeout(function(){refreshStatus()}, 2000);
+}
+*/
 

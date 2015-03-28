@@ -1,7 +1,14 @@
+/**
+ * Program to set and get the status of
+ * the Outputs
+ * 
+ * Johannes Strasser
+ * www.strasys.at
+ * 28.03.2015
+ */
+
+
 sortoutcache = new Date();
-
-
-
 
 function getGPIOinXMLDa(setget, url, cfunc, senddata){
 	xhttp = new XMLHttpRequest();
@@ -35,21 +42,23 @@ function getGPIOinStatus(callback1){
 }
 
 
-function setInputStatusHMI(){
+function setInputStatusHMI(callback3){
 	getGPIOinStatus(function()
 	{
 	for (i=0; i<4; i++){
-		if((IN[i]) = 0){
+		if((IN[i]) == 0){
 			document.getElementById("InputStatusLED"+i).className = "led-blue";
 		}
-		else if ((IN[i]) = 1)
+		else if ((IN[i]) == 1)
 		{
 			document.getElementById("InputStatusLED"+i).className = "led-blue-off";
-		}
-		
+		}	
+	}
+	if (callback3){
+		callback3();
 	}
 	});
-
+}
 
 // This function will be called once at start and after
 // set of the input naming.
@@ -74,9 +83,9 @@ function getGPIOinXMLData(callback2){
 			});		
 }
 
-// This function is called after pressing the "Eingang Beschriftung ändern" button.
-// The function loads the actual input naming form the XML - file on the server
-// into the input fields.
+//This function is called after pressing the "Button Beschriftung ändern" button.
+//The function loads the actual button naming form the XML - file on the server
+//into the input fields.
 
 function getGPIOinXMLDataInput(){
 	getGPIOinXMLDa("GET", "GPIOin.xml?sortoutcache="+sortoutcache.valueOf(),function()
@@ -95,10 +104,9 @@ function getGPIOinXMLDataInput(){
 	
 }
 
-
-// After pressing the button "Änderungen speichern" in the input name change menue.
-// This function transfers the data to the server where it will be saved with the 
-// help of a php function.
+//After pressing the button "Änderungen speichern" in the button name change menue.
+//This function transfers the data to the server where it will be saved with the 
+//help of a php function.
 function setGPIOinXMLDataInput(callback3){
 	
 		var InputText = [document.getElementById("setInputNameInputIn0").value,
@@ -148,18 +156,6 @@ function CollapseSetInputName(){
 		  $("#setInputNameDiv").hide();
 		  $("#showSetInputName").show();	 
 }
-
-
-//load functions ad webpage opening
-function startatLoad(){
-	loadNavbar(function(){
-//			getGPIOinXMLData(function(){
-//					setInputStatusHMI();
-//		});
-	});
-}
-window.onload=startatLoad();
-
 //Load the top fixed navigation bar and highlight the 
 //active site roots.
 function loadNavbar(){
@@ -170,11 +166,20 @@ $(document).ready(function(){
 	  });
 	});
 }
-/*
+
+//load functions ad webpage opening
+window.onload=function(){
+	loadNavbar();
+	setInputStatusHMI(function(){
+			getGPIOinXMLData(function(){
+				refreshStatus();
+			});
+		});
+	}
+
 function refreshStatus(){
 	setInputStatusHMI();
-	}
-	setTimeout(function(){refreshStatus()}, 2000);
+	setTimeout(function(){refreshStatus()}, 1000);
 }
-*/
+
 

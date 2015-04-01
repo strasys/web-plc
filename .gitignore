@@ -39,6 +39,7 @@ firmware/
 GPIOhandler/
 PT100handler/
 RTChandler/
+AINOUThandler/
 
 
 

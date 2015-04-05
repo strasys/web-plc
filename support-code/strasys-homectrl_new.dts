@@ -1,0 +1,141 @@
+/*  
+* Copyright (C) 2012 Texas Instruments Incorporated - http://www.ti.com/
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Purpose License Version 2 as
+* published by the Free Software Foundation
+*
+*Device tree description of home - controller 
+*Idea and development
+*strasys Dipl.-Ing. Johannes Strasser
+*January 2014
+*
+*/
+
+/dts-v1/;
+/plugin/;
+
+/{
+       compatible = "ti,beaglebone", "ti,beaglebone-black";
+       part-number = "STRASYS-HOMECTRL";
+       version = "00A0";
+       
+       /* state the resources this cape uses */
+	exclusive-use =
+		/* the pin header uses */
+		"P8.07",	/* digiout: gpio2_2 */
+		"P8.08",	/* digiout: gpio2_3 */
+		"P8.09",	/* digiout: gpio2_5 */
+		"P8.10",	/* digiout: gpio2_4 */
+		"P8.11",	/* digiout: gpio1_13 */
+		"P8.12",	/* digiout: gpio1_12 */
+		"P8.13",	/* digiout: gpio0_23 */
+		"P8.14",	/* digiout: gpio0_26 */
+		"P8.15",	/* digiin:  gpio1_15 */
+		"P8.16",	/* digiin:  gpio1_14 */
+		"P8.17",	/* digiin:  gpio0_27 */
+		"P8.18",	/* digiin:  gpio2_1 */
+		"P8.26",	/* digiin:  gpio1_29 */
+		"P9.12",	/* digiout:	gpio1_28 */
+		"P9.24",	/* TTL-TXD_4D: uart1_txd */
+		"P9.26",	/* TTL-TXD_4D: uart1_rxd */
+		/* the hardware IP uses */
+		"gpio2_2",
+		"gpio2_3",
+		"gpio2_5",
+		"gpio2_4",
+		"gpio1_13",
+		"gpio1_12",
+		"gpio0_23",
+		"gpio0_26",
+		"gpio1_15",
+		"gpio1_14",
+		"gpio0_27",
+		"gpio2_1",
+		"gpio1_29",
+		"gpio1_28",
+		"uart1";
+
+       fragment@0 {
+             target = <&am33xx_pinmux>;
+            
+             __overlay__ {
+                  digiout_test: strasys_homectrl_Pins {
+			pinctrl-single,pins = <
+				0x090 0x07 /* P8_07 66 OUTPUT MODE7 */
+				0x094 0x07 /* P8_08 67 OUTPUT MODE7 */
+				0x09c 0x07 /* P8_09 69 OUTPUT MODE7 */
+				0x098 0x07 /* P8_10 68 OUTPUT MODE7 */
+				0x034 0x07 /* P8_11 45 OUTPUT MODE7 */
+				0x030 0x07 /* P8_12 44 OUTPUT MODE7 */
+				0x024 0x07 /* P8_13 23 OUTPUT MODE7 */
+				0x028 0x07 /* P8_14 26 OUTPUT MODE7 */
+				0x03c 0x27 /* P8_15 47 INPUT MODE7 */
+				0x038 0x27 /* P8_16 46 INPUT MODE7 */
+				0x02c 0x27 /* P8_17 27 INPUT MODE7 */
+				0x08c 0x27 /* P8_18 65 INPUT MODE7 */
+				0x07c 0x27 /* P8_26 61 INPUT MODE7 */
+				0x078 0x07 /* P9_12 60 OUTPUT MODE7 */
+				
+				
+         
+                   /* OUTPUT  GPIO(mode7) 0x07 pulldown, 0x17 pullup, 0x?f no pullup/down */
+			       /* INPUT   GPIO(mode7) 0x27 pulldown, 0x37 pullup, 0x?f no pullup/down */
+
+			>;
+			};
+            };
+       		};
+
+       fragment@1 {
+		target = <&ocp>;
+		__overlay__ {
+		
+			homectrl_helper: helper {
+				compatible = "bone-pinmux-helper";
+				pinctrl-names = "default";
+				pinctrl-0 = <&digiout_test>;
+				status = "okay";
+			};
+		};
+	};
+	fragment@11 {
+		target = <&am33xx_pinmux>;
+		__overlay__ {
+			bb_uart1_pins: pinmux_bb_uart1_pins {
+				pinctrl-single,pins = <
+					0x184 0x20	/* P9.24 uart1_txd.uart1_txd | MODE0 */
+					0x180 0x20	/* P9.26 uart1_rxd.uart1_rxd | MODE0 */
+				>;
+			};
+		};
+	};
+
+	fragment@12 {
+		target = <&uart1>;	/* really uart1 */
+		__overlay__ {
+			status = "okay";
+			pinctrl-names = "default";
+			pinctrl-0 = <&bb_uart1_pins>;
+		};
+	};
+
+	i2c2: i2c@4819c000 {
+    pinctrl-names = "default";
+    pinctrl-0 = <&i2c2_pins>;
+    status = "okay";
+    clock-frequency = <100000>;
+    
+    RTC@6f {
+    		reg = <0x6f>;
+    };
+	};    
+
+//	i2c2_pins: pinmux_i2c2_pins {
+//    pinctrl-single,pins = <
+//    	0x178 0x73  
+//    	0x17c 0x73
+//   		 >;
+//	};		*/		
+
+};

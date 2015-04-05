@@ -1,0 +1,11 @@
+[Unit]
+Description=init device tree
+
+[Service]
+ExecStart=/home/root/init_home
+SyslogIdentifier=init_BBB_device_tree
+
+[Install]
+WantedBy=multi-user.target
+
+

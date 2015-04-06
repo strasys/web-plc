@@ -39,6 +39,13 @@
 		"P9.12",	/* digiout:	gpio1_28 */
 		"P9.24",	/* TTL-TXD_4D: uart1_txd */
 		"P9.26",	/* TTL-TXD_4D: uart1_rxd */
+		"P9.39",	/* AIN0 */
+		"P9.40",	/* AIN1 */
+		"P9.37",	/* AIN2 */
+		"P9.38",	/* AIN3 */
+		"P9.33",	/* AIN4 */
+		"P9.36",	/* AIN5 */
+		"P9.35",	/* AIN6 */
 		/* the hardware IP uses */
 		"gpio2_2",
 		"gpio2_3",
@@ -54,7 +61,8 @@
 		"gpio2_1",
 		"gpio1_29",
 		"gpio1_28",
-		"uart1";
+		"uart1",
+		"tscadc";
 
        fragment@0 {
              target = <&am33xx_pinmux>;
@@ -120,17 +128,46 @@
 		};
 	};
 
-	i2c2: i2c@4819c000 {
-    pinctrl-names = "default";
-    pinctrl-0 = <&i2c2_pins>;
-    status = "okay";
-    clock-frequency = <100000>;
-    
-    RTC@6f {
-    		reg = <0x6f>;
-    };
-	};    
+	fragment@13 {
+		target = <&ocp>;
+		__overlay__ {
+			/* avoid stupid warning */
+			#address-cells = <1>;
+			#size-cells = <1>;
 
+			tscadc {
+				compatible = "ti,ti-tscadc";
+				reg = <0x44e0d000 0x1000>;
+				interrupt-parent = <&intc>;
+				interrupts = <16>;
+				ti,hwmods = "adc_tsc";
+				status = "okay";
+
+				adc {
+					ti,adc-channels = <0 1 2 3 4 5 6 7>;
+				};
+			};
+
+			test_helper: helper {
+				compatible = "bone-iio-helper";
+				vsense-name  = "AIN0", "AIN1", "AIN2", "AIN3", "AIN4", "AIN5", "AIN6", "AIN7";
+				vsense-scale = <100     100     100     100     100     100     100     100>;
+				status = "okay";
+			};
+		};
+	};
+	
+//	i2c2: i2c@4819c000 {
+//    pinctrl-names = "default";
+//    pinctrl-0 = <&i2c2_pins>;
+//    status = "okay";
+//    clock-frequency = <100000>;
+//    
+//    RTC@6f {
+//    		reg = <0x6f>;
+//    };
+//	};    
+//
 //	i2c2_pins: pinmux_i2c2_pins {
 //    pinctrl-single,pins = <
 //    	0x178 0x73  

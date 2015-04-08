@@ -16,7 +16,7 @@ void EEPROMinit(int I2Cchannel, int address) {
 	char I2CBusDir[255] = { };
 	FILE *f;
 	sprintf(I2CBusDir,
-			"/sys/devices/ocp.2/4819c000.i2c/i2c-%i/%i-00%i/driver/unbind",
+			"/sys/devices/ocp.3/4819c000.i2c/i2c-%i/%i-00%i/driver/unbind",
 			I2Cchannel, I2Cchannel, address);
 	f = fopen(I2CBusDir, "w");
 	if (f != 0) {

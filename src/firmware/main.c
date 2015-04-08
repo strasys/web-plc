@@ -31,7 +31,7 @@ void init(void){
 	init_GPIO();
 	init_AOUT();
 	//unbind EEPROM from
-	sprintf(command, "./www/pages/cgi-bin/PT100handler i");
+	sprintf(command, "./usr/lib/cgi-bin/PT100handler i");
 	system(command);
 }
 

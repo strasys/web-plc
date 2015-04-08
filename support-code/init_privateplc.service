@@ -1,0 +1,11 @@
+[Unit]
+Description=init privateplc
+
+[Service]
+ExecStart=/usr/lib/cgi-bin/init_privateplc.sh
+SyslogIdentifier=init_privateplc
+
+[Install]
+WantedBy=multi-user.target
+
+

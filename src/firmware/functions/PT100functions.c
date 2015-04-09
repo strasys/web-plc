@@ -46,7 +46,7 @@ void setWireOffset(int channel, double length, double wireArea) {
 	//write wire offset to PT100wireOffset.txt
 
 	if ((channel == 1) || (channel == 2)) {
-		sprintf(DIR_PT100wireOffset, "../PT100_%iwireOffset.txt", channel);
+		sprintf(DIR_PT100wireOffset, "/usr/lib/cgi-bin/PT100_%iwireOffset.txt", channel);
 
 		if (access(DIR_PT100wireOffset, (R_OK | W_OK)) != -1) {
 			sprintf(fopenModus, "r+");
@@ -71,7 +71,7 @@ int getWireOffsetData(int channel, double data[]) {
 	int i;
 
 	if ((channel == 1) || (channel == 2)) {
-		sprintf(DIR_PT100wireOffset, "/www/pages/PT100_%iwireOffset.txt", channel);
+		sprintf(DIR_PT100wireOffset, "/usr/lib/cgi-bin/PT100_%iwireOffset.txt", channel);
 
 		if (access(DIR_PT100wireOffset, (R_OK | W_OK)) != -1) {
 			f = fopen(DIR_PT100wireOffset, "r");

@@ -120,7 +120,7 @@ int gpio_set_value(int gpio, int value) {
 		return 0;
 
 	}
-	perror("/gpio/value");
+	perror(file_value);
 	return 0;
 }
 

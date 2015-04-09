@@ -12,7 +12,8 @@ $get = "g";
 if ($setgetPT100handler == $get){
 	for ($i=1; $i<3; $i++){
 		$channel = "$i";
-		exec("./cgi-bin/PT100handler $channel g t", &$output);
+		chdir('/usr/lib/cgi-bin');
+		exec("./PT100handler $channel g t", $output);
 	}
 	$arr = array( 	'temperature1' => $output[0],
 			'temperature2' => $output[1]

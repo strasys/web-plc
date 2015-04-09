@@ -17,13 +17,14 @@
 	$d = "d";
 	
 	if ($td == $t){
-		exec("flock /tmp/flockRTChandler ./cgi-bin/RTChandler s t $hh $mm $ss", &$ausgabe);
+		exec("flock /tmp/flockRTChandler /usr/lib/cgi-bin/RTChandler s t $hh $mm $ss", $ausgabe);
 		}
 	elseif ($td == $d){
-		exec("flock /tmp/flockRTChandler ./cgi-bin/RTChandler s d $Day $Month $Year", &$ausgabe);
+		exec("flock /tmp/flockRTChandler /usr/lib/cgi-bin/RTChandler s d $Day $Month $Year", $ausgabe);
 		}
 	elseif ($td == 0) {
-	exec("./cgi-bin/RTChandler", &$ausgabe);	
+	//chdir('/usr/lib/cgi-bin');
+	exec(" /usr/lib/cgi-bin/RTChandler", $ausgabe);	
 	}
 	
 	$arr = array(	'Day' => $ausgabe[0],

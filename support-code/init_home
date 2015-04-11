@@ -4,13 +4,9 @@
 # Johannes Strasser
 # Sep. 2nd 2014
 
-slots="/sys/devices/bone_capemgr.9/slots"
+slots=/sys/devices/bone_capemgr.8/slots
 echo strasys-homectrl >$slots
-
-/usr/lib/cgi-bin/firmware
-
-
-
+echo cape-bone-iio >$slots
 
 
 

@@ -29,11 +29,11 @@ int main(int argc, char *argv[], char *env[]){
 		channel = atoi(argv[3]);
 		if (InOut == 'I'){
 			AINvalue = get_iio_value_n(channel);
-			printf("%i", AINvalue);
+			printf("%i\n", AINvalue);
 		}
 		else if (InOut == 'O'){
 			AOUTvalue = AOUT_get_value_DACn(channel);
-			printf("%i", AOUTvalue);
+			printf("%i\n", AOUTvalue);
 		}
 	}
 

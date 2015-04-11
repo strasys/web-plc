@@ -26,13 +26,13 @@
 
 
 void init(void){
-	char command[255];
+	//char command[255];
 	init_RTC();
 	init_GPIO();
 	init_AOUT();
 	//unbind EEPROM from
-	sprintf(command, "/usr/lib/cgi-bin/PT100handler i");
-	system(command);
+	//sprintf(command, "/usr/lib/cgi-bin/PT100handler i");
+	//system(command);
 }
 
 void getFormatForDate(char * pDateTime) {

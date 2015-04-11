@@ -157,16 +157,18 @@
 		};
 	};
 	
-//	i2c2: i2c@4819c000 {
-//    pinctrl-names = "default";
-//    pinctrl-0 = <&i2c2_pins>;
-//    status = "okay";
-//    clock-frequency = <100000>;
-//    
+	i2c2: i2c@4819c000 {
+    pinctrl-names = "default";
+    pinctrl-0 = <&i2c2_pins>;
+    status = "okay";
+    clock-frequency = <100000>;
+    
 //    RTC@6f {
 //    		reg = <0x6f>;
 //    };
-//	};    
+
+	};    
+
 //
 //	i2c2_pins: pinmux_i2c2_pins {
 //    pinctrl-single,pins = <

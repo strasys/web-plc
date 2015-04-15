@@ -62,9 +62,9 @@ int EEPROMwriteblock64(unsigned int EEPROMregister, char *EEPROMdata) {
 }
 
 int EEPROMwritebyte(unsigned int EEPROMregister, char EEPROMdata) {
-	int f, length, i, writenumberbyte;
+	int f, length, writenumberbyte;
 	unsigned char buf[255] = { };
-	char bufdata[255] = { };
+//	char bufdata[255] = { };
 	length = sizeof(EEPROMdata);
 
 	if (length == 1) {

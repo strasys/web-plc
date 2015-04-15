@@ -35,7 +35,7 @@
 
 int main(int argc, char *argv[], char *env[]){
 	int channel;
-	double calResistor, lengthWire = 0, areaWire = 0;
+	double calResistor=0, lengthWire = 0, areaWire = 0;
 	double tempOffsetCircuitData[4];
 	double tempOffsetWireData[4];
 	char setget[2] = {};
@@ -53,11 +53,12 @@ int main(int argc, char *argv[], char *env[]){
 		if (argv[2] != 0){
 			sscanf(argv[2], "%c", &setget[0]);				// Set argument necessary to set the circuit and wire length offset.
 
-			if ((setget[0] == 's') && ((argv[3] && argv[4] && argv[5]) != 0)){
+			if ((setget[0] == 's') && ((argv[3] && argv[4]) != 0)){
 				sscanf(argv[3], "%c", &setget[1]);
 
 				if (setget[1] == 'c'){				// c = circuit offset argument.
 					calResistor = atof(argv[4]);
+				//	printf("channel:%i \nSet:%c \nCircuit or Wire:%c\n Circuit offset:%5.2f\n",channel,setget[0],setget[1],calResistor);
 					setCircuitOffset(calResistor, channel);
 				}
 				else if (setget[1] == 'w'){			// w = wire offset of wire length

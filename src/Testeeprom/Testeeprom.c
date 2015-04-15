@@ -6,18 +6,25 @@
 #include "24AA256-EEPROM.h"
 
 int main(int argc, char *argv[], char *env[]){
-	char character = 'H';
-	int i;
+	char character[63] = "Hallo schreiben funktioniert!";
+	//int i;
 	unsigned int reg = 128;
 	char EEPROMdata[255] = {};
 
-	EEPROMwritebyte(reg, character);
+
+
+
+	EEPROMwriteblock64(reg, character);
+	//EEPROMwritebyte(reg, character);
 	sleep(1);
-	EEPROMreadbytes(reg, EEPROMdata, 10);
-	printf("Ausgabe: %c\n",EEPROMdata[0]);
-	for (i=1; i<11; i++){
+	EEPROMreadbytes(reg, EEPROMdata, 29);
+
+	printf("Ausgabe: %s\n",EEPROMdata);
+
+/*	for (i=1; i<11; i++){
 	printf("%c", EEPROMdata[i]);
 	}
+*/
 	return 0;
 
 }

@@ -124,12 +124,12 @@ void setCircuitOffset(double calResistor, int channel) {
 				calResistor, getPT100temp(calResistor),
 				getCircuitTempSimu(calBitvalue), circuitOffset);
 	}
-	//printf("datatoEEPROM: %s\n",datatoEEPROM);
+	printf("datatoEEPROM: %s\n",datatoEEPROM);
 
 	if (channel == 1) {
 		EEPROMregister = 128;
 	}
-	if (channel == 2) {
+	else if (channel == 2) {
 		EEPROMregister = 192;
 	}
 

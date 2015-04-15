@@ -62,7 +62,7 @@ int EEPROMwriteblock64(unsigned int EEPROMregister, char *EEPROMdata) {
 }
 
 int EEPROMwritebyte(unsigned int EEPROMregister, char EEPROMdata) {
-	int f, length, i;
+	int f, length, i, writenumberbyte;
 	unsigned char buf[255] = { };
 	char bufdata[255] = { };
 	length = sizeof(EEPROMdata);
@@ -72,12 +72,17 @@ int EEPROMwritebyte(unsigned int EEPROMregister, char EEPROMdata) {
 		//low byte 8 bit high byte 7 bit
 		buf[0] = (EEPROMregister >> 8) & 0xFF;
 		buf[1] = EEPROMregister & 0xFF;
-		for (i = 0; i <= sizeof(bufdata); i++) {
-			buf[i] = bufdata[i];
-		}
+		//for (i = 2; i <= sizeof(bufdata); i++) {
+			buf[2] = EEPROMdata;
+	//	}
 		f = i2c_open(I2C2_path, addr_EEPROM);
-		i2c_write(f, buf, length + 2);
-		i2c_close(f);
+		writenumberbyte = i2c_write(f, buf, length + 2);
+		if (writenumberbyte == 3){
+			i2c_close(f);
+		}
+		else {
+			fprintf(stderr, "Data not fully transfered: %s\n",strerror(errno));
+		}
 	} else {
 		fprintf(stderr, "EEPROMwritebyte; Number of byte > or < than 1 : %s\n",
 				strerror(errno));

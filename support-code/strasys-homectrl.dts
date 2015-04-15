@@ -17,9 +17,14 @@
 
 /{
        compatible = "ti,beaglebone", "ti,beaglebone-black";
-       part-number = "STRASYS-HOMECTRL";
+       part-number = "STRASYS-PRIVATEPLC";
        version = "00A0";
-       
+       manufacturer = "stasys";
+ 
+			
+				
+				   
+  
        /* state the resources this cape uses */
 	exclusive-use =
 		/* the pin header uses */
@@ -157,24 +162,22 @@
 		};
 	};
 	
-	i2c2: i2c@4819c000 {
+	fragment@14 {
+       	 target = <&i2c2>;
+        	__overlay__ {
+            	status = "okay";
+        	};
+	};
+	
+/*	i2c2: i2c@4819c000 {
     pinctrl-names = "default";
     pinctrl-0 = <&i2c2_pins>;
     status = "okay";
     clock-frequency = <100000>;
     
-//    RTC@6f {
-//    		reg = <0x6f>;
-//    };
-
+    eeprom@54 {
+    		reg = <0x54>;
+   };
 	};    
-
-//
-//	i2c2_pins: pinmux_i2c2_pins {
-//    pinctrl-single,pins = <
-//    	0x178 0x73  
-//    	0x17c 0x73
-//   		 >;
-//	};		*/		
-
+*/
 };

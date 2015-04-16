@@ -1,5 +1,5 @@
 /*
- * AINOUThandler.c
+0 * AINOUThandler.c
  *
  *  Created on: 01.04.2015
  *      Author: Johannes Strasser
@@ -12,7 +12,11 @@
 #include <AOUT_LTC2635.h>
 #include <AIN-handler.h>
 
-
+/*
+ * Function documentation:
+ * get Analog IN value: AINOUThandler g (=get) I (=Input) 1 (=Channel number)
+ * set Analog OUT value: AINOUThandler s (=set) O (=Output) 1 (=Channel number) 0:1023 (= Output value)
+ */
 
 
 int main(int argc, char *argv[], char *env[]){
@@ -37,7 +41,7 @@ int main(int argc, char *argv[], char *env[]){
 		}
 	}
 
-	if (setget == 's'){
+	else if (setget == 's'){
 		sscanf(argv[2], "%c", &InOut);
 		channel = atoi(argv[3]);
 		AOUTvalue = atoi(argv[4]);

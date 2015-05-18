@@ -11,13 +11,7 @@
 #ifndef AOUT_LTC2635_H_
 #define AOUT_LTC2635_H_
 
-extern int dacOUT1;
-extern int dacOUT2;
-
-typedef struct {
-	int dacValueOut1;
-	int dacValueOut2;
-} AOUT;
+#define AOUT_DIR "/usr/lib/cgi-bin/AOUTlastsetvalue.txt"
 
 void init_AOUT();
 
@@ -26,5 +20,7 @@ void AOUT_set_internal_reference();
 void AOUT_set_value_DACn(int DACchl, int value);
 
 int AOUT_get_value_DACn(unsigned int channel);
+
+void AOUT_write_value_DACn(unsigned int channel, int value);
 
 #endif /* AOUT_LTC2635_H_ */

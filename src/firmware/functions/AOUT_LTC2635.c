@@ -9,10 +9,13 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <errno.h>
 #include "I2C-handler.h"
 #include "AOUT_LTC2635.h"
 
-AOUT aout;
+
 
 int dacOUT1addr = 0b00000000;	//The last 4 bits describe the address codes
 int dacOUT2addr = 0b00000001;
@@ -22,7 +25,23 @@ int dacOUT1 = 1;
 int dacOUT2 = 2;
 
 void init_AOUT() {
+	char fopenModus[2] = {};
+	FILE *f = NULL;
+
 	AOUT_set_internal_reference();
+	//For the first call the txt file will be generated with val = 0
+	if (access(AOUT_DIR, (R_OK | W_OK)) != -1) {
+				sprintf(fopenModus, "r+");
+			} else {
+				sprintf(fopenModus, "w");
+			}
+
+		f = fopen(AOUT_DIR, fopenModus);
+		fprintf(f,
+				"AOUT1=%i:AOUT2=%i",
+				0, 0);
+		fclose(f);
+
 	AOUT_set_value_DACn(dacOUT1, 0);
 	AOUT_set_value_DACn(dacOUT2, 0);
 }
@@ -53,11 +72,11 @@ void AOUT_set_value_DACn(int DACchl, int value) {
 
 	if (DACchl == 1) {
 		buf[0] = buf[0] | dacOUT1addr;
-		aout.dacValueOut1 = value;
+		AOUT_write_value_DACn(DACchl,value);
 	}
 	if (DACchl == 2) {
 		buf[0] = buf[0] | dacOUT2addr;
-		aout.dacValueOut2 = value;
+		AOUT_write_value_DACn(DACchl,value);
 	}
 
 	if ((value < 0) | (value > 1024)) {
@@ -76,20 +95,77 @@ void AOUT_set_value_DACn(int DACchl, int value) {
 }
 
 int AOUT_get_value_DACn(unsigned int channel) {
-	int AOUTn;
+	int AOUTn, AOUTval1, AOUTval2;
+	char DIR_AOUTvalue[255] = {};
+	FILE *f = NULL;
 
-	if ((channel == 1) | (channel == 2)) {
-		if (channel == 1) {
-			AOUTn = aout.dacValueOut1;
-		}
-		if (channel == 2) {
-			AOUTn = aout.dacValueOut2;
-		}
-	} else {
-		printf("Error in Function \"AOUT_get_value_DACn\"! channel = %d",
-				channel);
-		AOUTn = -1;
-	}
+		sprintf(DIR_AOUTvalue, AOUT_DIR);
+
+		if (access(DIR_AOUTvalue, (R_OK | W_OK)) != -1) {
+					f = fopen(DIR_AOUTvalue, "r");
+					fscanf(f,
+							"AOUT1=%i:AOUT2=%i",
+							&AOUTval1, &AOUTval2);
+					fclose(f);
+
+					if ((channel == 1) | (channel == 2)) {
+						if (channel == 1) {
+							AOUTn = AOUTval1;
+						}
+						else if (channel == 2) {
+							AOUTn = AOUTval2;
+						}
+					} else {
+						fprintf(stderr, "AOUT_get_value_DACn (LTC2635): Channel %i does not exist!\n",channel);
+						return -1;
+					}
+
+
+				} else {
+					fprintf(stderr, "AOUT_get_value_DACn (LTC2635): File %s does not exist!\n",DIR_AOUTvalue);
+					return -1;
+				}
+
 	return (AOUTn);
+}
+
+//Since there is no possibility to read the actual set value
+//from the LTC2635 it is necessary to store the last set value.
+void AOUT_write_value_DACn(unsigned int channel, int value) {
+	FILE *f = NULL;
+	int AOUTval1, AOUTval2;
+	char DIR_AOUTvalue[255] = {};
+	char fopenModus[2] = {};
+
+	sprintf(DIR_AOUTvalue, AOUT_DIR);
+
+	if ((channel == 1) || (channel == 2)){
+		if (channel == 1) {
+			AOUTval1 = value;
+			AOUTval2 = AOUT_get_value_DACn(2);
+		}
+		else if (channel == 2) {
+			AOUTval1 = AOUT_get_value_DACn(1);
+			AOUTval2 = value;
+		}
+	}
+	else
+	{
+		fprintf(stderr, "AOUT_write_value_DACn (LTC2635): wrong channel number %i\n", channel);
+	}
+
+	//Check if the file exists already.
+	if (access(DIR_AOUTvalue, (R_OK | W_OK)) != -1) {
+			sprintf(fopenModus, "r+");
+		} else {
+			sprintf(fopenModus, "w");
+		}
+
+	f = fopen(DIR_AOUTvalue, fopenModus);
+	fprintf(f,
+			"AOUT1=%i:AOUT2=%i",
+			AOUTval1, AOUTval2);
+	fclose(f);
+
 }
 

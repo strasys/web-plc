@@ -3,11 +3,13 @@
 $arr;
 $setgetAnalog = $_POST["setgetAnalog"];
 $inout = $_POST["InOut"];
-$channelAOUT = $_POST["channelAOUT"];
+$AOUTvalue = $_POST["AOUTvalue"]; //0 - 1023
+$AOUTchannel = $_POST["AOUTchannel"];//1 or 2
 $get = "g";
 $set = "s";
 $IN = "I";
 $Out = "O";
+
 
 //get Analog IN values
 if ($setgetAnalog == $get){
@@ -27,17 +29,16 @@ if ($setgetAnalog == $get){
 			exec(" /usr/lib/cgi-bin/AINOUThandler g O $channel", $output);
 		}
 		$arr = array('OUTvalue1' => $output[0],
-				'OUTvalue2' => $output[1]
-		);
+					'OUTvalue2' => $output[1]
+					);
 	}	
 }
 
 elseif ($setgetAnalog == $set){
-	if ($inout == $out){
-	exec("flock /tmp/AINOUThandler /usr/lib/cgi-bin/AINOUThandler s O $channelAOUT", $output);
+	if ($inout == $Out){
+	exec("flock /tmp/AINOUThandler /usr/lib/cgi-bin/AINOUThandler s O $AOUTchannel $AOUTvalue");
 	}
-	$arr = array
-	
+
 }
 
 echo json_encode($arr);

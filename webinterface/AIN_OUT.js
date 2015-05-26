@@ -75,6 +75,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 var $rangeAnalogOUT1 = $("#AnalogOUTSlider1");
+var slider = $("#AnalogOUTSlider1").data("ionRangeSlider");	
+
 $.getScript("js/ion.rangeSlider.js", function(){
 	   $rangeAnalogOUT1.ionRangeSlider({
 		   type: "single",
@@ -83,46 +85,43 @@ $.getScript("js/ion.rangeSlider.js", function(){
 		   step : 11,
 		   grid: true,
 		   force_edges: true 
-	   });   
-	   var slider = $("#AnalogOUTSlider1").data("ionRangeSlider");	
+	   });
+	   
 	});
-
-
 
 $rangeAnalogOUT1.on("change", function(){
 	var $this = $(this),
 		slider1val = $this.prop("value");
 //	$("#slider1val").text(slider1val);
-	setAOUT(1, slider1val, function(){
-		getAIn(function(){
-			$("#badgeAIN1").text(AnalogIN[0]);
-			$("#badgeAIN2").text(AnalogIN[1]);
-			});		
+	setAOUT(1, slider1val);
 	});
-	});
+
+
+function showAOUTvalues(){
+getAOUT(function(){
+	//	var slider = $("#range_50").data("ionRangeSlider");
+	//	slider.update({
+	//		from: AnalogOUT[0]
+	$("#slider1val").text(AnalogOUT[0]);
+		});
+	setTimeout(function(){showAOUTvalues()}, 1000);
+}
 
 function showAINvalues(){
 	getAIn(function(){
 		$("#badgeAIN1").text(AnalogIN[0]);
 		$("#badgeAIN2").text(AnalogIN[1]);
-		getAOUT(function(){
-			//	var slider = $("#range_50").data("ionRangeSlider");
-				slider.update({
-					from: AnalogOUT[0]
-				});
-			});
 	});
-	
-//	setTimeout(function(){showAInvalues()}, 1000);
+	setTimeout(function(){showAINvalues()}, 1000);
 }
-
-
 
 //load functions ad webpage opening
 function startatLoad(){
 	loadNavbar();
-	showAINvalues();
-//	showAOUTvalues();
+	showAINvalues(function(){
+			showAOUTvalues();
+	});
+	
 }
 window.onload=startatLoad();
 

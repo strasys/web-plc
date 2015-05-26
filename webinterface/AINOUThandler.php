@@ -1,6 +1,6 @@
 <?php
 
-$arr;
+unset($arr);
 $setgetAnalog = $_POST["setgetAnalog"];
 $inout = $_POST["InOut"];
 $AOUTvalue = $_POST["AOUTvalue"]; //0 - 1023
@@ -9,6 +9,9 @@ $get = "g";
 $set = "s";
 $IN = "I";
 $Out = "O";
+
+//$inout = "O";
+//$setgetAnalog = "g";
 
 
 //get Analog IN values
@@ -26,11 +29,13 @@ if ($setgetAnalog == $get){
 	elseif ($inout == $Out){
 		for ($i=1; $i<3; $i++){
 			$channel = $i;
-			exec(" /usr/lib/cgi-bin/AINOUThandler g O $channel", $output);
+			exec(" /usr/lib/cgi-bin/AINOUThandler g O $channel", $output1);
 		}
-		$arr = array('OUTvalue1' => $output[0],
-					'OUTvalue2' => $output[1]
+		$arr = array('OUTvalue1' => $output1[0],
+					'OUTvalue2' => $output1[1]
 					);
+		//echo  "OUTvalue1 = $output1[0]";
+		//echo "Test";
 	}	
 }
 

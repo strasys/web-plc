@@ -267,7 +267,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="PT100handler/PT100handler.c|firmware/main.c|RTChandler/|GPIOhandler/|AINOUThandler/AINOUThandler.c" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
+						<entry excluding="PT100handler/PT100handler.c|firmware/main.c|Testeeprom/Testeeprom.c|GPIOhandler/GPIOhandler.c|RTChandler/RTChandler.c" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

@@ -75,10 +75,19 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 var $rangeAnalogOUT1 = $("#AnalogOUTSlider1");
-var slider = $("#AnalogOUTSlider1").data("ionRangeSlider");	
+var $rangeAnalogOUT2 = $("#AnalogOUTSlider2");
 
 $.getScript("js/ion.rangeSlider.js", function(){
 	   $rangeAnalogOUT1.ionRangeSlider({
+		   type: "single",
+		   min: 0,
+		   max: 1023,
+		   step : 11,
+		   grid: true,
+		   force_edges: true 
+	   });
+	  
+	   $rangeAnalogOUT2.ionRangeSlider({
 		   type: "single",
 		   min: 0,
 		   max: 1023,
@@ -90,38 +99,60 @@ $.getScript("js/ion.rangeSlider.js", function(){
 	});
 
 $rangeAnalogOUT1.on("change", function(){
-	var $this = $(this),
-		slider1val = $this.prop("value");
-//	$("#slider1val").text(slider1val);
+	var $this1 = $(this),
+		slider1val = $this1.prop("value");
 	setAOUT(1, slider1val);
 	});
 
+$rangeAnalogOUT2.on("change", function(){
+	var $this2 = $(this),
+		slider2val = $this2.prop("value");
+	setAOUT(2, slider2val);
+	});
 
+
+
+
+/*
 function showAOUTvalues(){
 getAOUT(function(){
 	//	var slider = $("#range_50").data("ionRangeSlider");
-	//	slider.update({
-	//		from: AnalogOUT[0]
+		slider.update({
+			from: AnalogOUT[0]
 	$("#slider1val").text(AnalogOUT[0]);
 		});
 	setTimeout(function(){showAOUTvalues()}, 1000);
 }
+*/
 
-function showAINvalues(){
+function showAINOUTvalues(){
+	
 	getAIn(function(){
 		$("#badgeAIN1").text(AnalogIN[0]);
 		$("#badgeAIN2").text(AnalogIN[1]);
-	});
-	setTimeout(function(){showAINvalues()}, 1000);
-}
-
-//load functions ad webpage opening
-function startatLoad(){
-	loadNavbar();
-	showAINvalues(function(){
-			showAOUTvalues();
+		
+		getAOUT(function(){
+			var slider1 = $("#AnalogOUTSlider1").data("ionRangeSlider");
+				slider1.update({
+					from: AnalogOUT[0]
+				});
+			var slider2 = $("#AnalogOUTSlider2").data("ionRangeSlider");
+				slider2.update({
+					from: AnalogOUT[1]
+				});
+			//	$("#slider1val").text(AnalogOUT[0]);
+			//	$("#slider2val").text(AnalogOUT[1]);
+		});
 	});
 	
+	setTimeout(function(){showAINOUTvalues()}, 1000);
+}
+
+//load functions at webpage opening
+function startatLoad(){
+	loadNavbar();
+	showAINOUTvalues();
+	//showAOUTvalues();
 }
 window.onload=startatLoad();
 

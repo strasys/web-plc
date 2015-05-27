@@ -131,7 +131,7 @@ int AOUT_get_value_DACn(unsigned int channel) {
 
 //Since there is no possibility to read the actual set value
 //from the LTC2635 it is necessary to store the last set value.
-void AOUT_write_value_DACn(unsigned int channel, int value) {
+void AOUT_write_value_DACn(int channel, int value) {
 	FILE *f = NULL;
 	int AOUTval1, AOUTval2;
 	char DIR_AOUTvalue[255] = {};

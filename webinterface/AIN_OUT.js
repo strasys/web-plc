@@ -131,28 +131,31 @@ function showAINOUTvalues(){
 		$("#badgeAIN1").text(AnalogIN[0]);
 		$("#badgeAIN2").text(AnalogIN[1]);
 		
-		getAOUT(function(){
-			var slider1 = $("#AnalogOUTSlider1").data("ionRangeSlider");
-				slider1.update({
-					from: AnalogOUT[0]
-				});
-			var slider2 = $("#AnalogOUTSlider2").data("ionRangeSlider");
-				slider2.update({
+	getAOUT(function(){
+		var slider1 = $("#AnalogOUTSlider1").data("ionRangeSlider");
+		var slider2 = $("#AnalogOUTSlider2").data("ionRangeSlider");
+		
+			
+			slider2.update({
 					from: AnalogOUT[1]
 				});
-			//	$("#slider1val").text(AnalogOUT[0]);
-			//	$("#slider2val").text(AnalogOUT[1]);
+			slider1.update({
+					from: AnalogOUT[0]
+			});
+			$("#slider1val").text(AnalogOUT[0]);
+			$("#slider2val").text(AnalogOUT[1]);
+			
 		});
+				
 	});
 	
-	setTimeout(function(){showAINOUTvalues()}, 1000);
+//	setTimeout(function(){showAINOUTvalues()}, 1000);
 }
 
 //load functions at webpage opening
 function startatLoad(){
 	loadNavbar();
 	showAINOUTvalues();
-	//showAOUTvalues();
 }
 window.onload=startatLoad();
 

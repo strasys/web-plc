@@ -28,7 +28,7 @@ if ($setgetAnalog == $get){
 			exec(" /usr/lib/cgi-bin/AINOUThandler g O $channel", $output);
 		}
 		$arr = array('OUTvalue1' => $output[0],
-					'OUTvalue2' => $output[1]
+					 'OUTvalue2' => $output[1]
 					);
 	}	
 }

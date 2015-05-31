@@ -38,7 +38,7 @@ void init_AOUT() {
 
 		f = fopen(AOUT_DIR, fopenModus);
 		fprintf(f,
-				"AOUT1=%i:AOUT2=%i",
+				"AOUT1=%4i:AOUT2=%4i",
 				0, 0);
 		fclose(f);
 
@@ -163,7 +163,7 @@ void AOUT_write_value_DACn(int channel, int value) {
 
 	f = fopen(DIR_AOUTvalue, fopenModus);
 	fprintf(f,
-			"AOUT1=%i:AOUT2=%i",
+			"AOUT1=%4i:AOUT2=%4i",
 			AOUTval1, AOUTval2);
 	fclose(f);
 

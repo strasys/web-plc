@@ -142,14 +142,14 @@ function showAINOUTvalues(){
 			slider1.update({
 					from: AnalogOUT[0]
 			});
-			$("#slider1val").text(AnalogOUT[0]);
-			$("#slider2val").text(AnalogOUT[1]);
+		//	$("#slider1val").text(AnalogOUT[0]);
+		//	$("#slider2val").text(AnalogOUT[1]);
 			
 		});
 				
 	});
 	
-//	setTimeout(function(){showAINOUTvalues()}, 1000);
+	setTimeout(function(){showAINOUTvalues()}, 1000);
 }
 
 //load functions at webpage opening

@@ -28,21 +28,21 @@
 		<div class="row>">
 				<div class="col-xs-2 col-sm-4 col-md-4"></div>
 				<div class="col-xs-8 col-sm-4 col-md-4">	
-			  		<form class="form-signin" action="user.php" method="post">
+			  		<form id="formuUser" class="form-signin">
 						<h2 class="form-signin-heading">Benutzer anlegen</h2>
 						<label class="sr-only" for="inputNewUsername">Benutzername</label>
-						<input class="form-control" name="username" type="text" autofocus="" required="" placeholder="Benutzername">
+						<input id="forminputusername" class="form-control" type="text" autofocus="" required="" placeholder="Benutzername">
 						<label class="sr-only" for="inputNewPassword">Passwort</label>
-						<input  class="form-control" name="password" type="password" required="" placeholder="Passwort">
+						<input id="frominputpassword" class="form-control" type="password" required="" placeholder="Passwort">
 						<label class="sr-only" for="inputNewPasswordRepeat">Passwort wiederholen</label>
-						<input class="form-control" name="passwordRepeat" type="password" required="" placeholder="Passwort">
+						<input id="forminputpasswordrepeat" class="form-control" type="password" required="" placeholder="Passwort wiederholen">
 						<div class="checkbox">
 							<label>
-							<input id="" type="checkbox" value="admin">
+							<input id="forminputcheckboxadmin" type="checkbox" value="admin">
 							Administrationsrechte
 							</label>
 							<label>
-							<input id="" type="checkbox" value="user">
+							<input id="forminputcheckboxuser" type="checkbox" value="user">
 							Benutzerrechte
 							</label>
 						</div>

@@ -24,14 +24,19 @@
 <!-- Fixed Navbar -->
 	<div id="mainNavbar">
 	</div>
-  	<div style = "padding-top:70px;" class="container">
+  	<div style = "padding-top:70px;" class="container">	
+		
 		<div class="row>">
 				<div class="col-xs-2 col-sm-4 col-md-4"></div>
-				<div class="col-xs-8 col-sm-4 col-md-4">	
-			  		<form id="formuUser" class="form-signin">
+				<div class="col-xs-8 col-sm-4 col-md-4">
+					<div id="alertusername"></div>
+			  		<form id="formuser" class="form-signin">
 						<h2 class="form-signin-heading">Benutzer anlegen</h2>
-						<label class="sr-only" for="inputNewUsername">Benutzername</label>
-						<input id="forminputusername" class="form-control" type="text" autofocus="" required="" placeholder="Benutzername">
+						<div id="validationinputusername">
+							<label class="sr-only" for="forminputusername">Benutzername</label>
+							<input id="forminputusername" class="form-control" type="text" autofocus="" required="" placeholder="Benutzername">
+							<span id="validationiconusername"></span>
+						</div>
 						<label class="sr-only" for="inputNewPassword">Passwort</label>
 						<input id="frominputpassword" class="form-control" type="password" required="" placeholder="Passwort">
 						<label class="sr-only" for="inputNewPasswordRepeat">Passwort wiederholen</label>

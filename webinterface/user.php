@@ -2,6 +2,12 @@
 $username = $_POST["username"];
 $password = $_POST["password"];
 $password2 = $_POST["passwordRepeat"];
+unset($arr);
+unset($errorFile, $errorUsername, $errorPasswordRepeat);
+$errorFile = 0; //If errorFile variable = -1 than fopen is False
+$errorUsername = 0; //If username exists already value = -1
+$errorPasswordRepeat = 0; //If password and password2 are not equal value = -1
+
 
 if ($password == $password2)
 	{
@@ -9,8 +15,14 @@ if ($password == $password2)
 	//todo: upgrade to PHP 5.5.x necessary to use 
 	//$passwordEncrypt = password_hash($password, PASSWORD_DEFAULT); 
 	$passwordEncrypt = md5($password);
-	echo "$passwordEncrypt <br>";
+	
 	$userfile = fopen("user.txt","r");
+	if ($userfile == FALSE)
+	{
+		$errorFile = -1;
+	}
+	else
+	{
 	while (!feof($userfile))
 		{
 		$line = fgets($userfile,500);
@@ -21,7 +33,7 @@ if ($password == $password2)
 	
 	if (in_array($username,$user_existing))
 		{
-		echo "Benutzername $username existiert bereits!";
+		$errorUsername = -1;
 		}
 		
 	else
@@ -32,13 +44,19 @@ if ($password == $password2)
 		fwrite($userfile, $passwordEncrypt);
 		fwrite($userfile, "\n");
 		fclose($userfile);
-		echo "Benutzer $username erfolgreich angelegt!";
 		}
 	}
-	
+	}
 	else 
 	{
-	echo "Die Passwörter stimmen nicht überein!";
+	$errorPasswordRepeat = -1;
 	}
-
+	
+	$arr = array( 	'errorFile' => $errorFile,
+					'errorUsername' => $errorUsername,
+					'errorPasswordRepeat' => $errorPasswordRepeat,
+					'username' => $username
+				);
+	
+	echo json_encode($arr);
 ?>

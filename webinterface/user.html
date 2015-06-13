@@ -29,7 +29,7 @@
 		<div class="row>">
 				<div class="col-xs-2 col-sm-4 col-md-4"></div>
 				<div class="col-xs-8 col-sm-4 col-md-4">
-					<div id="alertusername"></div>
+					<div id="alertusername" class="" role="alert"></div>
 			  		<form id="formuser" class="form-signin">
 						<h2 class="form-signin-heading">Benutzer anlegen</h2>
 						<div id="validationinputusername">
@@ -38,7 +38,7 @@
 							<span id="validationiconusername"></span>
 						</div>
 						<label class="sr-only" for="inputNewPassword">Passwort</label>
-						<input id="frominputpassword" class="form-control" type="password" required="" placeholder="Passwort">
+						<input id="forminputpassword" class="form-control" type="password" required="" placeholder="Passwort">
 						<label class="sr-only" for="inputNewPasswordRepeat">Passwort wiederholen</label>
 						<input id="forminputpasswordrepeat" class="form-control" type="password" required="" placeholder="Passwort wiederholen">
 						<div class="checkbox">
@@ -51,7 +51,7 @@
 							Benutzerrechte
 							</label>
 						</div>
-						<button class="btn btn-lg btn-primary btn-block" type="submit">Speichern</button>
+						<button class="btn btn-lg btn-primary btn-block" onclick="submitUserData()" type="button">Speichern</button>
 					</form> 
 				</div>
 				<div class="col-xs-2 col-sm-4 col-md-4"></div>

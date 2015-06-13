@@ -16,7 +16,7 @@ function setgetuser(setget, url, cfunc, senddata){
 	xhttp.send(senddata);
 }
 
- function setgetUserPassword(Username, Password, PasswordRepeat, callback1){
+ function setgetUserPassword(Username, Password, PasswordRepeat,callback1){
 		setgetuser("post","user.php",function()
 			{
 				if (xhttp.readyState==4 && xhttp.status==200)
@@ -27,7 +27,7 @@ function setgetuser(setget, url, cfunc, senddata){
 									(statusUsernamePassword.errorUsername),
 									(statusUsernamePassword.errorPasswordRepeat),
 									(statusUsernamePassword.username)
-									]
+									];
 					if (callback1){
 						callback1();
 					}
@@ -37,61 +37,75 @@ function setgetuser(setget, url, cfunc, senddata){
 }
  
 
- $("#formuser").submit(function(){
-		var inputUsername = $("#forminputusername").text();
-		var inputPassword = $("#forminputpassword").text();
-		var inputPasswordRepeat = $("#forminputpasswordrepeat").text();
-		
-		setgetUserPassword(inputUsername, inputPassword, inputPasswordRepeat, function(){
-			if (statusSetUsername[0] == -1)
-			{
-				DisplayAlertInformation("danger", 
-					"<strong>Schwerer Fehler:</strong> Benutzerverwaltung File !!"); 
-			}
-			else
-			{
-				if (statusSetUsername[1] == -1)
+function submitUserData(){
+	var inputUsername = document.getElementById("forminputusername").value;
+	var inputPassword = document.getElementById("forminputpassword").value;
+	var inputPasswordRepeat = document.getElementById("forminputpasswordrepeat").value;
+	 
+		setgetUserPassword(inputUsername, inputPassword, inputPasswordRepeat, function()
+		{
+			 if (statusSetUsername[0] == -1)
 				{
-					DisplayAlertInformation("warning",
-					"<strong>Warnung:</strong> Der von Ihnen eingegebene Benutzername existiert bereits.");
+					DisplayAlertInformation("danger", 
+						"Benutzerverwaltung File !!"); 
 				}
 				else
 				{
-					if (statusSetUsername[2] == -1)
+					if (statusSetUsername[1] == -1)
 					{
-						DisplayAlertInformation("danger",
-						"<strong>Fehler:</strong> Ihre eingegebenen Passwörter stimmen nicht überein.");
+						DisplayAlertInformation("warning",
+						"Der von Ihnen eingegebene Benutzername existiert bereits.");
 					}
 					else
 					{
-						DisplayAlertInformation("success",
-						"<strong>Erfolgreich:</strong> Benutzer wurde angelegt.");
-					}
+						if (statusSetUsername[2] == -1)
+						{
+							DisplayAlertInformation("danger",
+							"Ihre eingegebenen PasswÃ¶rter stimmen nicht Ãœberein.");
+						}
+						else
+						{
+							DisplayAlertInformation("success",
+							"Neuer Benutzer wurde angelegt.");
+						}
+					}	
 				}
-			}
 			
 		});
-		
- });
+ }
+
+
  
  //Alert information
  function DisplayAlertInformation(status, statusText){
-	var statusClass;
+	var statusClass, strongText;
 	switch (status){
 		case "success":
 			statusClass = "alert alert-success";
+			strongText = "Erfolgreich: ";
 			break;
 		case "warning":
 			statusClass = "alert alert-warning";
+			strongText = "Warnung: ";
 			break;
 		case "danger":
 			statusClass = "alert alert-danger";
+			strongText = "Fehler: ";
 			break;
 	}
 	
-	$("#alertusername").addClass(statusClass, function() {
-		$(this).text(statusText);
-	});
+		var setgetalertusername = document.getElementById("alertusername");
+		setgetalertusername.getAttributeNode("class").value = statusClass;
+		
+		var addparagraph = document.createElement("p");
+		var addstrong = document.createElement("strong");
+		var addtextnode = document.createTextNode(statusText);
+		var addtextstrong = document.createTextNode(strongText);
+		
+		addparagraph.appendChild(addtextnode);
+		addstrong.appendChild(addtextstrong);
+		setgetalertusername.appendChild(addstrong);
+		setgetalertusername.appendChild(addparagraph);
  }
  
 //load functions at webpage opening

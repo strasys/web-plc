@@ -1,7 +1,7 @@
 <?php
 $username = $_POST["username"];
 $password = $_POST["password"];
-$password2 = $_POST["passwordRepeat"];
+$password2 =$_POST["passwordRepeat"];
 unset($arr);
 unset($errorFile, $errorUsername, $errorPasswordRepeat);
 $errorFile = 0; //If errorFile variable = -1 than fopen is False

@@ -31,7 +31,7 @@ void init(void){
 	init_RTC();
 	init_GPIO();
 	init_AOUT();
-//	EEPROMinit(1, 54);
+	EEPROMinit(1, 54);
 	//unbind EEPROM from
 	//sprintf(command, "/usr/lib/cgi-bin/PT100handler i");
 	//system(command);

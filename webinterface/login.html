@@ -28,7 +28,7 @@
 		<div class="row>">
 			<div class="col-xs-2 col-sm-4 col-md-4"></div>
 			<div class="col-xs-8 col-sm-4 col-md-4">
-			<div id="alertusername" class="" role="alert"></div>
+			<div id="alertlogin" class="" role="alert"></div>
 		  		<form class="form-signin" action="login.php" method="post">
 					<h2 class="form-signin-heading">Login</h2>
 					<label class="sr-only" for="inputUsername">Benutzername</label>
@@ -41,7 +41,7 @@
 						Merken
 						</label>
 					</div>
-					<button class="btn btn-lg btn-primary btn-block" type="submit">Einloggen</button>
+					<button class="btn btn-lg btn-primary btn-block" type="button" id="btnloginsubmit" onclick="submitUserData()">Einloggen</button>
 				</form> 
 			</div>
 			<div class="col-xs-2 col-sm-4 col-md-4"></div>

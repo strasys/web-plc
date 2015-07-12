@@ -1,4 +1,11 @@
 <?php
+session_start();
+if(!isset($_SESSION['username']))
+{
+	echo "Bitte erst einlogen!";
+}
+else
+{
 $arr;
 $output;
 unset($output);
@@ -28,5 +35,6 @@ if ($setgetPT100handler == $get){
 
 						
 echo json_encode($arr);
+}
 
 ?>

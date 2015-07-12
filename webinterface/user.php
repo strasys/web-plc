@@ -12,8 +12,7 @@ $errorPasswordRepeat = 0; //If password and password2 are not equal value = -1
 if ($password == $password2)
 	{
 	$user_existing = array();
-	//todo: upgrade to PHP 5.5.x necessary to use 
-	//$passwordEncrypt = password_hash($password, PASSWORD_DEFAULT); 
+	//TODO: upgrade to PHP 5.5.x necessary to use $passwordEncrypt = password_hash($password, PASSWORD_DEFAULT); 
 	$passwordEncrypt = md5($password);
 	
 	$userfile = fopen("user.txt","r");

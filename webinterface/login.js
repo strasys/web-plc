@@ -15,7 +15,7 @@ function setgetuser(setget, url, cfunc, senddata){
 	xhttp.send(senddata);
 }
 
- function setgetUserPassword(Username, Password, PasswordRepeat,callback1){
+ function setgetUserPassword(Username, Password,callback1){
 		setgetuser("post","login.php",function()
 			{
 				if (xhttp.readyState==4 && xhttp.status==200)
@@ -52,7 +52,7 @@ function submitUserData(){
 					{
 						DisplayAlertInformation("warning",
 						"Der von Ihnen eingegebene Benutzername bzw. das Passwort sind falsch.");
-					
+					}
 					else
 					{
 						if (statusSetUsername[2] == -1)
@@ -64,11 +64,47 @@ function submitUserData(){
 						{
 							DisplayAlertInformation("success",
 							"Sie haben sich erfolgreich in das System eingelogt.");
+							//document.getElementById("navbarloginout").innerHTML = " logout";
+							setTimeout(function() {
+								window.location.replace("http://privateplc/index.html");
+							}, 2000);
 						}
 					}	
 				}
 			
 		});
+ }
+
+//Alert information
+ function DisplayAlertInformation(status, statusText){
+	var statusClass, strongText;
+	switch (status){
+		case "success":
+			statusClass = "alert alert-success";
+			strongText = "Erfolgreich: ";
+			break;
+		case "warning":
+			statusClass = "alert alert-warning";
+			strongText = "Warnung: ";
+			break;
+		case "danger":
+			statusClass = "alert alert-danger";
+			strongText = "Fehler: ";
+			break;
+	}
+	
+		var setgetalertlogin = document.getElementById("alertlogin");
+		setgetalertlogin.getAttributeNode("class").value = statusClass;
+		
+		var addparagraph = document.createElement("p");
+		var addstrong = document.createElement("strong");
+		var addtextnode = document.createTextNode(statusText);
+		var addtextstrong = document.createTextNode(strongText);
+		
+		addparagraph.appendChild(addtextnode);
+		addstrong.appendChild(addtextstrong);
+		setgetalertlogin.appendChild(addstrong);
+		setgetalertlogin.appendChild(addparagraph);
  }
 
 //load functions at webpage opening

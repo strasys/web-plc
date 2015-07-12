@@ -1,8 +1,9 @@
 <?php
 session_start(); 
+unset ($username, $password);
 $username = $_POST["username"]; 
 $password = $_POST["password"]; 
-$passwordEncrypt = md5($passwort); 
+$passwordEncrypt = md5($password); 
 unset($arr);
 unset($errorFile, $errorUsername, $errorPasswordRepeat);
 $errorFile = 0; //If errorFile variable = -1 than fopen is False
@@ -13,35 +14,43 @@ $userfile = fopen ("user.txt","r");
 	if ($userfile == FALSE)
 	{
 		$errorFile = -1;
+		transfer_javascript($errorFile, $errorUsername, $errorPassword, $username);
+		exit;
 	}
-	else
-	{
+
+//search user file if username matches
 	while (!feof($userfile)) 
 	{ 
-	$line = fgets($userdatei,500); 
+	$line = fgets($userfile,500); 
 	$userdata = explode("|", $line); 
-
-	if ($userdata[0]==$username)
+	
+		if ($userdata[0]==$username)
 		{
-			$errorUsername = 0;
-			
-			if $passwordEncrypt==trim($userdata[1])
+			if ($passwordEncrypt==trim($userdata[1]))
 			{
-				$errorPassword = 0;
-				$_SESSION['username'] = $username; 
+				$_SESSION['username'] = $username;
 			}
 			else
 			{
 				$errorPassword = -1;
 			}
+			transfer_javascript($errorFile, $errorUsername, $errorPassword, $username);
+			fclose($userfile);
+			break 1;
 		}
-		else
+		
+		if (($userdata[0]!=$username) && (feof($userfile)))
 		{
 			$errorUsername = -1;
-		}
-   }
-	fclose($userdatei); 
-	} 
+			$errorPassword = -1;
+			transfer_javascript($errorFile, $errorUsername, $errorPassword, $username);
+			fclose($userfile);
+			break 1;
+		}	
+	}
+	
+function transfer_javascript($errorFile, $errorUsername, $errorPassword, $username)	
+{
 	$arr = array( 	'errorFile' => $errorFile,
 					'errorUsername' => $errorUsername,
 					'errorPassword' => $errorPassword,
@@ -49,4 +58,5 @@ $userfile = fopen ("user.txt","r");
 				);
 	
 	echo json_encode($arr);
-?>
+}
+	?>

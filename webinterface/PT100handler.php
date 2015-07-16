@@ -1,11 +1,20 @@
 <?php
 session_start();
+unset($loginstatus);
 if(!isset($_SESSION['username']))
 {
-	echo "Bitte erst einlogen!";
+	$loginstatus = false;
+	$adminstatus = false;
+	transfer_javascript("error", "error", $loginstatus, $adminstatus );
 }
 else
 {
+$adminstatus = false;
+$loginstatus = true;
+if(isset($_SESSION['admin']))
+{
+	$adminstatus = true;	
+}
 $arr;
 $output;
 unset($output);
@@ -21,20 +30,21 @@ if ($setgetPT100handler == $get){
 	
 		exec("flock /tmp/PT100handlerlock /usr/lib/cgi-bin/PT100handler 1 g t", $output);
 		exec("flock /tmp/PT100handlerlock /usr/lib/cgi-bin/PT100handler 2 g t", $output);
-		
-		
-//	}
-//	$arr = array( 	'temperature1' => $output[0],
-//			'temperature2' => $output[1]
-//	);
 
-	$arr = array( 'temperature1' => $output[0] ,
-				  'temperature2' => $output[1]
-				);
+		transfer_javascript($output[0], $output[1], $loginstatus, $adminstatus);
 }
 
-						
-echo json_encode($arr);
+}
+
+function transfer_javascript($temperature1, $temperature2, $loginstatus, $adminstatus)	
+{
+	$arr = array( 'temperature1' => $temperature1 ,
+				  'temperature2' => $temperature2 ,
+				  'loginstatus' => $loginstatus ,
+				  'adminstatus' => $adminstatus
+				);
+	
+	echo json_encode($arr);
 }
 
 ?>

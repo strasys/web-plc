@@ -66,7 +66,7 @@ function submitUserData(){
 							"Sie haben sich erfolgreich in das System eingelogt.");
 							//document.getElementById("navbarloginout").innerHTML = " logout";
 							setTimeout(function() {
-								window.location.replace("http://privateplc/index.html");
+								window.location.replace("index.html");
 							}, 2000);
 						}
 					}	

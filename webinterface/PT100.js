@@ -25,7 +25,9 @@ function getPT100values(callback1){
 			var getPT100 = JSON.parse(xhttp.responseText); 
 			
 			PT100temperaturevalues = [(getPT100.temperature1),
-			                          (getPT100.temperature2)
+			                          (getPT100.temperature2),
+			                          (getPT100.loginstatus),
+			                          (getPT100.adminstatus)
 			                          ];
 				if (callback1){
 				callback1();
@@ -36,27 +38,61 @@ function getPT100values(callback1){
 
 function showPT100values(){
 	getPT100values(function(){
-		$("#badgePT1001").text(PT100temperaturevalues[0]+" °C");
-		$("#badgePT1002").text(PT100temperaturevalues[1]+" °C");
+		if (PT100temperaturevalues[2])
+			{
+			$("#badgePT1001").text(PT100temperaturevalues[0]+" °C");
+			$("#badgePT1002").text(PT100temperaturevalues[1]+" °C");
+			}
+		else
+			{
+			window.location.replace("login.html");
+			}
 	});
 	setTimeout(function(){showPT100values()}, 10000);
 }
 
+//This function should check if the user is loged in 
+
+function loginstatus(){
+	
+}
+
 // load functions ad webpage opening
 function startatLoad(){
-	loadNavbar();
-	showPT100values();
+		loadNavbar(function(){
+			showPT100values();
+		});
 }
 window.onload=startatLoad();
 
 //Load the top fixed navigation bar and highlight the 
 //active site roots.
-function loadNavbar(){
-$(document).ready(function(){
-	$("#mainNavbar").load("navbar.html", function(){
-		$("#navbarFunction").addClass("active");
-		$("#navbarItemPT100").addClass("active");
-	
-	  });
+//Check of the operater is already loged on the system.
+function loadNavbar(callback1){
+	getPT100values(function(){
+		if (PT100temperaturevalues[2])
+		{
+			$(document).ready(function(){
+				$("#mainNavbar").load("navbar.html", function(){
+					$("#navbarFunction").addClass("active");
+					$("#navbarItemPT100").addClass("active");
+					$("#navbarlogin").hide();
+					
+					if (!PT100temperaturevalues[3])
+					{
+					$("#navbarSet").hide();
+					}
+					
+					});	
+			});
+		}
+		else
+		{
+			window.location.replace("login.html");
+		}
+		if (callback1){
+			callback1();
+		}
 	});
 }
+

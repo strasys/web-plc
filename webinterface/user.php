@@ -1,13 +1,22 @@
 <?php
 $username = $_POST["username"];
 $password = $_POST["password"];
-$password2 =$_POST["passwordRepeat"];
+$password2 = $_POST["passwordRepeat"];
+$adminright = $_POST["adminright"];
 unset($arr);
 unset($errorFile, $errorUsername, $errorPasswordRepeat);
 $errorFile = 0; //If errorFile variable = -1 than fopen is False
 $errorUsername = 0; //If username exists already value = -1
 $errorPasswordRepeat = 0; //If password and password2 are not equal value = -1
 
+if ($adminright == "true")
+{
+	$adminmarker = "admin";
+}
+else 
+{
+	$adminmarker = "user";	
+}
 
 if ($password == $password2)
 	{
@@ -41,6 +50,8 @@ if ($password == $password2)
 		fwrite($userfile, $username);
 		fwrite($userfile, "|");
 		fwrite($userfile, $passwordEncrypt);
+		fwrite($userfile, "|");
+		fwrite($userfile, $adminmarker);
 		fwrite($userfile, "\n");
 		fclose($userfile);
 		}

@@ -29,6 +29,11 @@ $userfile = fopen ("user.txt","r");
 			if ($passwordEncrypt==trim($userdata[1]))
 			{
 				$_SESSION['username'] = $username;
+				if (trim($userdata[2])=="admin")
+				{
+					$_SESSION['admin'] = "admin";
+					
+				}
 			}
 			else
 			{

@@ -16,7 +16,7 @@ function setgetuser(setget, url, cfunc, senddata){
 	xhttp.send(senddata);
 }
 
- function setgetUserPassword(Username, Password, PasswordRepeat,callback1){
+ function setgetUserPassword(Username, Password, PasswordRepeat, Adminright, callback1){
 		setgetuser("post","user.php",function()
 			{
 				if (xhttp.readyState==4 && xhttp.status==200)
@@ -33,7 +33,7 @@ function setgetuser(setget, url, cfunc, senddata){
 					}
 				}
 			},"username="+Username+"&password="+Password+"&passwordRepeat="+
-			PasswordRepeat);		
+			PasswordRepeat+"&adminright="+Adminright);		
 }
  
 
@@ -41,8 +41,9 @@ function submitUserData(){
 	var inputUsername = document.getElementById("forminputusername").value;
 	var inputPassword = document.getElementById("forminputpassword").value;
 	var inputPasswordRepeat = document.getElementById("forminputpasswordrepeat").value;
+	var inputAdminright = document.getElementById("forminputcheckboxadmin").checked;
 	 
-		setgetUserPassword(inputUsername, inputPassword, inputPasswordRepeat, function()
+		setgetUserPassword(inputUsername, inputPassword, inputPasswordRepeat, inputAdminright, function()
 		{
 			 if (statusSetUsername[0] == -1)
 				{

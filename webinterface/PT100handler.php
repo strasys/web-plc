@@ -1,20 +1,7 @@
 <?php
 session_start();
-unset($loginstatus);
-if(!isset($_SESSION['username']))
-{
-	$loginstatus = false;
-	$adminstatus = false;
-	transfer_javascript("error", "error", $loginstatus, $adminstatus );
-}
-else
-{
-$adminstatus = false;
-$loginstatus = true;
-if(isset($_SESSION['admin']))
-{
-	$adminstatus = true;	
-}
+include_once ('authentification.inc.php');
+
 $arr;
 $output;
 unset($output);
@@ -34,7 +21,7 @@ if ($setgetPT100handler == $get){
 		transfer_javascript($output[0], $output[1], $loginstatus, $adminstatus);
 }
 
-}
+
 
 function transfer_javascript($temperature1, $temperature2, $loginstatus, $adminstatus)	
 {

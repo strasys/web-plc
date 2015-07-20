@@ -68,6 +68,9 @@ function submitUserData(){
 						{
 							DisplayAlertInformation("success",
 							"Neuer Benutzer wurde angelegt.");
+							setTimeout(function() {
+								window.location.replace("user.html");
+							}, 2000);
 						}
 					}	
 				}

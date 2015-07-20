@@ -51,11 +51,6 @@ function showPT100values(){
 	setTimeout(function(){showPT100values()}, 10000);
 }
 
-//This function should check if the user is loged in 
-
-function loginstatus(){
-	
-}
 
 // load functions ad webpage opening
 function startatLoad(){

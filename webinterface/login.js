@@ -15,7 +15,7 @@ function setgetuser(setget, url, cfunc, senddata){
 	xhttp.send(senddata);
 }
 
- function setgetUserPassword(Username, Password,callback1){
+ function setgetUserPassword(Username, Password, rememberlogin, callback1){
 		setgetuser("post","login.php",function()
 			{
 				if (xhttp.readyState==4 && xhttp.status==200)
@@ -31,15 +31,16 @@ function setgetuser(setget, url, cfunc, senddata){
 						callback1();
 					}
 				}
-			},"username="+Username+"&password="+Password);		
+			},"username="+Username+"&password="+Password+"&rememberlogin="+rememberlogin);		
 }
  
 
 function submitUserData(){
 	var inputUsername = document.getElementById("inputUsername").value;
 	var inputPassword = document.getElementById("inputPassword").value;
+	var inputrememberlogin = document.getElementById("checkboxstaylogedin").checked;
 	 
-		setgetUserPassword(inputUsername, inputPassword, function()
+		setgetUserPassword(inputUsername, inputPassword, inputrememberlogin, function()
 		{
 			 if (statusSetUsername[0] == -1)
 				{

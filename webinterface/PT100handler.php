@@ -1,7 +1,6 @@
 <?php
 session_start();
 include_once ('authentification.inc.php');
-
 $arr;
 $output;
 unset($output);

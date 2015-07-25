@@ -1,5 +1,9 @@
 <?php
 session_start(); 
+ini_set('session.use_trans_sid', '0');
+ini_set('session.use_cookies' , '1' );
+ini_set('session.use_only_cookies' , '1');
+ini_set('session.name', 'privateplc_login');
 unset ($username, $password, $rememberlogin);
 $username = $_POST["username"]; 
 $password = $_POST["password"];
@@ -73,6 +77,7 @@ $userfile = fopen ("user.txt","r");
 		
 		//generate hashed username incl. salt to safe in cookie
 		//$saltedusername = $salt . $username . $salt;
+		
 		$secret_key = "j/LfE09cUeJ9QXiP8i6IjdXIoYZZZhFKSYreymf3"; 
 		//TODO: Write routine to store and generate it initially
 		//the key was on linux generated: "head -c 32 /dev/random | base64"
@@ -80,8 +85,9 @@ $userfile = fopen ("user.txt","r");
 		//echo "mac = ".$mac."<br>";
 		$cookie .= ":" . $mac;
 		
-		//store $hashedusername and sessionid 
-		setcookie("rememberme",$cookie);
+		//cookie expires after 10 days 
+		setcookie("rememberme",$cookie, time()+60*60*24*10);
+	
 		
 		//store individual salt in database
 		//look if user is allready stoard in data base
@@ -136,7 +142,9 @@ $userfile = fopen ("user.txt","r");
 					{
 						fwrite($f,$arstaylogedinfile[$i].":".$arstaylogedinfile[$i+1]."\n");
 					}
+					
 				}
+				fclose($f);
 				
 			}
 			else

@@ -119,8 +119,11 @@ window.onload=startatLoad();
 function loadNavbar(){
 $(document).ready(function(){
 	$("#mainNavbar").load("navbar.html", function(){
-		$("#navbarloginout").addClass("active");
-	//	$("#navbar").addClass("active");
+		$("#navbarlogin").addClass("active");
+		$("#navbarlogout").hide();
+		$("#navbarFunction").hide();
+		$("#navbarSet").hide();
+		$("#navbarHelp").hide();
 	  });
 	});
 }

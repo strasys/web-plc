@@ -1,4 +1,5 @@
 <?php
+include_once ('privateplc_php.ini.php');
 session_start();
 include_once ('authentification.inc.php');
 $arr;
@@ -11,13 +12,17 @@ $setgetPT100handler = $_POST["setgetPT100handler"];
 $get = "g";
 
 //get temperature from all channels
-if ($setgetPT100handler == $get){
+if (($setgetPT100handler == $get) && ($flag)){
 //	for ($i=1; $i<3; $i++){
 	
 		exec("flock /tmp/PT100handlerlock /usr/lib/cgi-bin/PT100handler 1 g t", $output);
 		exec("flock /tmp/PT100handlerlock /usr/lib/cgi-bin/PT100handler 2 g t", $output);
 
 		transfer_javascript($output[0], $output[1], $loginstatus, $adminstatus);
+}
+else
+{
+	transfer_javascript('error', 'error', $loginstatus, $adminstatus);
 }
 
 

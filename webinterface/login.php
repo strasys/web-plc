@@ -1,9 +1,6 @@
 <?php
+include_once ('privateplc_php.ini.php');
 session_start(); 
-ini_set('session.use_trans_sid', '0');
-ini_set('session.use_cookies' , '1' );
-ini_set('session.use_only_cookies' , '1');
-ini_set('session.name', 'privateplc_login');
 unset ($username, $password, $rememberlogin);
 $username = $_POST["username"]; 
 $password = $_POST["password"];
@@ -133,7 +130,7 @@ $userfile = fopen ("user.txt","r");
 				
 				$arstaylogedinfile[$key + 1] = $salt;
 				
-				$f = fopen("userlogedin.txt", w);
+				$f = fopen("userlogedin.txt", 'w');
 				
 				$n = count($arstaylogedinfile);
 				if ($f) //add error code

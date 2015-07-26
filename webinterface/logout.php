@@ -1,4 +1,5 @@
 <?php 
+include_once ('privateplc_php.ini.php');
 session_start();
 unset($_SESSION['username']);
 unset($_SESSION['admin']);

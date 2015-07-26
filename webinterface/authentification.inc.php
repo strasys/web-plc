@@ -1,26 +1,26 @@
 <?php
 unset($loginstatus);
 unset($adminstatus);
+unset($flag);
 
 if(!isset($_SESSION['username']) && !isset ($_COOKIE['rememberme']))
 {
 	$loginstatus = false;
 	$adminstatus = false;
-	transfer_javascript("error", "error", $loginstatus, $adminstatus );
-	exit;
+	$flag = false;
 }
 elseif(isset($_SESSION['username']))
 {
 	$adminstatus = false;
 	$loginstatus = true;
+	$flag = true;
 	if(isset($_SESSION['admin']))
 	{
 		$adminstatus = true;
-		break 1;
 	}
 
 }
-elseif(isset($_COOKIE['rememberme']))
+elseif(isset($_COOKIE['rememberme']) && !isset($_SESSION['username']))
 {
 	list($username, $token, $mac) = explode(":", $_COOKIE['rememberme']);
 
@@ -45,12 +45,14 @@ elseif(isset($_COOKIE['rememberme']))
 					$_SESSION['username'] = $username;
 					$loginstatus = true;
 					$adminstatus = false;
+					$flag = true;
 					break 1;
 				}
 				else
 				{
 					$loginstatus = false;
 					$adminstatus = false;
+					$flag = false;
 					break 1;
 				}
 			}

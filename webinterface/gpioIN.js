@@ -30,7 +30,9 @@ function getGPIOinStatus(callback1){
 			IN =  [parseInt(getIN.IN1),
 		           parseInt(getIN.IN2),
 		           parseInt(getIN.IN3),
-		           parseInt(getIN.IN4)
+		           parseInt(getIN.IN4),
+		           (getIN.loginstatus),
+		           (getIN.adminstatus)
 		        ];
 			
 			if (callback1){
@@ -158,24 +160,53 @@ function CollapseSetInputName(){
 }
 //Load the top fixed navigation bar and highlight the 
 //active site roots.
-function loadNavbar(){
-$(document).ready(function(){
-	$("#mainNavbar").load("navbar.html", function(){
-		$("#navbarFunction").addClass("active");
-		$("#navbarItemDigiIn").addClass("active");
-	  });
+//Check if the operater is already loged on the system.
+function loadNavbar(callback1)
+{
+	setInputStatusHMI(function()
+	{
+		if(IN[4])
+		{
+			$(document).ready(function()
+			{
+				$("#mainNavbar").load("navbar.html", function()
+				{
+					$("#navbarFunction").addClass("active");
+					$("#navbarItemDigiIn").addClass("active");
+					$("#navbarlogin").hide();
+					$("#showSetInputName").hide();
+					$("#navbarSet").hide();
+					
+					if(IN[5])
+					{
+						$("#navbarSet").show();
+						$("#showSetInputName").show();
+					}
+				});
+			});	
+		}
+		else
+		{
+			window.location.replace("login.html");
+		}
+		if (callback1)
+		{
+			callback1();
+		}
 	});
 }
 
 //load functions ad webpage opening
-window.onload=function(){
-	loadNavbar();
-	setInputStatusHMI(function(){
-			getGPIOinXMLData(function(){
-				refreshStatus();
-			});
-		});
-	}
+window.onload=function()
+{
+	loadNavbar(function()
+	{
+		getGPIOinXMLData(function()
+		{
+			refreshStatus();
+		});	
+	});
+}
 
 function refreshStatus(){
 	setInputStatusHMI();

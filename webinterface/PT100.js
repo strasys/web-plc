@@ -72,10 +72,11 @@ function loadNavbar(callback1){
 					$("#navbarFunction").addClass("active");
 					$("#navbarItemPT100").addClass("active");
 					$("#navbarlogin").hide();
-					
-					if (!PT100temperaturevalues[3])
-					{
 					$("#navbarSet").hide();
+					
+					if (PT100temperaturevalues[3])
+					{
+					$("#navbarSet").show();
 					}
 					
 					});	

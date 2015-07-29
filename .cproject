@@ -49,7 +49,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="GPIOhandler/GPIOhandler.c|PT100handler/PT100handler.c|AINOUThandler/AINOUThandler.c|RTChandler/RTChandler.c" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
+						<entry excluding="GPIOhandler/GPIOhandler.c|PT100handler/PT100handler.c|AINOUThandler/AINOUThandler.c|RTChandler/RTChandler.c|Testeeprom/Testeeprom.c" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -104,7 +104,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="PT100handler/PT100handler.c|firmware/main.c|RTChandler/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
+						<entry excluding="PT100handler/PT100handler.c|firmware/main.c|RTChandler/RTChandler.c|Testeeprom/Testeeprom.c|AINOUThandler/AINOUThandler.c" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -212,7 +212,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="firmware/main.c|GPIOhandler/GPIOhandler.c|PT100handler/PT100handler.c" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
+						<entry excluding="firmware/main.c|GPIOhandler/GPIOhandler.c|PT100handler/PT100handler.c|AINOUThandler/AINOUThandler.c|Testeeprom/Testeeprom.c" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -341,6 +341,7 @@
 		<configuration configurationName="PT100handler">
 			<resource resourceType="PROJECT" workspacePath="/web-plc"/>
 		</configuration>
+		<configuration configurationName="eepromtest"/>
 		<configuration configurationName="AINOUThandler"/>
 		<configuration configurationName="Debug">
 			<resource resourceType="PROJECT" workspacePath="/web-plc"/>

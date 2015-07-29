@@ -2,6 +2,7 @@
 include_once ('privateplc_php.ini.php');
 session_start(); 
 unset ($username, $password, $rememberlogin);
+$rememberlogin = false;
 $username = $_POST["username"]; 
 $password = $_POST["password"];
 $rememberlogin = $_POST["rememberlogin"];
@@ -44,7 +45,7 @@ $userfile = fopen ("user.txt","r");
 			transfer_javascript($errorFile, $errorUsername, $errorPassword, $username);
 			fclose($userfile);
 			break 1;
-		}
+			}
 		
 		if (($userdata[0]!=$username) && (feof($userfile)))
 		{

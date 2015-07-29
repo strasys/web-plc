@@ -23,7 +23,9 @@ function getAIn(callback1){
 				var getAIn = JSON.parse(xhttp.responseText); 
 				
 				AnalogIN = [(getAIn.INvalue1),
-				            (getAIn.INvalue2)
+				            (getAIn.INvalue2),
+				            (getAIn.loginstatus),
+				            (getAIn.adminstatus)
 				               ];
 					if (callback1){
 						callback1();
@@ -52,7 +54,9 @@ function getAOUT(callback4){
 				var getAOUT = JSON.parse(xhttp.responseText); 
 				
 				AnalogOUT = [(getAOUT.OUTvalue1),
-				            (getAOUT.OUTvalue2)
+				             (getAOUT.OUTvalue2),
+				             (getAOUT.loginstatus),
+				             (getAOUT.adminstatus)
 				               ];
 				if (callback4){
 					callback4();
@@ -153,19 +157,47 @@ function showAINOUTvalues(){
 }
 
 //load functions at webpage opening
-function startatLoad(){
-	loadNavbar();
-	showAINOUTvalues();
+function startatLoad()
+{
+	loadNavbar(function()
+	{
+		showAINOUTvalues();
+	});
 }
 window.onload=startatLoad();
 
 //Load the top fixed navigation bar and highlight the 
 //active site roots.
-function loadNavbar(){
-$(document).ready(function(){
-	$("#mainNavbar").load("navbar.html", function(){
-		$("#navbarFunction").addClass("active");
-		$("#navbarItemAIO").addClass("active");
-	  });
+//Check if the operater is already loged on the system.
+function loadNavbar(callback1)
+{
+	getAIn(function()
+	{
+		if(AnalogIN[2])
+		{
+			$(document).ready(function()
+			{
+				$("#mainNavbar").load("navbar.html", function()
+				{
+					$("#navbarFunction").addClass("active");
+					$("#navbarItemAIO").addClass("active");
+					$("#navbarlogin").hide();
+					$("#navbarSet").hide();
+					
+					if(AnalogIN[3])
+					{
+						$("#navbarSet").show();
+					}
+				});
+			});
+		}
+		else
+		{
+			
+		}
+	if (callback1)
+	{
+		callback1();
+	}
 	});
 }

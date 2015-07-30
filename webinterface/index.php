@@ -2,8 +2,9 @@
 include_once ('privateplc_php.ini.php');
 session_start();
 include_once ('authentification.inc.php');
+unset($getLoginStatus);
 $getLoginStatus = $_POST['getLoginStatus'];
-
+//$getLoginStatus = "g";
 unset($arr);
 $get = "g";
 

@@ -2,10 +2,12 @@
 include_once ('privateplc_php.ini.php');
 session_start(); 
 unset ($username, $password, $rememberlogin);
-$rememberlogin = false;
+$rememberlogin = 0;
 $username = $_POST["username"]; 
 $password = $_POST["password"];
 $rememberlogin = $_POST["rememberlogin"];
+//$username = "strajoha";
+//$password = "1234";
 $passwordEncrypt = md5($password); 
 unset($arr);
 unset($errorFile, $errorUsername, $errorPasswordRepeat);
@@ -13,7 +15,8 @@ $errorFile = 0; //If errorFile variable = -1 than fopen is False
 $errorUsername = 0; //If username does not exist variable = -1
 $errorPassword = 0; //If password is wrong value = -1
 
-$userfile = fopen ("user.txt","r"); 
+$userfile = fopen("user.txt","r"); 
+
 	if ($userfile == FALSE)
 	{
 		$errorFile = -1;
@@ -26,17 +29,19 @@ $userfile = fopen ("user.txt","r");
 	{ 
 	$line = fgets($userfile,500); 
 	$userdata = explode("|", $line); 
-	
-		if ($userdata[0]==$username)
+
+		if (($userdata[0]==$username))
 		{
 			if ($passwordEncrypt==trim($userdata[1]))
 			{
 				$_SESSION['username'] = $username;
+		
 				if (trim($userdata[2])=="admin")
 				{
 					$_SESSION['admin'] = "admin";
-					
+				
 				}
+				
 			}
 			else
 			{
@@ -45,7 +50,7 @@ $userfile = fopen ("user.txt","r");
 			transfer_javascript($errorFile, $errorUsername, $errorPassword, $username);
 			fclose($userfile);
 			break 1;
-			}
+		}
 		
 		if (($userdata[0]!=$username) && (feof($userfile)))
 		{
@@ -56,9 +61,10 @@ $userfile = fopen ("user.txt","r");
 			break 1;
 		}	
 	}
-	
-	if ($rememberlogin)
+
+	if ($rememberlogin == 1)
 	{
+		
 		//generate salt
 		unset($randompartofsalt);
 		exec("head -c20 /dev/urandom | base64", $randompartofsalt);
@@ -69,6 +75,7 @@ $userfile = fopen ("user.txt","r");
 			$randompartofsalt .= rand(0,$characters-1);
 		}
 		*/
+
 		$salt = '$2y$15$' . $randompartofsalt[0] .'$';
 		//echo "salt" . $salt . "<br>";
 		$cookie = $username . ":" . $salt; 

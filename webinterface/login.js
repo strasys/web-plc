@@ -39,7 +39,15 @@ function submitUserData(){
 	var inputUsername = document.getElementById("inputUsername").value;
 	var inputPassword = document.getElementById("inputPassword").value;
 	var inputrememberlogin = document.getElementById("checkboxstaylogedin").checked;
-	 
+	if (inputrememberlogin)
+	{
+		inputrememberlogin = 1;
+	}
+	else
+	{
+		inputrememberlogin = 0;
+	}
+	
 		setgetUserPassword(inputUsername, inputPassword, inputrememberlogin, function()
 		{
 			 if (statusSetUsername[0] == -1)

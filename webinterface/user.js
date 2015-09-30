@@ -26,7 +26,9 @@ function setgetuser(setget, url, cfunc, senddata){
 				statusSetUsername = [(statusUsernamePassword.errorFile),
 									(statusUsernamePassword.errorUsername),
 									(statusUsernamePassword.errorPasswordRepeat),
-									(statusUsernamePassword.username)
+									(statusUsernamePassword.username),
+									(statusUsernamePassword.loginstatus),
+									(statusUsernamePassword.adminstatus)
 									];
 					if (callback1){
 						callback1();
@@ -35,7 +37,23 @@ function setgetuser(setget, url, cfunc, senddata){
 			},"username="+Username+"&password="+Password+"&passwordRepeat="+
 			PasswordRepeat+"&adminright="+Adminright);		
 }
- 
+
+function getloginstatus(callback1){
+	setgetuser("post","user.php",function()
+			{
+				if (xhttp.readyState==4 && xhttp.status==200)
+					{
+						var statusLogIn = JSON.parse(xhttp.responseText);
+						
+						LogInStatusCheck = [(statusLogIn.loginstatus),
+						                    (statusLogIn.adminstatus)
+						                    ];
+						if (callback1){
+							callback1();
+						}
+					}
+			});
+}
 
 function submitUserData(){
 	var inputUsername = document.getElementById("forminputusername").value;
@@ -121,10 +139,35 @@ window.onload=startatLoad();
 //Load the top fixed navigation bar and highlight the 
 //active site roots.
 function loadNavbar(){
-$(document).ready(function(){
-	$("#mainNavbar").load("navbar.html", function(){
-		$("#navbarSet").addClass("active");
-		$("#navbarItemUser").addClass("active");
-	  });
+	getloginstatus(function(){
+		if (LogInStatusCheck[0])
+		{
+			$(document).ready(function(){
+				$("#mainNavbar").load("navbar.html", function(){
+					$("#navbarSet").addClass("active");
+					$("#navbarItemUser").addClass("active");
+					$("#navbarlogin").hide();
+					$("#navbarSet").hide();
+					
+					if (LogInStatusCheck[1])
+					{
+						$("#navbarSet").show();
+					}
+				});
+			});
+		}
+		else
+		{
+			window.location.replace("login.html");
+		}
+		if (callback1)
+		{
+			callback1();
+		}
 	});
-}
+		
+	}
+
+
+
+

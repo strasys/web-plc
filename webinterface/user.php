@@ -1,4 +1,8 @@
 <?php
+include_once ('privateplc_php.ini.php');
+session_start();
+include_once ('authentification.inc.php');
+
 $username = $_POST["username"];
 $password = $_POST["password"];
 $password2 = $_POST["passwordRepeat"];
@@ -8,6 +12,9 @@ unset($errorFile, $errorUsername, $errorPasswordRepeat);
 $errorFile = 0; //If errorFile variable = -1 than fopen is False
 $errorUsername = 0; //If username exists already value = -1
 $errorPasswordRepeat = 0; //If password and password2 are not equal value = -1
+
+if ($flag)
+{
 
 if ($adminright == "true")
 {
@@ -65,8 +72,17 @@ if ($password == $password2)
 	$arr = array( 	'errorFile' => $errorFile,
 					'errorUsername' => $errorUsername,
 					'errorPasswordRepeat' => $errorPasswordRepeat,
-					'username' => $username
+					'username' => $username,
+					'loginstatus' => $loginstatus,
+					'adminstatus' => $adminstatus
 				);
-	
+}
+else 
+{
+	$arr = array(	'loginstatus' => $loginstatus,
+					'adminstatus' => $adminstatus
+	);
+}
+
 	echo json_encode($arr);
 ?>

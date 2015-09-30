@@ -4,7 +4,32 @@
  */
 
 var offsetTime;
-	
+
+function getlogindata(setget, url, cfunc, senddata){
+	xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = cfunc;
+	xhttp.open(setget,url,true);
+	xhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	xhttp.send(senddata);
+}
+
+function getloginstatus(callback1){
+	getlogindata("post","setgetTime.php",function()
+			{
+				if (xhttp.readyState==4 && xhttp.status==200)
+					{
+						var statusLogIn = JSON.parse(xhttp.responseText);
+						
+						LogInStatusCheck = [(statusLogIn.loginstatus),
+						                    (statusLogIn.adminstatus)
+						                    ];
+						if (callback1){
+							callback1();
+						}
+					}
+			});
+}
+
 	function getSystemTimeDate(){
 		if (!document.all && !document.getElementById)
 		return
@@ -39,6 +64,7 @@ var offsetTime;
 	    }
 		}
 
+	
 	function DisplayTime(){
 		if (!document.all && !document.getElementById)
 		return
@@ -110,11 +136,10 @@ var offsetTime;
 	    	x.options.add(option);
 	    	}
 	    }
-	    
-	    
+	    	    
 	    function startatLoad(){
-	    	loadNavbar();
-    		getSystemTimeDate();	
+	    	loadNavbar();	
+	    	getSystemTimeDate();
 		}
 		window.onload=startatLoad;
 		
@@ -143,12 +168,30 @@ var offsetTime;
 		//Load the top fixed navigation bar and highlight the 
 		//active site roots.
 		 function loadNavbar(){
-			 $(document).ready(function(){
-			 	$("#mainNavbar").load("navbar.html", function(){
-			 		$("#navbarSet").addClass("active");
-			 		$("#navbarItemTimeDate").addClass("active");
-			 	
-			 	  });
-			 	});
-			 }
-
+			getloginstatus(function(){
+				if (LogInStatusCheck[0])
+				{
+					$(document).ready(function(){
+						$("#mainNavbar").load("navbar.html", function(){
+							$("#navbarSet").addClass("active");
+							$("#navbarItemTimeDate").addClass("active");
+							$("#navbarlogin").hide();
+							$("#navbarSet").hide();
+							
+							if (LogInStatusCheck[1])
+							{
+								$("#navbarSet").show();
+							}
+						});
+					});
+				}
+				else
+				{
+					window.location.replace("login.html");
+				}
+				if (callback1)
+				{
+					callback1();
+				}
+			});
+		 }

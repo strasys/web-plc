@@ -1,4 +1,8 @@
 <?php
+include_once ('privateplc_php.ini.php');
+session_start();
+include_once ('authentification.inc.php');
+
 	$td;
 	$ausgabe;
 	$arr;
@@ -15,7 +19,9 @@
 	$Year = $_POST["Year"];
 	$t = "t";
 	$d = "d";
-	
+
+if($flag)
+{
 	if ($td == $t){
 		exec("flock /tmp/flockRTChandler /usr/lib/cgi-bin/RTChandler s t $hh $mm $ss", $ausgabe);
 		}
@@ -32,6 +38,16 @@
 					'Year' => $ausgabe[2],
 					'hh' => $ausgabe[3],
 					'mm' => $ausgabe[4],
-					'ss' => $ausgabe[5]);
+					'ss' => $ausgabe[5],
+					'loginstatus' => $loginstatus,
+					'adminstatus' => $adminstatus
+	);
+}
+else 
+{
+	$arr = array(	'loginstatus' => $loginstatus,
+					'adminstatus' => $adminstatus
+				);
+}
 	echo json_encode($arr);
 ?>

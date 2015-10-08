@@ -32,11 +32,11 @@ class GPIO
 */
 
 	/*set the digital output (0 = off, 1 = on)  */
-	function setOut($out[0], $out[1], $out[2], $out[3], $out[4], $out[5], $out[6], $out[7])
+	function setOut($out)
 	{
 		for ($i = 0; $i<8; $i++)
 		{
-			exec(" /usr/lib/cgi-bin/GPIOhandler s $i $out");
+			exec(" /usr/lib/cgi-bin/GPIOhandler s $i $out[$i]");
 		}
 	}
 	

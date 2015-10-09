@@ -1,62 +1,62 @@
 <?php 
-unset($loginstatus);
+include "GPIO.inc.php";
 
-if(!isset($_SESSION['username']) && !isset ($_COOKIE['rememberme']))
-{
-	$loginstatus = false;
-	$adminstatus = false;
-	//transfer_javascript("error", "error", $loginstatus, $adminstatus );
-	exit;
-}
-elseif(isset($_SESSION['username']))
-{
-	$adminstatus = false;
-	$loginstatus = true;
-	if(isset($_SESSION['admin']))
+$DIGI = new GPIO();
+
+$OUT = array();
+$timeinterval = 1;
+$endtime = microtime(true);
+$i=0;
+$a=0;
+$OUT = array (	0 => 0,
+		1 => 0,
+		2 => 0,
+		3 => 0,
+		4 => 0,
+		5 => 0,
+		6 => 0,
+		7 => 0
+);
+
+while ($a<1){
+	//$OUT = $DIGI->getOut();
+	
+/*	for ($i=0; $i<8; $i++)
 	{
-		$adminstatus = true;
-		break 1;
+	echo "Ausgang ".$i." = ".$OUT[$i]."<br>";
 	}
-
-}
-elseif(isset($_COOKIE['rememberme']))
-{
-	list($username, $token, $mac) = explode(":", $_COOKIE['rememberme']);
-	echo "username = " . $username . " token = ". $token . " mac = ".$mac."<br>";
-	$staylogedinfile = fopen ("userlogedin.txt","r");
-	if ($staylogedinfile)
+*/
+	
+	if ($i < 8){
+	$OUT[$i] = 1;
+	 $DIGI->setOut($OUT);
+	 $i++;
+	}
+	else 
 	{
-		//check if user does exist in "userlogedin.txt"
-		while (!feof($staylogedinfile))
-		{
-			$line = fgets($staylogedinfile, 500);
-			$userdata1 = explode(":", $line);
-
-			if ($userdata1[0] == $username)
-			{
-				$token_database = trim($userdata1[1]);
-				$secret_key = "j/LfE09cUeJ9QXiP8i6IjdXIoYZZZhFKSYreymf3";
-
-				$mac_database = hash_hmac('sha256', trim($username) . ":" . trim($token), $secret_key);
-				echo "mac_database = ".$mac_database."<br>";
-				if ($mac_database == trim($mac))
-				{
-					$_SESSION['username'] = $username;
-					$loginstatus = true;
-					$adminstatus = false;
-					break 1;
-				}
-				else
-				{
-					$loginstatus = false;
-					$adminstatus = false;
-					break 1;
-				}
-			}
-		}
+		$OUT = array (	0 => 0,
+						1 => 0,
+						2 => 0,
+						3 => 0,
+						4 => 0,
+						5 => 0,
+						6 => 0,
+						7 => 0
+					);
+		$DIGI->setOut($OUT);
+		$i=0;
 	}
-	fclose($staylogedinfile);
+	usleep(2000000);
 }
 
+
+/*	$IN = $DIGI->getIn();
+	
+	for ($i=0; $i<4; $i++)
+	{
+		echo "Eingang ".$i." = ".$IN[$i]."<br>";
+	}
+	echo "micro time = ".microtime(true)."<br>";
+*/
 
 ?>

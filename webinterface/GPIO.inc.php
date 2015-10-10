@@ -14,9 +14,15 @@ class GPIO
 	{
 		for ($i = 0; $i<8; $i++)
 		{
-			unset($ausgabe);
-			exec(" /usr/lib/cgi-bin/GPIOhandler s $i $out[$i]", $ausgabe);
+			
+			exec("flock /tmp/GPIOlock /usr/lib/cgi-bin/GPIOhandler s $i $out[$i]");
 		}
+	}
+	
+	function setOutsingle($outs, $i)
+	{
+		
+		exec("flock /tmp/GPIOslock /usr/lib/cgi-bin/GPIOhandler s $i $outs");
 	}
 	
 	function getOut()

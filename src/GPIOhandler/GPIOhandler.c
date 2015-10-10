@@ -36,10 +36,10 @@ int main(int argc, char *argv[], char *env[]){
 		printf("Num=%d Value=%d\n",Num, Value);
 		printf("Value=%d\n", Value);
 		gpio_set_value(IN_OUT[Num][0], Value);
-		for (i = 0; i < 8; i++){
-				GPIOstatval[i] = gpio_get_value(IN_OUT[i][0]);
-				printf("%d\n", GPIOstatval[i]);
-				}
+		//for (i = 0; i < 8; i++){
+		//		GPIOstatval[i] = gpio_get_value(IN_OUT[i][0]);
+		//		printf("%d\n", GPIOstatval[i]);
+		//		}
 	}
 
 	if ((setget == 'g')){

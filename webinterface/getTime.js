@@ -189,9 +189,5 @@ function getloginstatus(callback1){
 				{
 					window.location.replace("login.html");
 				}
-				if (callback1)
-				{
-					callback1();
-				}
 			});
 		 }

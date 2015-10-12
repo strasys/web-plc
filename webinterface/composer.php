@@ -10,11 +10,11 @@ $DIGI = new GPIO();
  * It will be read within the while loop of the composer.
  * This stops the composer.php process.
  */
-
+/*
 $statusFile = fopen("/tmp/composerstatus.txt", "w");
 fwrite($status,"run");
 fclose($status);
-
+*/
 $OUT = array();
 $i=0;
 $a=true;
@@ -29,12 +29,14 @@ $OUT = array (	0 => 0,
 );
 
 $DIGI->setOut($OUT);
+$stop = "stop";
 
 while ($a){
 	$statusFile = fopen("/tmp/composerstatus.txt","r");
-	$statusWord = fgets($statusFile,5);
+	$statusWord = trim(fgets($statusFile,5));
 	fclose($statusFile);
-	if ($statusWord = "stop")
+	
+	if ($statusWord == $stop)
 	{
 		$a = false;
 	}

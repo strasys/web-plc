@@ -32,6 +32,10 @@ $DIGI->setOut($OUT);
 $stop = "stop";
 
 while ($a){
+	/*
+	 * Controlled test 
+	 * 
+	 */
 	$statusFile = fopen("/tmp/composerstatus.txt","r");
 	$statusWord = trim(fgets($statusFile,5));
 	fclose($statusFile);
@@ -42,6 +46,7 @@ while ($a){
 	}
 	
 	set_time_limit(5);
+	
 	if ($i == 0){
 	 $DIGI->setOutsingle(1,5);
 	 $DIGI->setOutsingle(0,6);

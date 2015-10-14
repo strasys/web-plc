@@ -1,23 +1,19 @@
 <?php 
 include "GPIO.inc.php";
-
+include "composerloopcontrol.inc.php";
 $DIGI = new GPIO();
+$loopstatuscontrol = new composerloopcontrol();
 
 /*
- * Write the word "run" in a text file.
- * Store it under /tmp/composerstatus.txt
- * If the file text is changed to "stop".
- * It will be read within the while loop of the composer.
- * This stops the composer.php process.
- */
+ * To initially start the process of the 
+ * composer loop $loopstatus must be set to true.
+ */  
+$loopstatus = true;
+
 /*
-$statusFile = fopen("/tmp/composerstatus.txt", "w");
-fwrite($status,"run");
-fclose($status);
-*/
-$OUT = array();
-$i=0;
-$a=true;
+ * Define basic settings.
+ */
+
 $OUT = array (	0 => 0,
 		1 => 0,
 		2 => 0,
@@ -29,23 +25,22 @@ $OUT = array (	0 => 0,
 );
 
 $DIGI->setOut($OUT);
-$stop = "stop";
 
-while ($a){
+while ($loopstatus){
 	/*
-	 * Controlled test 
-	 * 
+	 * Loop control function.
+	 * Attention: Without the implementation of the 
+	 * composerloopcontrol class the loop can not be operated
+	 * in a defined and controlled mode.
+	 * => run = true/ stop = false
 	 */
-	$statusFile = fopen("/tmp/composerstatus.txt","r");
-	$statusWord = trim(fgets($statusFile,5));
-	fclose($statusFile);
-	
-	if ($statusWord == $stop)
-	{
-		$a = false;
-	}
-	
-	set_time_limit(5);
+	$loopstatus = $loopstatuscontrol->runstop();
+	//TODO: Add log file function.
+	/*
+	 * Without setting a time limit the loop will stop after a while.
+	 *Further this function should secure the run of the system.
+	 */
+	set_time_limit(5); //Set to 5 seconds.
 	
 	if ($i == 0){
 	 $DIGI->setOutsingle(1,5);
@@ -58,7 +53,27 @@ while ($a){
 		$DIGI->setOutsingle(1,6);
 		$i=0;
 	}
-	usleep(20000);
+	usleep(150000); //Time set in µs!
+	
+	/*
+	 * Define privatePLC status if $status = false.
+	 * Clarify what the DigiOut and Analogue Out settings should be
+	 * in case of a stop of the script.
+	 */
+	
+	if ($loopstatus == false)
+	{
+		$OUT = array (	0 => 0,
+				1 => 0,
+				2 => 0,
+				3 => 0,
+				4 => 0,
+				5 => 0,
+				6 => 0,
+				7 => 0
+		);
+		$DIGI->setOut($OUT);
+	}
 }
 
 ?>

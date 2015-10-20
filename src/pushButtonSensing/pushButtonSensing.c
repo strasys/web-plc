@@ -2,8 +2,8 @@
  * pushButtonSensing.c
  *
  *  Created on: 14.10.2015
- *      Author: Johannes Strasser
- *      www.strasys.at
+ *  Author: Johannes Strasser
+ *  www.strasys.at
  */
 
 #include <stdio.h>
@@ -16,13 +16,9 @@
 int getboolRunStop(char *charRunStop){
 	int boolRunStop;
 	char charStop[4], charRun[3];
-	//char RunStop[5];
-	//printf("Übergabe an getboolRunStop = %s\n",charRunStop);
+
 	strcpy(charStop,"stop");
 	strcpy(charRun, "run");
-	//printf("%s\n",charRunStop);
-	//printf("%s\n",charStop);
-	//printf("%s\n",charRun);
 
 	if (strcmp(charRunStop,charStop) == 0)
 	{
@@ -37,7 +33,7 @@ int getboolRunStop(char *charRunStop){
 		fprintf(stderr, "String comparison does not match: %s\n", strerror( errno ));
 		return EXIT_FAILURE;
 	}
-	//printf("boolRunStop = %i\n", boolRunStop);
+
 	return boolRunStop;
 }
 
@@ -76,7 +72,6 @@ int getRunStopStatus() {
 		f = fopen(DIR_getRunStopStatus, fopenModus);
 		fread(charRunStop,sizeof(charRunStop),sizeof(charRunStop),f);
 		sprintf(charRunStop,"%s%s",charRunStop,"\0");
-		//printf("Info direkt nach fread: %s\n",charRunStop);
 		fclose(f);
 
 		RunStopStatus = getboolRunStop(charRunStop);
@@ -96,9 +91,8 @@ void writeDigiInStatus(char *DigiInStatus) {
 	char DIR_writeDigiInStatus[255] = {};
 	char InStatus[7] = {};
 	char fopenModus[2] = {};
-	char buffer1[4] = {}; //buffer2[5]={};
+	char buffer1[4] = {};
 	int i = 0;
-	printf("writeDigiInStatus erreicht\n");
 
 	sprintf(DIR_writeDigiInStatus, "/tmp/pushButtonSensingDigiInStatus.txt");
 
@@ -109,10 +103,10 @@ void writeDigiInStatus(char *DigiInStatus) {
 	}
 
 	sprintf(buffer1,"%s",DigiInStatus);
-	printf("buffer1 = %s\n", buffer1);
+
 	f = fopen(DIR_writeDigiInStatus, fopenModus);
 	for (i=0; i<4; i++){
-		sprintf(InStatus,"IN%i:%c\n",i,buffer1[i]);
+		sprintf(InStatus,"IN:%i:%c\n",i,buffer1[i]);
 		fprintf(f,"%s",InStatus);
 	}
 	fclose(f);
@@ -136,7 +130,6 @@ int main(int argc, char *argv[], char *env[]){
 		for (i=1;i<5;i++)
 		{
 			sscanf(argv[i],"%c",&SensingInput[i-1]);
-			printf("Wert SensingInput = %c\n",SensingInput[i-1]);
 
 			if (((SensingInput[i-1]) != '0')&&(SensingInput[i-1] != '1'))
 			{
@@ -182,7 +175,7 @@ int main(int argc, char *argv[], char *env[]){
 				//Mark an Input which is not considered for pushButtonSensing.
 				InputStatus[i] = 'N';
 			}
-			//It is only interresting to sens the 0 value.
+			//It is only interesting to sense the 0 value.
 			if ((InputStatusNew[i] == '0') && (InputStatusOld[i] == '1') && (InputStatus[i] != 'N'))
 			{
 				//change IN switch Status
@@ -197,17 +190,13 @@ int main(int argc, char *argv[], char *env[]){
 			//remember status to sense status change
 				InputStatusOld[i] = InputStatusNew[i];
 		}
-		printf("InputStatus = %c\n",InputStatus[0]);
-		printf("InputStatus = %c\n",InputStatus[1]);
-		printf("InputStatusNew = %c\n",InputStatusNew[0]);
-		printf("InputStatusNew = %c\n",InputStatusNew[1]);
 
 		if (flagWriteDigiInStatus == -1)
 		{
 			writeDigiInStatus(InputStatus);
 		}
 		usleep(sensingCycleTime);
-		//Wihout the getRunStopSatus() it is not possible to control the pushButtonSensing function.
+		//Without the getRunStopSatus() it is not possible to control the pushButtonSensing function.
 		runstop = getRunStopStatus();
 		//set variables to initial status
 		flagWriteDigiInStatus = 0;

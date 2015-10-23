@@ -69,20 +69,24 @@ function setButtonColorBadge(ButtonNumber){
 	 switch (ButtonNumber){
 	 case 0:
 			if(StatuspushButtonSensingProcess[0] == 1){
-				span = document.getElementById("badgebuttonpushButtonSesningScriptOnOff");
-				span.textContent = "RUN";
-				button = document.getElementById("buttonpushButtonSesningOnOff");
+				span = document.getElementById("badgebuttonpushButtonSensingScriptOnOff");
+				span.textContent = "EIN";
+				button = document.getElementById("buttonpushButtonSensingOnOff");
 				button.getAttributeNode("class").value = "btn btn-success";
 			}
 			if(StatuspushButtonSensingProcess[0] == 0) {
-				span = document.getElementById("badgebuttonpushButtonSesningScriptOnOff");
-				span.textContent = "STOP";
-				button = document.getElementById("buttonpushButtonSesningOnOff");
+				span = document.getElementById("badgebuttonpushButtonSensingScriptOnOff");
+				span.textContent = "AUS";
+				button = document.getElementById("buttonpushButtonSensingOnOff");
 				button.getAttributeNode("class").value = "btn btn-danger";
 			}
 			break;
 	 }
 	 
+}
+
+function setgetSensingIn(){
+	
 }
 
 function ButtonpushButtonSensingAction(ButtonNumber){

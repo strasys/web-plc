@@ -6,13 +6,12 @@ unset($getLoginStatus, $setgetComposerStatus, $runstop, $setrunstopStatus);
 $getLoginStatus = $_POST['getLoginStatus'];
 $setgetpushButtonSensingProcessStatus = $_POST['setgetpushButtonSensingProcessStatus'];
 $setrunstopStatus = $_POST['setrunstopStatus'];
-$sensingChannels = $_POST['sensingChannels']; //variable must be transfered "1 1 1 1" with space in between
+$sensingChannels = $_POST['sensingChannels']; // as an array Attention: Array includes comma values (0,1,1,1) Therefor 0 = 0 but 1 would be ,
 $sensingCycle = $_POST['sensingCycle'];
 
 unset($arr);
 $get = "g";
 $set = "s";
-
 
 if ($getLoginStatus == $get)
 {
@@ -75,7 +74,7 @@ if ($setgetpushButtonSensingProcessStatus == $set)
 		
 		if ($statusWord == "run")
 		{
-			$cmd = " /usr/lib/cgi-bin/pushButtonSensing 0 1 0 1";
+			$cmd = " /usr/lib/cgi-bin/pushButtonSensing $sensingChannels[0] $sensingChannels[2] $sensingChannels[4] $sensingChannels[6]"; 
 			exec($cmd . " > /dev/null &");
 		}
 	}

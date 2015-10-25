@@ -114,7 +114,8 @@ void writeDigiInStatus(char *DigiInStatus) {
 }
 
 int main(int argc, char *argv[], char *env[]){
-	char SensingInput[3] = {};
+	char SensingInput[4] = {};
+	char InputStatusInit[4] = {};
 	char InputStatusNew[4] = {'1','1','1','1'};
 	char InputStatusOld[4]={'1','1','1','1'};
 	char InputStatus[4]={'1','1','1','1'};
@@ -130,7 +131,7 @@ int main(int argc, char *argv[], char *env[]){
 		for (i=1;i<5;i++)
 		{
 			sscanf(argv[i],"%c",&SensingInput[i-1]);
-
+			
 			if (((SensingInput[i-1]) != '0')&&(SensingInput[i-1] != '1'))
 			{
 				fprintf(stderr, "Wrong argument value: %s\n", strerror( errno ));
@@ -143,7 +144,22 @@ int main(int argc, char *argv[], char *env[]){
 		fprintf(stderr, "To view arguments: %s\n", strerror( errno ));
 		return EXIT_FAILURE;
 	}
+	
+/*
+ * Write init status to file.
+ * This enables other interface processes like php to read the set sensing inputs.
+ */
+	for (i=0;i<4;i++){
+		if (SensingInput[i] == '0'){
+			InputStatusInit[i] = 'N';
+		}
+		else if (SensingInput[i] == '1'){
+			InputStatusInit[i] = '1'; // 1 Input 1 means low because of PNP (pull up) 
+		}
+	}
+	writeDigiInStatus(InputStatusInit);
 
+	
 	if (argv[5]!=0)
 	{
 		sensingCycleTime = atoi(argv[5])*1000; //sensing in xx ms
@@ -158,7 +174,7 @@ int main(int argc, char *argv[], char *env[]){
 
 		/*
 		 * get status of input channel
-		 * 1 = no high signal / 0 = high signal on input
+		 * 1 = low signal / 0 = high signal on input
 		 * N = Is the marker that this channel is not considered for sensing.
 		 */
 		for (i=0;i<sizeof(SensingInput)+1;i++)
@@ -167,7 +183,7 @@ int main(int argc, char *argv[], char *env[]){
 			{
 				InNumber = i + 8; //8 is the offset to read only IN channels.
 
-				InputStatusNew[i] =	gpio_get_value(IN_OUT[InNumber][0])+'0';
+				InputStatusNew[i] =	gpio_get_value(IN_OUT[InNumber][0])+'0'; //The 0 is necessary to convert int to char.
 
 			}
 			else

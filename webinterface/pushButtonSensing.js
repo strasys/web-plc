@@ -88,8 +88,7 @@ function setButtonColorBadge(ButtonNumber){
 
 sortoutcache = new Date();
 
-//This function will be called once at start and after
-//set of the input naming.
+//This function will be called once on start.
 //The names of the inputs are stored in a XML file on the server.
 function getNamingXMLData(callback3){
 	setgetServer("GET","GPIOin.xml?sortoutcache="+sortoutcache.valueOf(),function()
@@ -118,10 +117,15 @@ function setgetpushButtonSensingActivation(setget, callback4){
 	inputActivationStatus = new Array();
 	if (setget == "set"){
 		for (i=0;i<4;i++){
-			inputActivationStatus[i] = document.getElementById("checkboxpushButtonSensing"+i).checked;
+			if (document.getElementById("checkboxpushButtonSensing"+i).checked){
+			inputActivationStatus[i] = 1;
+			}
+			else
+			{
+				inputActivationStatus[i] = 0;
 			}
 		}
-	
+	}
 	if(setget == "get"){
 		
 	}
@@ -135,7 +139,7 @@ function ButtonpushButtonSensingAction(ButtonNumber){
 	switch (ButtonNumber){
 	case 0:
 		if(StatuspushButtonSensingProcess[0] == 1){
-			setgetStatuspushButtonSensingProcess("s","0", function(){
+			setgetStatuspushButtonSensingProcess("s","0","", function(){
 				setButtonColorBadge(0);
 			});
 		}

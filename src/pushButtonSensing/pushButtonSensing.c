@@ -145,21 +145,7 @@ int main(int argc, char *argv[], char *env[]){
 		return EXIT_FAILURE;
 	}
 	
-/*
- * Write init status to file.
- * This enables other interface processes like php to read the set sensing inputs.
- */
-	for (i=0;i<4;i++){
-		if (SensingInput[i] == '0'){
-			InputStatusInit[i] = 'N';
-		}
-		else if (SensingInput[i] == '1'){
-			InputStatusInit[i] = '1'; // 1 Input 1 means low because of PNP (pull up) 
-		}
-	}
-	writeDigiInStatus(InputStatusInit);
 
-	
 	if (argv[5]!=0)
 	{
 		sensingCycleTime = atoi(argv[5])*1000; //sensing in xx ms
@@ -169,6 +155,21 @@ int main(int argc, char *argv[], char *env[]){
 		sensingCycleTime = 80000; //standard sensing time if nothing is set
 	}
 
+	/*
+	 * Write init status to file.
+	 * This enables other interface processes like php to read the set sensing inputs.
+	 */
+		for (i=0;i<sizeof(InputStatusInit);i++){
+			if (SensingInput[i] == '0'){
+				InputStatusInit[i] = 'N';
+			}
+			else if (SensingInput[i] == '1'){
+				InputStatusInit[i] = '1'; // 1 Input 1 means low because of PNP (pull up)
+			}
+		}
+		InputStatusInit[i] = '\0';
+		writeDigiInStatus(InputStatusInit);
+
 	while(runstop == 1)
 	{
 
@@ -177,7 +178,7 @@ int main(int argc, char *argv[], char *env[]){
 		 * 1 = low signal / 0 = high signal on input
 		 * N = Is the marker that this channel is not considered for sensing.
 		 */
-		for (i=0;i<sizeof(SensingInput)+1;i++)
+		for (i=0;i<sizeof(SensingInput);i++)
 		{
 			if (SensingInput[i] == '1')
 			{

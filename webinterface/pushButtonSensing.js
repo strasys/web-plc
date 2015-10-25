@@ -44,7 +44,7 @@ function getStatusLogin(callback1){
  * This function set's and get's the status of the push button sensing process.
  * If the sensing function is running st = 1 else 0.
  */
-function setgetStatuspushButtonSensingProcess(setget,setrunstopStatus, callback2){
+function setgetStatuspushButtonSensingProcess(setget,setrunstopStatus,inputActivationStatus, callback2){
 		setgetServer("post","pushButtonSensinghandler.php",function()
 			{
 				if (xhttp.readyState==4 && xhttp.status==200)
@@ -57,7 +57,8 @@ function setgetStatuspushButtonSensingProcess(setget,setrunstopStatus, callback2
 					callback2();
 					}
 				}
-			},"setgetpushButtonSensingProcessStatus="+setget+"&setrunstopStatus="+setrunstopStatus);		
+			},"setgetpushButtonSensingProcessStatus="+setget+"&setrunstopStatus="+setrunstopStatus+
+			"&sensingChannels="+inputActivationStatus);		
 }
 
 
@@ -85,7 +86,48 @@ function setButtonColorBadge(ButtonNumber){
 	 
 }
 
-function setgetSensingIn(){
+sortoutcache = new Date();
+
+//This function will be called once at start and after
+//set of the input naming.
+//The names of the inputs are stored in a XML file on the server.
+function getNamingXMLData(callback3){
+	setgetServer("GET","GPIOin.xml?sortoutcache="+sortoutcache.valueOf(),function()
+			{
+				if (xhttp.readyState==4 && xhttp.status==200)
+					{
+					var getXMLData = xhttp.responseXML;
+					var w = getXMLData.getElementsByTagName("InputName");
+					var z = getXMLData.getElementsByTagName("InputName");
+					var i = 0;
+					for (i=0; i<w.length; i++){
+						document.getElementById("checkboxTextpushButtonSensing"+i).innerHTML=z[i].childNodes[0].nodeValue;	
+						}
+					if (callback3){
+						callback3();
+					}
+					
+					}
+			});		
+}
+/*
+ * Get and set either an input is set for push button sensing.
+ */
+
+function setgetpushButtonSensingActivation(setget, callback4){
+	inputActivationStatus = new Array();
+	if (setget == "set"){
+		for (i=0;i<4;i++){
+			inputActivationStatus[i] = document.getElementById("checkboxpushButtonSensing"+i).checked;
+			}
+		}
+	
+	if(setget == "get"){
+		
+	}
+	if (callback4){
+		callback4();
+	}
 	
 }
 
@@ -95,12 +137,14 @@ function ButtonpushButtonSensingAction(ButtonNumber){
 		if(StatuspushButtonSensingProcess[0] == 1){
 			setgetStatuspushButtonSensingProcess("s","0", function(){
 				setButtonColorBadge(0);
-			})
+			});
 		}
 		if(StatuspushButtonSensingProcess[0] == 0){
-			setgetStatuspushButtonSensingProcess("s","1", function(){
-				setButtonColorBadge(0);
-			})
+			setgetpushButtonSensingActivation("set", function(){
+				setgetStatuspushButtonSensingProcess("s","1", inputActivationStatus, function(){
+					setButtonColorBadge(0);
+				});
+			});
 		}
 		break;
 	}
@@ -109,8 +153,10 @@ function ButtonpushButtonSensingAction(ButtonNumber){
 // load functions ad webpage opening
 function startatLoad(){
 	loadNavbar(function(){
+		getNamingXMLData(function(){
 			refreshStatus();
-		});
+		});	
+	});
 }
 window.onload=startatLoad();
 
@@ -148,7 +194,7 @@ window.onload=startatLoad();
   * Refresh status of pushButtonSensing information's.
   */
  function refreshStatus(){
-	 	setgetStatuspushButtonSensingProcess("g","", function(){
+	 	setgetStatuspushButtonSensingProcess("g","","", function(){
 			setButtonColorBadge(0);
 		});
 		setTimeout(function(){refreshStatus()}, 5000);

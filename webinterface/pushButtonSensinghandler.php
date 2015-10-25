@@ -13,6 +13,7 @@ unset($arr);
 $get = "g";
 $set = "s";
 
+
 if ($getLoginStatus == $get)
 {
 	transfer_javascript($loginstatus, $adminstatus);
@@ -47,14 +48,14 @@ if ($setgetpushButtonSensingProcessStatus == $get)
 
 if ($setgetpushButtonSensingProcessStatus == $set)
 {
-	$statusFile = fopen("flock /tmp/pushButtonSensingRunStop /tmp/pushButtonSensingRunStop.txt", "w");
+	$statusFile = fopen("/tmp/pushButtonSensingRunStop.txt", "w");
 	if ($statusFile == false)
 	{
-		$errorMsg = "Error: fopen\"/tmp/composerstatus.txt\", \"w\" ";
-		break;
+		$errorMsg = "Error: file could not be opened! ";
 	}
-	elseif ($statusFile)
+	elseif ($statusFile == true)
 	{
+		
 		switch ($setrunstopStatus)
 		{
 			case 0:
@@ -74,7 +75,7 @@ if ($setgetpushButtonSensingProcessStatus == $set)
 		
 		if ($statusWord == "run")
 		{
-			$cmd = " /usr/lib/cgi-bin/pushButtonSensing $sensingChannels $sensingCycle";
+			$cmd = " /usr/lib/cgi-bin/pushButtonSensing 0 1 0 1";
 			exec($cmd . " > /dev/null &");
 		}
 	}

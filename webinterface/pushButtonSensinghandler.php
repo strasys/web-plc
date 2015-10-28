@@ -33,7 +33,7 @@ if ($setgetpushButtonSensingProcessStatus == $get)
 		$statusWord = trim(fgets($statusFile, 5));
 		fclose($status);
 	}
-
+	
 	switch ($statusWord){
 		case "stop":
 			$runstop = 0;
@@ -42,7 +42,28 @@ if ($setgetpushButtonSensingProcessStatus == $get)
 			$runstop = 1;
 			break;
 	}
-	transfer_javascript($loginstatus, $adminstatus, $runstop);
+/*
+ * The following part of the get attribute was set to get the set status 
+ * of the push button sensing inputs.
+*/
+	$statusFile = fopen("/tmp/pushButtonSensingDigiInStatus.txt","r");
+	if ($statusFile == false)
+	{
+		$errorMsg = "Could not read \"pushButtonSensingDigiInStatus.txt\"! 
+		Start sensing first time to generate the file!";
+	}
+	elseif ($statusFile)
+	{
+		for (i=0;i<4;i++){
+		$line = fgets($statusFile, 30);
+		$DigiInStatus = explode(":",$line);
+		$DigiIN[i] = $DigiInStatus[2];
+		i++;
+		}
+		
+	}
+	
+	transfer_javascript($loginstatus, $adminstatus, $runstop, $errorMsg, $DigiIN);
 }
 
 if ($setgetpushButtonSensingProcessStatus == $set)
@@ -81,16 +102,25 @@ if ($setgetpushButtonSensingProcessStatus == $set)
 	transfer_javascript($loginstatus, $adminstatus, $runstop, $errorMsg);
 }
 
+if ($)
 
-
-function transfer_javascript($loginstatus, $adminstatus, $runstop, $errorMsg)
+function transfer_javascript($loginstatus, $adminstatus, $runstop, $errorMsg, $DigiIN)
 {
 	$arr = array(	'loginstatus' => $loginstatus ,
 					'adminstatus' => $adminstatus ,
 					'runstop' => $runstop,
 					'errorMsg' => $errorMsg
 	);
-
+/* 
+ * The transfered data's are:
+ * N = Not selectet for Sensing
+ * 1 = Signal on Input low.
+ * 0 = Signal on Input high.
+*/ 
+	for (i=0;i<4;i++)
+	{
+	$arr[] = array_push($arr,'IN$i' => $DigiIN[i]);
+	}
 	echo json_encode($arr);
 }
 

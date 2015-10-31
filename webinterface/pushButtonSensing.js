@@ -40,9 +40,16 @@ function getStatusLogin(callback1){
 			}
 		},"getLoginStatus=g");		
 }
-/*
+/* 
+ * setgetpushButtonSensingStatus can be used to get the most actual status of the 
+ * push Button sensing process:
+ * With the information N, 1, 0
+ * N = No sensing
+ * 1 = sensing on, off (PNP positive negative positive)
+ * 0 = sensing off, on
  * This function set's and get's the status of the push button sensing process.
- * If the sensing function is running st = 1 else 0.
+ * If the sensing function is running runstop = 1 else 0.
+ * With errorMsg the PHP function transfers possible error messages.
  */
 function setgetStatuspushButtonSensingProcess(setget,setrunstopStatus,inputActivationStatus, callback2){
 		setgetServer("post","pushButtonSensinghandler.php",function()
@@ -51,8 +58,14 @@ function setgetStatuspushButtonSensingProcess(setget,setrunstopStatus,inputActiv
 				{
 				var setgetpushButtonSensingProcessStatus = JSON.parse(xhttp.responseText); 
 				
-				StatuspushButtonSensingProcess = [(setgetpushButtonSensingProcessStatus.runstop)
-				                         ];
+				StatuspushButtonSensingProcess = [(setgetpushButtonSensingProcessStatus.runstop),
+				                                  (setgetpushButtonSensingProcessStatus.errorMsg),
+				                                  (setgetpushButtonSensingProcessStatus.IN0),
+				                                  (setgetpushButtonSensingProcessStatus.IN1),
+				                                  (setgetpushButtonSensingProcessStatus.IN2),
+				                                  (setgetpushButtonSensingProcessStatus.IN3)
+				                                  ];
+				
 					if (callback2){
 					callback2();
 					}
@@ -117,31 +130,43 @@ function setgetpushButtonSensingActivation(setget, callback4){
 	inputActivationStatus = new Array();
 	if (setget == "set"){
 		for (i=0;i<4;i++){
-			if (document.getElementById("checkboxpushButtonSensing"+i).checked){
+			if (document.getElementById("inputcheckboxpushButtonSensing"+i).checked){
 			inputActivationStatus[i] = 1;
 			}
 			else
 			{
 				inputActivationStatus[i] = 0;
 			}
+			$("#inputcheckboxpushButtonSensing"+i).attr("disabled", "disabled");
+			$("#checkboxpushButtonSensing"+i).addClass("disabled");
 		}
+		
 	}
 	if(setget == "get"){
-		
+		for (i=0;i<4;i++){
+			$("#inputcheckboxpushButtonSensing"+i).removeAttr("disabled", "disabled");
+			$("#checkboxpushButtonSensing"+i).removeClass("disabled");
+		}	
 	}
 	if (callback4){
 		callback4();
-	}
-	
+	}	
 }
+
+/*
+ * pushButtonSensingActiviation 
+ */
 
 function ButtonpushButtonSensingAction(ButtonNumber){
 	switch (ButtonNumber){
 	case 0:
 		if(StatuspushButtonSensingProcess[0] == 1){
-			setgetStatuspushButtonSensingProcess("s","0","", function(){
-				setButtonColorBadge(0);
+			setgetpushButtonSensingActivation("get",function(){
+				setgetStatuspushButtonSensingProcess("s","0","", function(){
+					setButtonColorBadge(0);
+				});
 			});
+			
 		}
 		if(StatuspushButtonSensingProcess[0] == 0){
 			setgetpushButtonSensingActivation("set", function(){
@@ -153,6 +178,8 @@ function ButtonpushButtonSensingAction(ButtonNumber){
 		break;
 	}
 }
+
+
 
 // load functions ad webpage opening
 function startatLoad(){
@@ -197,9 +224,31 @@ window.onload=startatLoad();
  /*
   * Refresh status of pushButtonSensing information's.
   */
+
  function refreshStatus(){
 	 	setgetStatuspushButtonSensingProcess("g","","", function(){
 			setButtonColorBadge(0);
+			("#inputcheckboxpushButtonSensing0").prop("checked", true);
+			for(i=0;i<4;i++){
+				if ((StatuspushButtonSensingProcess[i+2] == 0) || (StatuspushButtonSensingProcess[i+2] == 1)){
+					("#inputcheckboxpushButtonSensing"+i).attr("checked", "checked");
+					if (StatuspushButtonSensingProcess[0] == 1){
+						("#inputcheckboxpushButtonSensing"+i).attr("disabled", "disabled");
+					}
+					else if (StatuspushButtonSensingProcess[0] == 0) {
+						("#inputcheckboxpushButtonSensing"+i).removeAttr("disabled", "disabled");
+					}
+				}
+				else if (StatuspushButtonSensingProcess[i+2] == "N"){
+					("#inputcheckboxpushButtonSensing"+i).removeAttr("checked", "checked");
+					if (StatuspushButtonSensingProcess[0] == 1){
+						("#inputcheckboxpushButtonSensing"+i).attr("disabled", "disabled");
+					}
+					else if (StatuspushButtonSensingProcess[0] == 0) {
+						("#inputcheckboxpushButtonSensing"+i).removeAttr("disabled", "disabled");
+					}
+				}
+			}
 		});
 		setTimeout(function(){refreshStatus()}, 5000);
 	}

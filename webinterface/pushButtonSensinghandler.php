@@ -54,11 +54,10 @@ if ($setgetpushButtonSensingProcessStatus == $get)
 	}
 	elseif ($statusFile)
 	{
-		for (i=0;i<4;i++){
+		for ($i=0;$i<4;$i++){
 		$line = fgets($statusFile, 30);
 		$DigiInStatus = explode(":",$line);
-		$DigiIN[i] = $DigiInStatus[2];
-		i++;
+		$DigiIN[$i] = trim($DigiInStatus[2]);
 		}
 		
 	}
@@ -102,7 +101,6 @@ if ($setgetpushButtonSensingProcessStatus == $set)
 	transfer_javascript($loginstatus, $adminstatus, $runstop, $errorMsg);
 }
 
-if ($)
 
 function transfer_javascript($loginstatus, $adminstatus, $runstop, $errorMsg, $DigiIN)
 {
@@ -117,9 +115,9 @@ function transfer_javascript($loginstatus, $adminstatus, $runstop, $errorMsg, $D
  * 1 = Signal on Input low.
  * 0 = Signal on Input high.
 */ 
-	for (i=0;i<4;i++)
+	for ($i=0;$i<4;$i++)
 	{
-	$arr[] = array_push($arr,'IN$i' => $DigiIN[i]);
+	$arr["IN$i"] = $DigiIN[$i];
 	}
 	echo json_encode($arr);
 }

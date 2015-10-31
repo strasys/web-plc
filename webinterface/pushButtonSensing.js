@@ -79,7 +79,7 @@ function setgetStatuspushButtonSensingProcess(setget,setrunstopStatus,inputActiv
 /*
  * This function sets the color and the badge description of the pushButtonSensing button.
  */
-function setButtonColorBadge(ButtonNumber){
+function setButtonColorBadge(ButtonNumber, callback7){
 	 switch (ButtonNumber){
 	 case 0:
 			if(StatuspushButtonSensingProcess[0] == 1){
@@ -96,7 +96,9 @@ function setButtonColorBadge(ButtonNumber){
 			}
 			break;
 	 }
-	 
+	 if (callback7){
+		 callback7();
+	 }
 }
 
 sortoutcache = new Date();
@@ -179,6 +181,54 @@ function ButtonpushButtonSensingAction(ButtonNumber){
 	}
 }
 
+/*
+ * updatecheckboxSensingStatus 
+ * This function 
+ */
+function updatecheckboxSensingStatus(callback5){
+	for(i=0;i<4;i++){
+		var x = document.getElementById("inputcheckboxpushButtonSensing"+i);
+		if ((StatuspushButtonSensingProcess[i+2] == 0) || (StatuspushButtonSensingProcess[i+2] == 1)){
+			x.checked = true;
+			if (StatuspushButtonSensingProcess[0] == 1){
+				x.setAttribute("disabled", "disabled");
+			}
+			else if (StatuspushButtonSensingProcess[0] == 0) {
+				x.removeAttribute("disabled");
+			}
+		}
+		else if (StatuspushButtonSensingProcess[i+2] == "N"){
+			x.checked = false;
+			if (StatuspushButtonSensingProcess[0] == 1){
+				x.setAttribute("disabled", "disabled");
+			}
+			else if (StatuspushButtonSensingProcess[0] == 0) {
+				x.removeAttribute("disabled");
+			}
+		}
+	}
+
+	if (callback5){
+		callback5();
+	}
+}
+/*
+ * The StatusinformationPushButtonSensing() is a function to print
+ * the status informations of the process.
+ */
+function StatusinformationPushButtonSensing(callback6){
+		//Function must be optimised to replace information in existing Elements once created.
+	for (i=0;i<4;i++){
+		var statusInfo = document.createElement("p");
+		var node = document.createTextNode("Eingang "+i+" : "+StatuspushButtonSensingProcess[i+2]);
+		statusInfo.appendChild(node);
+		var element = document.getElementById("StatusinformationPushButtonSensing");
+		element.appendChild(statusInfo);
+	}
+	if(callback6){
+		callback6();
+	}
+}
 
 
 // load functions ad webpage opening
@@ -227,28 +277,11 @@ window.onload=startatLoad();
 
  function refreshStatus(){
 	 	setgetStatuspushButtonSensingProcess("g","","", function(){
-			setButtonColorBadge(0);
-			("#inputcheckboxpushButtonSensing0").prop("checked", true);
-			for(i=0;i<4;i++){
-				if ((StatuspushButtonSensingProcess[i+2] == 0) || (StatuspushButtonSensingProcess[i+2] == 1)){
-					("#inputcheckboxpushButtonSensing"+i).attr("checked", "checked");
-					if (StatuspushButtonSensingProcess[0] == 1){
-						("#inputcheckboxpushButtonSensing"+i).attr("disabled", "disabled");
-					}
-					else if (StatuspushButtonSensingProcess[0] == 0) {
-						("#inputcheckboxpushButtonSensing"+i).removeAttr("disabled", "disabled");
-					}
-				}
-				else if (StatuspushButtonSensingProcess[i+2] == "N"){
-					("#inputcheckboxpushButtonSensing"+i).removeAttr("checked", "checked");
-					if (StatuspushButtonSensingProcess[0] == 1){
-						("#inputcheckboxpushButtonSensing"+i).attr("disabled", "disabled");
-					}
-					else if (StatuspushButtonSensingProcess[0] == 0) {
-						("#inputcheckboxpushButtonSensing"+i).removeAttr("disabled", "disabled");
-					}
-				}
-			}
+			setButtonColorBadge(0, function(){
+				updatecheckboxSensingStatus(function(){
+					StatusinformationPushButtonSensing();
+				});
+			});
 		});
 		setTimeout(function(){refreshStatus()}, 5000);
 	}

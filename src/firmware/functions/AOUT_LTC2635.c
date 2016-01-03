@@ -12,8 +12,10 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
+#include <fcntl.h>
 #include "I2C-handler.h"
 #include "AOUT_LTC2635.h"
+#include "accessorg.h"
 
 
 
@@ -27,6 +29,13 @@ int dacOUT2 = 2;
 void init_AOUT() {
 	char fopenModus[2] = {};
 	FILE *f = NULL;
+	char username[255];
+	long int uidresult[] = {0};
+	long int gidresult[] = {0};
+	long int uidowner[] = {0};
+	long int gidowner[] = {0};
+	long int fileprotection[] = {0};
+	int filedesc;
 
 	AOUT_set_internal_reference();
 	//For the first call the txt file will be generated with val = 0
@@ -41,6 +50,25 @@ void init_AOUT() {
 				"AOUT1=%4i:AOUT2=%4i",
 				0, 0);
 		fclose(f);
+
+	// Check if file has the defined uid (user ID) and gid (group ID)!
+			filedesc = open(AOUT_DIR, O_RDWR);
+
+			getinfofile(&filedesc, uidowner, gidowner, fileprotection);
+
+		//	printf("getinfofile call: \n uidowner : %li\n gidowner : %li\n fileprotection : %lo\n", uidowner[0], gidowner[0], fileprotection[0]);
+			strcpy(username, uid_Name);
+			getuidbyname(username, uidresult, gidresult);
+
+		//	printf("Result of function call:\n uid : %li\n gid : %li\n", uidresult[0], gidresult[0]);
+
+			if ((uidowner[0] != uidresult[0]) || (gidowner[0] != gidresult[0])){
+				if ((fchown(filedesc, uidresult[0], gidresult[0])) != 0){
+					fprintf(stderr, "%s\n", strerror(errno));
+				}
+			}
+
+			close(filedesc);
 
 	AOUT_set_value_DACn(dacOUT1, 0);
 	AOUT_set_value_DACn(dacOUT2, 0);

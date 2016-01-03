@@ -217,13 +217,21 @@ function updatecheckboxSensingStatus(callback5){
  * the status informations of the process.
  */
 function StatusinformationPushButtonSensing(callback6){
-		//Function must be optimised to replace information in existing Elements once created.
+		//Function must be optimized to replace information in existing Elements once created.
 	for (i=0;i<4;i++){
-		var statusInfo = document.createElement("p");
-		var node = document.createTextNode("Eingang "+i+" : "+StatuspushButtonSensingProcess[i+2]);
-		statusInfo.appendChild(node);
 		var element = document.getElementById("StatusinformationPushButtonSensing");
-		element.appendChild(statusInfo);
+		var tagInfo = element.getElementsByTagName("p");
+		var node = document.createTextNode("Eingang "+i+" : "+StatuspushButtonSensingProcess[i+2]);
+		var statusInfo = document.createElement("p");
+		if(tagInfo[i] != null){
+			var tagNodes = tagInfo[i].childNodes;
+			tagNodes[0].nodeValue = "Eingang "+i+" : "+StatuspushButtonSensingProcess[i+2];
+			//tagInfo[i].appendChild(node);
+		}
+		else {
+			statusInfo.appendChild(node);
+			element.appendChild(statusInfo);
+		}	
 	}
 	if(callback6){
 		callback6();
@@ -231,7 +239,7 @@ function StatusinformationPushButtonSensing(callback6){
 }
 
 
-// load functions ad webpage opening
+// load functions ad web page opening
 function startatLoad(){
 	loadNavbar(function(){
 		getNamingXMLData(function(){

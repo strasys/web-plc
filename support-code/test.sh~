@@ -1,0 +1,20 @@
+#!/bin/sh
+echo "Test wait for input"
+input = false
+while ($input)
+do
+	echo -n "Enter to continue (y/n) and press [ENTER]: "
+	read -n 1 status
+	if [$status == "n" | $status == "N"]
+	then
+		exit 2
+	elif [$status == "y" | $status == "Y"]
+	then
+		input = true
+	else
+		input = false
+	fi
+done
+
+echo "Danke\n"
+exit

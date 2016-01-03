@@ -12,6 +12,7 @@
 #define AOUT_LTC2635_H_
 
 #define AOUT_DIR "/usr/lib/cgi-bin/AOUTlastsetvalue.txt"
+#define uid_Name "www-data"
 
 void init_AOUT();
 

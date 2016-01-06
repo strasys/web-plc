@@ -22,7 +22,7 @@
  * EEPROM init:
  * it is needed to unbind the relevant EEPROM to read and write with this program
  * set circuit offset (= op-amp circuit on the strasys board):
- * ./PT100handler 1(=channel-number) s(=set) c(=circuit) 100.1(=calibration Resistor) 1(=int Number)
+ * ./PT100handler 1(=channel-number) s(=set) c(=circuit) 100.1(=calibration Resistor)
  * set wire offset (= compensation of resistance of 2 wire PT100 sensors):
  * ./PT100handler 1(=channel-number) s(=set) w(=wire) 10.0(=length of wire in meter) 0.25(= area of wire in mm²)
  * get temperature:

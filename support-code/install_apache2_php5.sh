@@ -67,7 +67,8 @@ echo "Reload apache2"
 service apache2 force-reload
 wait
 echo "copy set up - file default-ssl to sites-available"
-wget -nH --directory-prefix=/etc/apache2/sites-enabled/ --cut-dirs=3 -r -np http://HP1-strasser/privateplc/vers1_0/apache2setup/default-ssl
+wget -nH --directory-prefix=/etc/apache2/sites-available/ --cut-dirs=4 -r -np http://HP1-strasser/privateplc/vers1_0/startupservice/apache2setup/default-ssl
+
 wait
 echo "enable default-ssl"
 a2ensite default-ssl

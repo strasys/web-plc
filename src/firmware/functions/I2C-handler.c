@@ -19,10 +19,12 @@
 #include <string.h>
 
 #include "I2C-handler.h"
-
+// devices on i2c2 = naming on pin description
 int addr_RTC_MCP7940N = 0b01101111;  // = 0x6F I2C address of the RTC (MCP7940N)
 int addr_AOUT_LTC2635 = 0b0010000; // = 0x20 I2C address of the Analog Out (AOUT) LTC2635
 int addr_EEPROM = 0b1010100;  // = 0x54 I2C address of the 24AA256-EEPROM
+//Devices on i2c1 = naming on Pin description
+int addr_ADC_ADS1015 = 0b1001000; // = 0x48 I2C address of the ADS1015 ADC for PT1000
 
 int i2c_open(unsigned char bus, unsigned char addr) {
 	int file;

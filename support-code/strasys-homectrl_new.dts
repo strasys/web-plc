@@ -7,9 +7,10 @@
 *
 *Device tree description of home - controller 
 *Idea and development
-*strasys Dipl.-Ing. Johannes Strasser
+*strasys.at
+*Dipl.-Ing. Johannes Strasser
 *January 2014
-*
+*modified: 13th of January 2016
 */
 
 /dts-v1/;
@@ -17,8 +18,10 @@
 
 /{
        compatible = "ti,beaglebone", "ti,beaglebone-black";
-       part-number = "STRASYS-HOMECTRL";
+       part-number = "PRIVATEPLC";
        version = "00A0";
+       manufacturer = "strasys.at";
+       board-name = "privateplc";
        
        /* state the resources this cape uses */
 	exclusive-use =
@@ -37,6 +40,9 @@
 		"P8.18",	/* digiin:  gpio2_1 */
 		"P8.26",	/* digiin:  gpio1_29 */
 		"P9.12",	/* digiout:	gpio1_28 */
+		"P9.14",	/* digiin:  gpio1_18 */
+		"P9.17",	/* I2C1_SCL */
+		"P9.18",	/* I2C1_SDA */
 		"P9.24",	/* TTL-TXD_4D: uart1_txd */
 		"P9.26",	/* TTL-TXD_4D: uart1_rxd */
 		"P9.39",	/* AIN0 */
@@ -61,14 +67,16 @@
 		"gpio2_1",
 		"gpio1_29",
 		"gpio1_28",
+		"gpio1_18",
 		"uart1",
-		"tscadc";
+		"tscadc",
+		"i2c1";
 
        fragment@0 {
              target = <&am33xx_pinmux>;
             
              __overlay__ {
-                  digiout_test: strasys_homectrl_Pins {
+                  digi_in_out: strasys_homectrl_Pins {
 			pinctrl-single,pins = <
 				0x090 0x07 /* P8_07 66 OUTPUT MODE7 */
 				0x094 0x07 /* P8_08 67 OUTPUT MODE7 */
@@ -84,9 +92,8 @@
 				0x08c 0x27 /* P8_18 65 INPUT MODE7 */
 				0x07c 0x27 /* P8_26 61 INPUT MODE7 */
 				0x078 0x07 /* P9_12 60 OUTPUT MODE7 */
-				
-				
-         
+				0x048 0x27 /* P9_14 50 INPUT MODE7 */ 
+          				
                    /* OUTPUT  GPIO(mode7) 0x07 pulldown, 0x17 pullup, 0x?f no pullup/down */
 			       /* INPUT   GPIO(mode7) 0x27 pulldown, 0x37 pullup, 0x?f no pullup/down */
 
@@ -102,11 +109,12 @@
 			homectrl_helper: helper {
 				compatible = "bone-pinmux-helper";
 				pinctrl-names = "default";
-				pinctrl-0 = <&digiout_test>;
+				pinctrl-0 = <&digi_in_out>;
 				status = "okay";
 			};
 		};
 	};
+	
 	fragment@11 {
 		target = <&am33xx_pinmux>;
 		__overlay__ {
@@ -128,7 +136,45 @@
 		};
 	};
 
-	fragment@13 {
+	fragment@20 {
+		target = <&am33xx_pinmux>;
+		__overlay__ {
+			bb_i2c1_pins: pinmux_bb_i2c1_pins {
+				pinctrl-single,pins = <
+					0x158 0x72	/* spi0_d1.i2c1_sda, SLEWCTRL_SLOW | INPUT_PULLUP | MODE2 */
+					0x15c 0x72	/* spi0_cs0.i2c1_scl, SLEWCTRL_SLOW | INPUT_PULLUP | MODE2 */
+				>;
+			};
+		};
+	};
+	
+	fragment@21 {
+		target = <&i2c1>;	/* i2c1 is numbered correctly */
+		__overlay__ {
+			status = "okay";
+			pinctrl-names = "default";
+			pinctrl-0 = <&bb_i2c1_pins>;
+
+			/* this is the configuration part */
+			clock-frequency = <100000>;
+
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			/* add any i2c devices on the bus here */
+
+			// commented out example of a touchscreen (taken from BB-BONE-LCD7-01-00A4) */
+			// maxtouch@4a {
+			//	compatible = "mXT224";
+			//	reg = <0x4a>;
+			//	interrupt-parent = <&gpio4>;
+			//	interrupts = <19 0x0>;
+			//	atmel,irq-gpio = <&gpio4 19 0>;
+			// };
+		};
+	};
+	
+	fragment@30 {
 		target = <&ocp>;
 		__overlay__ {
 			/* avoid stupid warning */
@@ -156,23 +202,10 @@
 			};
 		};
 	};
-	
-//	i2c2: i2c@4819c000 {
-//    pinctrl-names = "default";
-//    pinctrl-0 = <&i2c2_pins>;
-//    status = "okay";
-//    clock-frequency = <100000>;
-//    
-//    RTC@6f {
-//    		reg = <0x6f>;
-//    };
-//	};    
-//
-//	i2c2_pins: pinmux_i2c2_pins {
-//    pinctrl-single,pins = <
-//    	0x178 0x73  
-//    	0x17c 0x73
-//   		 >;
-//	};		*/		
 
-};
+
+}; /* root node end */
+
+	
+
+

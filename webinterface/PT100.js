@@ -26,6 +26,10 @@ function getPT100values(callback1){
 			
 			PT100temperaturevalues = [(getPT100.temperature1),
 			                          (getPT100.temperature2),
+									  (getPT100.temperature11),
+									  (getPT100.temperature12),
+									  (getPT100.temperature13),
+									  (getPT100.temperature14),
 			                          (getPT100.loginstatus),
 			                          (getPT100.adminstatus)
 			                          ];
@@ -36,12 +40,17 @@ function getPT100values(callback1){
 		},"setgetPT100handler=g");		
 }
 
+
 function showPT100values(){
 	getPT100values(function(){
 		if (PT100temperaturevalues[2])
 			{
 			$("#badgePT1001").text(PT100temperaturevalues[0]+" °C");
 			$("#badgePT1002").text(PT100temperaturevalues[1]+" °C");
+		//	$"#badgePT10001).text(PT100temperaturevalues[2]+" °C");
+			for(i=0;i<5;i++){
+				$("#badgePT1000"+(i+1)).text(PT100temperaturevalues[i+2]+" °C");
+			}
 			}
 		else
 			{
@@ -50,7 +59,6 @@ function showPT100values(){
 	});
 	setTimeout(function(){showPT100values()}, 10000);
 }
-
 
 // load functions ad webpage opening
 function startatLoad(){

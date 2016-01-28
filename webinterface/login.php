@@ -96,11 +96,19 @@ $userfile = fopen("user.txt","r");
 		
 		//store individual salt in database
 		//look if user is allready stoard in data base
-		$usernameexistslogedin = false;
+		$usernameexistslogedin = false;	
 		
-		$staylogedinfile = fopen ("userlogedin.txt","r");
+	//	if (!file_exists('userlogedin.txt'){
+	//		exec('file="./userlogedin.txt"');
+	//		exec('chown root:www-data userlogedin.txt');
+	//		exec('chmod g+rw userlogedin.txt');
+	//	}
+		
+		
+		$staylogedinfile = fopen ('userlogedin.txt','r');
 		if ($staylogedinfile)
 		{
+		
 		//check if user does already exist in "userlogedin.txt"
 			while (!feof($staylogedinfile))
 			{
@@ -154,9 +162,9 @@ $userfile = fopen("user.txt","r");
 			}
 			else
 			{
-				$staylogedinfile = fopen ("userlogedin.txt","a");
-				fwrite($staylogedinfile, $username.":".$salt."\n");
-				fclose($staylogedinfile);
+			$staylogedinfile = fopen ("userlogedin.txt","a");
+			fwrite($staylogedinfile, $username.":".$salt."\n");
+			fclose($staylogedinfile);
 			}
 		}
 	}	

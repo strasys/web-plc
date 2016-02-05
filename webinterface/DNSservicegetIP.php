@@ -1,10 +1,10 @@
 <?php
-// Gibt an welche PHP-Fehler überhaupt angezeigt werden
+// Gibt an welche PHP-Fehler ï¿½berhaupt angezeigt werden
 error_reporting(E_ALL | E_STRICT);
 // Um die Fehler auch auszugeben, aktivieren wir die Ausgabe
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-// Da man in einem Produktivsystem üblicherweise keine Fehler ausgeben
+// Da man in einem Produktivsystem ï¿½blicherweise keine Fehler ausgeben
 // will sondern sie nur mitloggen will, bietet es sich an dort die
 // Ausgabe der Fehler zu deaktivieren und sie stattdessen in ein Log-File
 // schreiben zu lassen
@@ -41,10 +41,14 @@ while ($loopstatus)
 	//sudo apt-get install php5-curl => needed
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, 'http://dns.strasys.at/getclientIP.php');
+	//curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	//curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 	curl_setopt($ch, CURLOPT_POST, count($data));
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-	curl_exec($ch);
+	//curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+	$return = curl_exec($ch);
 	curl_close($ch);
+	
 	/*
 	//start request
 

@@ -12,11 +12,11 @@ class dnsloopcontrol
 
 function runstop()
 {
-$statusFile = fopen("flock /tmp/DNSservicestatuslock /tmp/DNSservicestatus.txt","r");
+$statusFile = fopen("/tmp/DNSservicestatus.txt","r");
 if ($statusFile == false)
 {
 	fclose($statusFile);
-	$statusFile = fopen("/tmp/dnsstatus.txt", "w");
+	$statusFile = fopen("/tmp/DNSservicestatus.txt", "w");
 	fwrite($statusFile, "stop");
 	fclose($statusFile);
 	$statusbool = false;

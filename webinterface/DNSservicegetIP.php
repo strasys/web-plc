@@ -40,12 +40,12 @@ while ($loopstatus)
 	set_time_limit(5);
 	//sudo apt-get install php5-curl => needed
 	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, 'http://dns.strasys.at/getclientIP.php');
-	//curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	//curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+	curl_setopt($ch, CURLOPT_URL, 'https://strasys.at/dns/getclientIP.php');
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 	curl_setopt($ch, CURLOPT_POST, count($data));
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-	//curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 	$return = curl_exec($ch);
 	curl_close($ch);
 	

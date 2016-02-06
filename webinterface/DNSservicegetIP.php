@@ -18,7 +18,7 @@ $dnsloop = new dnsloopcontrol();
 
 $loopstatus = true;
 //The device ID shall be stored in the final basic setup *.xml.
-$deviceIDinfo = "00022016";
+$deviceIDinfo = "00012016";
 
 $data = array(
 	'deviceID' => $deviceIDinfo

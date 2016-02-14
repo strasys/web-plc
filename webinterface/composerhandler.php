@@ -21,7 +21,7 @@ if ($setgetComposerProcessStatus == $get)
 	$statusFile = fopen("/tmp/composerstatus.txt", "r");
 	if ($statusFile == false)
 	{
-		$statusFile = fopen("/tmp/composerstatus.txt", "w");
+		$statusFile = fopen("flock /tmp/composerstatuslock /tmp/composerstatus.txt", "w");
 		fwrite($statusFile, "stop");
 		fclose($statusFile);
 		$statusWord = "stop";
@@ -45,7 +45,7 @@ if ($setgetComposerProcessStatus == $get)
 
 if ($setgetComposerProcessStatus == $set)
 {
-	$statusFile = fopen("/tmp/composerstatus.txt", "w");
+	$statusFile = fopen("flock /tmp/composerstatuslock /tmp/composerstatus.txt", "w");
 	if ($statusFile == false)
 	{
 		$errorMsg = "Error: fopen\"/tmp/composerstatus.txt\", \"w\" ";

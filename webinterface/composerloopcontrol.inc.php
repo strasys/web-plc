@@ -16,7 +16,7 @@ $statusFile = fopen("/tmp/composerstatus.txt","r");
 if ($statusFile == false)
 {
 	fclose($statusFile);
-	$statusFile = fopen("/tmp/composerstatus.txt", "w");
+	$statusFile = fopen("flock /tmp/composerstatuslock /tmp/composerstatus.txt", "w");
 	fwrite($statusFile, "stop");
 	fclose($statusFile);
 	$statusbool = false;

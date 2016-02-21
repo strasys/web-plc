@@ -45,21 +45,8 @@
     border:solid 1px black
 }
 
-
-.panel-info {
-  border-color: #cbd9fb;
-}
-
-.panel-info > .panel-heading {
-background: #e2e9fb;
-color: #005bea;
-border-color: #cbd9fb; 
-}
-
-/* badge - info - custom color */
-
-.alert-info {
-  color: #32c82d;
-  background-color: #efefef;
-}
-
+@brand-primary: darken(#428bca, 6.5%); // #337ab7
+@brand-success: #5cb85c;
+@brand-info:    #005bea;
+@brand-warning: #f0ad4e;
+@brand-danger:  #d9534f;

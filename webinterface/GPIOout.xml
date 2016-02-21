@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GPIOout>
 <OUT>
-<ButtonName>Out 1</ButtonName>
+<ButtonName>Haustür</ButtonName>
 </OUT>
 <OUT>
 <ButtonName>Out 2</ButtonName>

@@ -57,7 +57,7 @@ function showPT100values(){
 			window.location.replace("login.html");
 			}
 	});
-	setTimeout(function(){showPT100values()}, 10000);
+	setTimeout(function(){showPT100values()}, 1000);
 }
 
 // load functions ad webpage opening

@@ -52,6 +52,7 @@
 		"P9.33",	/* AIN4 */
 		"P9.36",	/* AIN5 */
 		"P9.35",	/* AIN6 */
+		"P8.27",	/* digiout: gpio2_22 */
 		/* the hardware IP uses */
 		"gpio2_2",
 		"gpio2_3",
@@ -68,6 +69,7 @@
 		"gpio1_29",
 		"gpio1_28",
 		"gpio1_18",
+		"gpio2_22",
 		"uart1",
 		"tscadc",
 		"i2c1";
@@ -93,6 +95,7 @@
 				0x07c 0x27 /* P8_26 61 INPUT MODE7 */
 				0x078 0x07 /* P9_12 60 OUTPUT MODE7 */
 				0x048 0x27 /* P9_14 50 INPUT MODE7 */ 
+				0x0e0 0x07 /* P8_27 86 OUTPUT MODE7 */
           				
                    /* OUTPUT  GPIO(mode7) 0x07 pulldown, 0x17 pullup, 0x?f no pullup/down */
 			       /* INPUT   GPIO(mode7) 0x27 pulldown, 0x37 pullup, 0x?f no pullup/down */

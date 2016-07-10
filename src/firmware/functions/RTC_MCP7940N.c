@@ -21,14 +21,14 @@
 
 RTC RTC_info;
 
-void init_RTC() {
+void init_RTC(int I2CAddress) {
 
 	int reg = 0x03;	//check in reg 0x03 Bit 5 = OSCON = 1 if the oscillator is running
 	unsigned char buf[2] = { 0 };
 	int OSCON, VBATEN;
 	int handler;
 
-	handler = i2c_open(I2C2_path, addr_RTC_MCP7940N);
+	handler = i2c_open(I2CAddress, addr_RTC_MCP7940N);
 	i2c_write_byte(handler, reg);
 	i2c_read_byte(handler, buf);
 

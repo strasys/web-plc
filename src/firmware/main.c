@@ -3,7 +3,6 @@
  *
  *  Created on: 27.09.2014
  *      Author: Johannes Strasser
- *      Author:
  */
 
 
@@ -28,10 +27,10 @@
 
 void init(void){
 	//char command[255];
-	init_RTC();
-	init_GPIO();
-	init_AOUT();
-	EEPROMinit(1, 54);
+	init_RTC(I2C1_path);
+	init_GPIO(2);
+	//init_AOUT();
+	//EEPROMinit(1, 54);
 	//unbind EEPROM from
 	//sprintf(command, "/usr/lib/cgi-bin/PT100handler i");
 	//system(command);

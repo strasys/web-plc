@@ -48,22 +48,22 @@ unsigned int initStatusOut = 0b00000000; // Defines the initial value set of the
 //definition: 1 = "out"; 0 = "in"
 //def.matrix: 0 = PortNumber; 1 = Input =0/Output=1; 2 = Initial value of Output pin
 unsigned int IN_OUT_2[][3] = {
-		{ 66, 1, 0},	// P8_07 66 OUTPUT "OUT4"
-		{ 67, 1, 0},	// P8_08 67 OUTPUT "OUT3"
-		{ 69, 1, 0},	// P8_09 69 OUTPUT "OUT2"
 		{ 68, 1, 0},	// P8_10 68 OUTPUT "OUT1"
-		{ 45, 1, 0},	// P8_11 45 OUTPUT "OUT8"
-		{ 44, 1, 0},	// P8_12 44 OUTPUT "OUT7"
-		{ 23, 1, 0},	// P8_13 23 OUTPUT "OUT6"
+		{ 69, 1, 0},	// P8_09 69 OUTPUT "OUT2"
+		{ 67, 1, 0},	// P8_08 67 OUTPUT "OUT3"
+		{ 66, 1, 0},	// P8_07 66 OUTPUT "OUT4"
 		{ 26, 1, 0},	// P8_14 26 OUTPUT "OUT5"
-		{ 47, 0,  },	// P8_15 47 INPUT "IN4"
-		{ 46, 0,  },	// P8_16 46 INPUT "IN3"
-		{ 27, 0,  },	// P8_17 27 INPUT "IN2"
-		{ 65, 0,  },	// P8_18 65 INPUT "IN1"
+		{ 23, 1, 0},	// P8_13 23 OUTPUT "OUT6"
+		{ 44, 1, 0},	// P8_12 44 OUTPUT "OUT7"
+		{ 45, 1, 0},	// P8_11 45 OUTPUT "OUT8"
 		{ 86, 1, 0},	// P8_27 86 OUTPUT "OUT9"
 		{ 88, 1, 0},	// P8_28 88 OUTPUT "OUT10"
 		{ 87, 1, 0},	// P8_29 87 OUTPUT "OUT11"
 		{ 89, 1, 0},	// P8_30 89 OUTPUT "OUT12"
+		{ 65, 0,  },	// P8_18 65 INPUT "IN1"
+		{ 27, 0,  },	// P8_17 27 INPUT "IN2"
+		{ 46, 0,  },	// P8_16 46 INPUT "IN3"
+		{ 47, 0,  },	// P8_15 47 INPUT "IN4"
 		{ 76, 0,  },	// P8_39 76 INPUT "IN5"
 		{ 77, 0,  },	// P8_40 77 INPUT "IN6"
 		{ 74, 0,  },	// P8_41 74 INPUT "IN7"
@@ -90,7 +90,7 @@ void init_GPIO(int devicetype) {
 			//The following for loop sets all OUT_x defined pins
 				//as defined
 
-				for (i = 0; !IN_OUT_1 == 0; ++i) {
+				for (i = 0; !IN_OUT_1[i][0] == 0; ++i) {
 					gpio_export(IN_OUT_1[i][0]);
 					gpio_set_direction(IN_OUT_1[i][0], IN_OUT_1[i][1]);
 				}

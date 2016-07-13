@@ -1,7 +1,7 @@
 /*
  * RTChandler.c
  *
- *  Created on: 08.11.2014
+ *  Created on: 12.07.2016
  *      Author: Johannes Strasser
  *
  *This program is supposed to be called from the server
@@ -35,7 +35,7 @@ int main(int argc, char *argv[], char *env[]){
 		//Value = GPIOvalue;
 		printf("Num=%d Value=%d\n",Num, Value);
 		printf("Value=%d\n", Value);
-		gpio_set_value(IN_OUT_1[Num][0], Value);
+		gpio_set_value(IN_OUT_2[Num][0], Value);
 		//for (i = 0; i < 8; i++){
 		//		GPIOstatval[i] = gpio_get_value(IN_OUT[i][0]);
 		//		printf("%d\n", GPIOstatval[i]);
@@ -47,14 +47,14 @@ int main(int argc, char *argv[], char *env[]){
 
 		if ((InOut == 'O')){
 			for (i = 0; i < 8; i++){
-			GPIOstatval[i] = gpio_get_value(IN_OUT_1[i][0]);
+			GPIOstatval[i] = gpio_get_value(IN_OUT_2[i][0]);
 			printf("%d\n", GPIOstatval[i]);
 			}
 		}
 
 		else if ((InOut == 'I')){
 			for (i = 8; i < 12; i++){
-			GPIOstatval[i] = gpio_get_value(IN_OUT_1[i][0]);
+			GPIOstatval[i] = gpio_get_value(IN_OUT_2[i][0]);
 			printf("%d\n", GPIOstatval[i]);
 			}
 		}

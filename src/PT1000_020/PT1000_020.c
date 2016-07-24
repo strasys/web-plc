@@ -21,12 +21,13 @@ void calctemp_Celsius(int channel, double *t_celsius){
 	//get AINval from ADC
 	AINval = getADCPT1000singleval(channel);
 //Hardware PT1000 Funktion EL-100-020-020
-	A = pow(10, -7);
+	A = pow(10, -6);
 	B = AINval * AINval;
+	//printf("AINval = %i\n", AINval);
 	//Hardware related function.
 	//Derived from hardware design simulation.
 	//Trend function generated with spread sheet trend line
-	t_celsius[0] = -5.501 * A * B + 0.041*AINval-41.291;
+	t_celsius[0] = -2.201 * A * B + 0.081*AINval-41.291;
 }
 
 void calctemp_Kelvin(int channel, double *t_kelvin){
@@ -35,12 +36,12 @@ void calctemp_Kelvin(int channel, double *t_kelvin){
 	//get AINval from ADC
 	AINval = getADCPT1000singleval(channel);
 	//Hardware PT1000 Funktion
-	A = pow(10, -7);
+	A = pow(10, -6);
 	B = AINval * AINval;
 	//Hardware related function.
 	//Derived from hardware design simulation.
 	//Trend function generated with spread sheet trend line
-	t_celsius = -5.501 * A * B + 0.041*AINval-41.291;
+	t_celsius = -2.201 * A * B + 0.081*AINval-41.291;
 	t_kelvin[0] = t_celsius + 273.15;
 }
 

@@ -45,19 +45,21 @@ int main(int argc, char *argv[], char *env[]){
 	if ((setget == 'g')){
 		sscanf(argv[2], "%c", &InOut);
 
-		if ((InOut == 'O')){
+		if ((InOut == 'I')){
+					for (i = 12; i < 16; i++){
+					GPIOstatval[i-12] = gpio_get_value(IN_OUT_2[i][0]);
+					printf("%d\n", GPIOstatval[i-12]);
+					}
+				}
+
+		else if ((InOut == 'O')){
 			for (i = 0; i < 8; i++){
 			GPIOstatval[i] = gpio_get_value(IN_OUT_2[i][0]);
 			printf("%d\n", GPIOstatval[i]);
 			}
 		}
 
-		else if ((InOut == 'I')){
-			for (i = 8; i < 12; i++){
-			GPIOstatval[i] = gpio_get_value(IN_OUT_2[i][0]);
-			printf("%d\n", GPIOstatval[i]);
-			}
-		}
+
 	}
 
 	return 0;

@@ -21,7 +21,7 @@
 
 RTC RTC_info;
 
-void init_RTC(int I2CAddress) {
+void init_RTC(unsigned char I2CAddress) {
 
 	int reg = 0x03;	//check in reg 0x03 Bit 5 = OSCON = 1 if the oscillator is running
 	unsigned char buf[2] = { 0 };
@@ -59,12 +59,12 @@ void RTC_start_oscillator(int handler) {
 	RTC_info.on = 1;
 }
 
-int RTC_get_seconds() {
+int RTC_get_seconds(unsigned char I2CAddress) {
 	int handler, reg = 0x00;// in reg 0x00 Bit 0:3 0-9 sec. and 4:6 10 Seconds 0-5
 	unsigned char buf[1] = { 0 };
 	unsigned int seconds, secondsten;
 
-	handler = i2c_open(I2C2_path, addr_RTC_MCP7940N);
+	handler = i2c_open(I2CAddress, addr_RTC_MCP7940N);
 	i2c_write_byte(handler, reg);
 	i2c_read_byte(handler, buf);
 	i2c_close(handler);
@@ -76,7 +76,7 @@ int RTC_get_seconds() {
 	return (RTC_info.seconds);
 }
 
-int RTC_set_seconds(int seconds) {
+int RTC_set_seconds(int seconds, unsigned char I2CAddress) {
 	int handler, reg = 0x00;
 	unsigned char buf[2] = { reg, 0 }; //will start as well the clock if not already running
 
@@ -90,19 +90,19 @@ int RTC_set_seconds(int seconds) {
 	buf[1] = ((secondsten.quot & 0b00000111) << 4)
 			| ((seconds - secondsten.quot * 10) & 0b10001111) | 0b10000000;
 
-	handler = i2c_open(I2C2_path, addr_RTC_MCP7940N);
+	handler = i2c_open(I2CAddress, addr_RTC_MCP7940N);
 	i2c_write(handler, buf, 2);
 	i2c_close(handler);
 
 	return (1);
 }
 
-int RTC_get_minutes() {
+int RTC_get_minutes(unsigned char I2CAddress) {
 	int handler, reg = 0x01; // in reg 0x01 Bit 0:3 0-9 min. and 4:6 10 minutes 0-5
 	unsigned char buf[1] = { 0 };
 	unsigned int minutesten, minutessingle;
 
-	handler = i2c_open(I2C2_path, addr_RTC_MCP7940N);
+	handler = i2c_open(I2CAddress, addr_RTC_MCP7940N);
 	i2c_write_byte(handler, reg);
 	i2c_read_byte(handler, buf);
 	i2c_close(handler);
@@ -115,7 +115,7 @@ int RTC_get_minutes() {
 	return (RTC_info.minutes);
 }
 
-int RTC_set_minutes(int minutes) {
+int RTC_set_minutes(int minutes, unsigned char I2CAddress) {
 	int handler, reg = 0x01;
 	unsigned char buf[2] = { reg, 0 };
 
@@ -129,7 +129,7 @@ int RTC_set_minutes(int minutes) {
 	buf[1] = ((minutesten.quot & 0b00000111) << 4)
 			| ((minutes - minutesten.quot * 10) & 0b00001111);
 
-	handler = i2c_open(I2C2_path, addr_RTC_MCP7940N);
+	handler = i2c_open(I2CAddress, addr_RTC_MCP7940N);
 	i2c_write(handler, buf, 2);
 	i2c_close(handler);
 
@@ -139,12 +139,12 @@ int RTC_set_minutes(int minutes) {
  * The RTC_get_hours function is only for the 24 hour mode!
  *
  */
-int RTC_get_hours() {
+int RTC_get_hours(unsigned char I2CAddress) {
 	int handler, reg = 0x02; // in reg 0x02 Bit 0:3 0-9 h and 4:5 10 ten hours bit 6 = 1 = 12 hour mode
 	unsigned char buf[1] = { 0 };
 	unsigned int hours, hoursten;
 
-	handler = i2c_open(I2C2_path, addr_RTC_MCP7940N);
+	handler = i2c_open(I2CAddress, addr_RTC_MCP7940N);
 	i2c_write_byte(handler, reg);
 	i2c_read_byte(handler, buf);
 	i2c_close(handler);
@@ -158,7 +158,7 @@ int RTC_get_hours() {
 /*
  * The RTC_set_hours function is only for the 24 hour mode!
  */
-int RTC_set_hours(int hours) {
+int RTC_set_hours(int hours,unsigned char I2CAddress) {
 	int handler, reg = 0x02;
 	unsigned char buf[2] = { reg, 0 };
 
@@ -172,7 +172,7 @@ int RTC_set_hours(int hours) {
 	buf[1] = ((hoursten.quot & 0b00000011) << 4)
 			| ((hours - hoursten.quot * 10) & 0b00001111); //To simplify set will only done in 24h mode Bit 6 = 0
 
-	handler = i2c_open(I2C2_path, addr_RTC_MCP7940N);
+	handler = i2c_open(I2CAddress, addr_RTC_MCP7940N);
 	i2c_write(handler, buf, 2);
 	i2c_close(handler);
 
@@ -196,13 +196,13 @@ void RTC_set_hourmode(int handler, int mode) { //mode 0: 24h and mode 1: 12h mod
 	i2c_write(handler, buf1, 2);
 }
 
-int RTC_get_dayOfWeek() {
+int RTC_get_dayOfWeek(unsigned char I2CAddress) {
 
 	int handler, reg = 0x03;//in reg 0x03 Bit 0:2 day, Bit 3 pufferd by battery if Vss fails, Bit 4 is set to 1 if no VSS, Bit 5 is 1 when the Oscillator is running
 	unsigned char buf[1] = { 0 };
 	unsigned int day;
 
-	handler = i2c_open(I2C2_path, addr_RTC_MCP7940N);
+	handler = i2c_open(I2CAddress, addr_RTC_MCP7940N);
 	i2c_write_byte(handler, reg);
 	i2c_read_byte(handler, buf);
 	i2c_close(handler);
@@ -213,7 +213,7 @@ int RTC_get_dayOfWeek() {
 	return (RTC_info.dayOfWeek);
 }
 
-int RTC_set_dayOfWeek(int _day) {
+int RTC_set_dayOfWeek(int _day, unsigned char I2CAddress) {
 	int handler, reg = 0x03;
 	if (_day > 7) {
 		printf("ERROR day: %i/n", _day);
@@ -223,20 +223,20 @@ int RTC_set_dayOfWeek(int _day) {
 	unsigned char buf[2] = { reg, 0 };
 	buf[1] = _day | 0b00001000;
 
-	handler = i2c_open(I2C2_path, addr_RTC_MCP7940N);
+	handler = i2c_open(I2CAddress, addr_RTC_MCP7940N);
 	i2c_write(handler, buf, 2);
 	i2c_close(handler);
 
 	return (_day);
 }
 
-int RTC_get_day() {
+int RTC_get_day(unsigned char I2CAddress) {
 
 	int handler, reg = 0x04;//in reg 0x04 Bit 0:3 date 0 - 9, Bit 4:5 ten's of month
 	unsigned char buf[1] = { 0 };
 	unsigned int datesingle, dateten;
 
-	handler = i2c_open(I2C2_path, addr_RTC_MCP7940N);
+	handler = i2c_open(I2CAddress, addr_RTC_MCP7940N);
 	i2c_write_byte(handler, reg);
 	i2c_read_byte(handler, buf);
 	i2c_close(handler);
@@ -249,7 +249,7 @@ int RTC_get_day() {
 	return (RTC_info.day);
 }
 
-int RTC_set_day(int day) {
+int RTC_set_day(int day,unsigned char I2CAddress) {
 	int handler, reg = 0x04;
 	unsigned char buf[2] = { reg, 0 };
 	if (day > 31 || day < 1) {
@@ -262,19 +262,19 @@ int RTC_set_day(int day) {
 	buf[1] = ((dateten.quot & 0b00000011) << 4)
 			| ((day - dateten.quot * 10) & 0b00001111);
 
-	handler = i2c_open(I2C2_path, addr_RTC_MCP7940N);
+	handler = i2c_open(I2CAddress, addr_RTC_MCP7940N);
 	i2c_write(handler, buf, 2);
 	i2c_close(handler);
 
 	return (day);
 }
 
-int RTC_get_year() {
+int RTC_get_year(unsigned char I2CAddress) {
 	int handler, reg = 0x06;//int reg 0x06 Bit 0:3 year 0 - 9, Bit 4:7 tens of years
 	unsigned char buf[1] = { 0 };
 	unsigned int yearsingle, yearten;
 
-	handler = i2c_open(I2C2_path, addr_RTC_MCP7940N);
+	handler = i2c_open(I2CAddress, addr_RTC_MCP7940N);
 	i2c_write_byte(handler, reg);
 	i2c_read_byte(handler, buf);
 	i2c_close(handler);
@@ -287,7 +287,7 @@ int RTC_get_year() {
 	return (RTC_info.year);
 }
 
-int RTC_set_year(int year) {
+int RTC_set_year(int year, unsigned char I2CAddress) {
 	int handler, reg = 0x06;
 	unsigned char buf[2] = { reg, 0 };
 	if (year > 99) {
@@ -300,18 +300,18 @@ int RTC_set_year(int year) {
 	buf[1] = ((yearten.quot & 0b00001111) << 4)
 			| ((year - yearten.quot * 10) & 0b00001111);
 
-	handler = i2c_open(I2C2_path, addr_RTC_MCP7940N);
+	handler = i2c_open(I2CAddress, addr_RTC_MCP7940N);
 	i2c_write(handler, buf, 2);
 	i2c_close(handler);
 
 	return (year);
 }
 
-int RTC_get_month() {
+int RTC_get_month(unsigned char I2CAddress) {
 	int handler, reg = 0x05;//in reg 0x05 Bit 0:3 month 0 - 9, Bit 4 ten's of month, Bit 5 shows leap year
 	unsigned char buf[1] = { 0 }, monthsingle, monthten;
 
-	handler = i2c_open(I2C2_path, addr_RTC_MCP7940N);
+	handler = i2c_open(I2CAddress, addr_RTC_MCP7940N);
 	i2c_write_byte(handler, reg);
 	i2c_read_byte(handler, buf);
 	i2c_close(handler);
@@ -324,7 +324,7 @@ int RTC_get_month() {
 	return (RTC_info.month);
 }
 
-int RTC_set_month(int month) {
+int RTC_set_month(int month, unsigned char I2CAddress) {
 	int handler, reg = 0x05;
 	unsigned char buf[2] = { reg, 0 };
 	if (month > 12 || month < 1) {
@@ -336,18 +336,18 @@ int RTC_set_month(int month) {
 	monthten = div(month, 10);
 	buf[1] = ((monthten.quot & 0b00000001) << 4)
 			| ((month - monthten.quot * 10) & 0b00001111);
-	handler = i2c_open(I2C2_path, addr_RTC_MCP7940N);
+	handler = i2c_open(I2CAddress, addr_RTC_MCP7940N);
 	i2c_write(handler, buf, 2);
 	i2c_close(handler);
 
 	return (month);
 }
 
-int RTC_get_time(unsigned char *buf_time) {
+int RTC_get_time(unsigned char *buf_time, unsigned char I2CAddress) {
 
-	RTC_get_hours();
-	RTC_get_minutes();
-	RTC_get_seconds();
+	RTC_get_hours(I2CAddress);
+	RTC_get_minutes(I2CAddress);
+	RTC_get_seconds(I2CAddress);
 
 	//printf("%02i:%02i:%02i\n", RTC_info.RTC_hours, RTC_info.RTC_minutes, RTC_info.RTC_seconds);
 
@@ -362,23 +362,23 @@ int RTC_get_time(unsigned char *buf_time) {
  * the sequence in the buf_time variable has to be
  * as follows: hh, min, sec.
  */
-void RTC_set_time(int *buf_time) {
+void RTC_set_time(int *buf_time, unsigned char I2CAddress) {
 	int hours, minutes, seconds;
 	hours = buf_time[0];
 	minutes = buf_time[1];
 	seconds = buf_time[2];
-	RTC_set_hours(hours);
-	RTC_set_minutes(minutes);
-	RTC_set_seconds(seconds);
+	RTC_set_hours(hours, I2CAddress);
+	RTC_set_minutes(minutes, I2CAddress);
+	RTC_set_seconds(seconds, I2CAddress);
 
 //	printf("%i:%i:%i\n", hours, minutes, seconds);
 }
 
-int RTC_get_datum(unsigned char *_date) {
-	RTC_get_dayOfWeek();
-	RTC_get_day();
-	RTC_get_month();
-	RTC_get_year();
+int RTC_get_datum(unsigned char *_date, unsigned char I2CAddress) {
+	RTC_get_dayOfWeek(I2CAddress);
+	RTC_get_day(I2CAddress);
+	RTC_get_month(I2CAddress);
+	RTC_get_year(I2CAddress);
 
 //	printf("%i %02i.%02i.%i\n", RTC_info.RTC_day, RTC_info.RTC_date, RTC_info.RTC_month, RTC_info.RTC_year);
 
@@ -390,20 +390,20 @@ int RTC_get_datum(unsigned char *_date) {
 	return (1);
 }
 
-RTC RTC_get_all() {
-	RTC_get_dayOfWeek();
-	RTC_get_day();
-	RTC_get_month();
-	RTC_get_year();
-	RTC_get_hours();
-	RTC_get_minutes();
-	RTC_get_seconds();
+RTC RTC_get_all(unsigned char I2CAddress) {
+	RTC_get_dayOfWeek(I2CAddress);
+	RTC_get_day(I2CAddress);
+	RTC_get_month(I2CAddress);
+	RTC_get_year(I2CAddress);
+	RTC_get_hours(I2CAddress);
+	RTC_get_minutes(I2CAddress);
+	RTC_get_seconds(I2CAddress);
 	return RTC_info;
 }
 
-int RTC_get_formatted(char * p_formatted) {
+int RTC_get_formatted(char * p_formatted, unsigned char I2CAddress) {
 	RTC rtc;
-	rtc = RTC_get_all();
+	rtc = RTC_get_all(I2CAddress);
 	sprintf(p_formatted, "%02d.%02d.%02d %02d:%02d:%02d", rtc.year, rtc.month,
 			rtc.day, rtc.hours, rtc.minutes, rtc.seconds);
 	return 0;
@@ -413,12 +413,12 @@ int RTC_get_formatted(char * p_formatted) {
  * as follows: day, date, month, year
  * For the year only two digits! 2014 = 14!
  */
-void RTC_set_datum(unsigned char *buf_date) {
+void RTC_set_datum(unsigned char *buf_date, unsigned char I2CAddress) {
 
-	RTC_set_dayOfWeek(buf_date[0]);
-	RTC_set_day(buf_date[1]);
-	RTC_set_month(buf_date[2]);
-	RTC_set_year(buf_date[3]);
+	RTC_set_dayOfWeek(buf_date[0], I2CAddress);
+	RTC_set_day(buf_date[1], I2CAddress);
+	RTC_set_month(buf_date[2], I2CAddress);
+	RTC_set_year(buf_date[3], I2CAddress);
 }
 
 void RTC_print_status(void) {

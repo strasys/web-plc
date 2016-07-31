@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wistcon-pool>
+
+<GPIOIN>
+	<InputName>Mischer Bypass</InputName>
+</GPIOIN>
+<GPIOIN>
+	<InputName>Mischer Solar</InputName>
+</GPIOIN>
+<GPIOIN>
+	<InputName>Schwimmer</InputName>
+</GPIOIN>
+<GPIOIN>
+	<InputName>Außenbeleuchtung</InputName>
+</GPIOIN>
+
+<GPIOOUT>
+	<OutputName>Pumpe</OutputName>
+</GPIOOUT>
+<GPIOOUT>
+	<OutputName>Mischer</OutputName>
+</GPIOOUT>
+<GPIOOUT>
+	<OutputName>Pool - Beleuchtung</OutputName>
+</GPIOOUT>
+<GPIOOUT>
+	<OutputName>Außenbeleuchtung</OutputName>
+</GPIOOUT>
+<GPIOOUT>
+	<OutputName>Frischwasserventil</OutputName>
+</GPIOOUT>
+<GPIOOUT>
+	<OutputName>Out 6</OutputName>
+</GPIOOUT>
+<GPIOOUT>
+	<OutputName>Out 7</OutputName>
+</GPIOOUT>
+<GPIOOUT>
+	<OutputName>Out 8</OutputName>
+</GPIOOUT>
+
+<PT1000>
+	<PT1000Name>Becken</PT1000Name>
+</PT1000>
+<PT1000>
+	<PT1000Name>Dach</PT1000Name>
+</PT1000>
+<PT1000>
+	<PT1000Name>Außentemperatur</PT1000Name>
+</PT1000>
+<PT1000>
+	<PT1000Name>Bürotemperatur</PT1000Name>
+</PT1000>
+</wistcon-pool>

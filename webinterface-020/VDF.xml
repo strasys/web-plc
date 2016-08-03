@@ -46,9 +46,39 @@
 	<PT1000Name>Dach</PT1000Name>
 </PT1000>
 <PT1000>
-	<PT1000Name>Außentemperatur</PT1000Name>
+	<PT1000Name>Außentemp.</PT1000Name>
 </PT1000>
 <PT1000>
 	<PT1000Name>Bürotemperatur</PT1000Name>
 </PT1000>
+<CleaningInterval>
+	<Start>10:00</Start>
+	<Stop>10:30</Stop>
+	<Periode>00:30</Periode>
+</CleaningInterval>
+<CleaningInterval>
+	<Start>00:00</Start>
+	<Stop>00:00</Stop>
+	<Periode>00:00</Periode>
+</CleaningInterval>
+<CleaningInterval>
+	<Start>00:00</Start>
+	<Stop>00:00</Stop>
+	<Periode>00:00</Periode>
+</CleaningInterval>
+<CleaningInterval>
+	<Start>00:00</Start>
+	<Stop>00:00</Stop>
+	<Periode>00:00</Periode>
+</CleaningInterval>
+<SolarSetting>
+	<operationMode>
+	</operationMode>
+	<backWatterTemp>
+	</backWatterTemp>
+	<diffTemp>
+	</diffTemp>
+	<tankTemp>
+	</tankTemp>
+</SolarSetting>
 </wistcon-pool>

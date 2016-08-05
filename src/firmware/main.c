@@ -26,6 +26,7 @@
 #include "24AA256-EEPROM.h"
 
 
+
 void init(void){
 	//char command[255];
 	init_RTC(I2C1_path);
@@ -40,8 +41,8 @@ void init(void){
 void getFormatForDate(char * pDateTime) {
 	// formats for date -u
 	// date --universal $(/www/pages/cgi-bin/RTChandler g f)
-	sprintf(pDateTime, "%2.2d%2.2d%2.2d%2.2d%4.4d", RTC_get_month(),
-			RTC_get_day(), RTC_get_hours(), RTC_get_minutes(), RTC_get_year());
+	sprintf(pDateTime, "%2.2d%2.2d%2.2d%2.2d%4.4d", RTC_get_month(I2C1_path),
+			RTC_get_day(I2C1_path), RTC_get_hours(I2C1_path), RTC_get_minutes(I2C1_path), RTC_get_year(I2C1_path));
 }
 
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GPIOin>
+<IN>
+<InputName>In 1</InputName>
+</IN>
+<IN>
+<InputName>In 2</InputName>
+</IN>
+<IN>
+<InputName>In 3</InputName>
+</IN>
+<IN>
+<InputName>In 4</InputName>
+</IN>
+</GPIOin>

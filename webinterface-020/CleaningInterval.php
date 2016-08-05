@@ -8,10 +8,11 @@ include_once ('privateplc_php.ini.php');
 session_start();
 include_once ('authentification.inc.php');
 $arr;
+unset($SetFilterMode,$setCleanTime);
 unset($arr);
 $getLogData = $_POST["getLogData"];
-$setCleanTime = $_POST["setCleanTime"];
-$setSolarTemp = $_POST["setSolarTemp"];
+$setCleanTime = $_POST["setCleanTime"]; 
+$setFilterMode = $_POST["setFilterMode"];	
 $get = "g";
 $set = "s";
 
@@ -20,6 +21,11 @@ if ($getLogData == $get){
 	transfer_javascript($loginstatus, $adminstatus);
 }
 
+if (($_POST["setFilterMode"] == $set) && ($adminstatus)){
+	$xml=simplexml_load_file("VDF.xml") or die("Error: Cannot create object");
+	$xml->CleaningSetting[0]->OperationMode = $_POST["FilterMode"];
+	echo $xml->asXML("VDF.xml");
+}
 
 
 if (($setCleanTime == $set) && ($adminstatus)){

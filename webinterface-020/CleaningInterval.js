@@ -86,6 +86,18 @@ function getSetXMLData(callback4){
 		if (xhttp.readyState==4 && xhttp.status==200){
 			var getXMLData = xhttp.responseXML;
 			var w = getXMLData.getElementsByTagName("CleaningInterval");
+			var z = getXMLData.getElementsByTagName("CleaningSetting");
+			var operationMode = z[0].getElementsByTagName("OperationMode")[0].childNodes[0].nodeValue;
+		
+			if(operationMode =='OFF'){
+			document.getElementById("radioFilterOFF").checked = true;
+			document.getElementById("radioFilterAUTO").checked = false;
+			}
+			if(operationMode =='AUTO'){
+			document.getElementById("radioFilterAUTO").checked = true;
+			document.getElementById("radioFilterOFF").checked = false;
+			}
+
 			var z = w.length;
 			var i=0;
 			for (i=0; i<z; i++){
@@ -157,7 +169,19 @@ function clearCleaningIntervalTimeXML(interval,ButtonCleanTimeClear){
 		"&setCleanTime=s");
 }
 
-
+function setFilterModeXML(radioID){
+	var FilterMode = document.getElementById(radioID).value;		
+	
+		getData("post","CleaningInterval.php",function()
+		{
+			if (xhttp.readyState==4 && xhttp.status==200)
+			{
+				getSetXMLData(function(){});	
+			}
+		},
+		"FilterMode="+FilterMode+
+		"&setFilterMode=s");
+}
 
 //Workaround since span text can not be read with all browser
 //

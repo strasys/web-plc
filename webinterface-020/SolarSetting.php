@@ -9,27 +9,46 @@ session_start();
 include_once ('authentification.inc.php');
 $arr;
 unset($arr);
+unset($TempTyp, $TempValue);
 $getLogData = $_POST["getLogData"];
-$setCleanTime = $_POST["setCleanTime"];
-$setSolarTemp = $_POST["setSolarTemp"];
+$TempValue = $_POST["TempValue"];
+$TempTyp = $_POST["TempTyp"];
 $get = "g";
 $set = "s";
+$TempBackWater = "TempBackWater";
+$DifferenceTemp = "DifferenceTemp";
+$PoolTemp = "PoolTemp";
+$operationMode = "operationMode";
 
 //get Log status
 if ($getLogData == $get){
 	transfer_javascript($loginstatus, $adminstatus);
 }
 
-
-
-if (($setCleanTime == $set) && ($adminstatus)){
+if (($TempTyp == $TempBackWater) && ($adminstatus)){
 	$xml=simplexml_load_file("VDF.xml") or die("Error: Cannot create object");
-	$i = intval($_POST["CleanInterval"]);
-	$xml->CleaningInterval[$i]->Start = $_POST["StartTime"];
-	$xml->CleaningInterval[$i]->Stop = $_POST["StopTime"];
-	$xml->CleaningInterval[$i]->Periode = $_POST["CleanIntervalPeriode"];
+	$xml->SolarSetting[0]->backWaterTemp = $_POST["TempValue"];
 	echo $xml->asXML("VDF.xml");
 }
+
+if (($TempTyp == $DifferenceTemp) && ($adminstatus)){
+	$xml=simplexml_load_file("VDF.xml") or die("Error: Cannot create object");
+	$xml->SolarSetting[0]->diffTemp = $_POST["TempValue"];
+	echo $xml->asXML("VDF.xml");
+}
+
+if (($TempTyp == $PoolTemp) && ($adminstatus)){
+	$xml=simplexml_load_file("VDF.xml") or die("Error: Cannot create object");
+	$xml->SolarSetting[0]->poolTemp = $_POST["TempValue"];
+	echo $xml->asXML("VDF.xml");
+}
+
+if (($TempTyp == $operationMode) && ($adminstatus)){
+	$xml=simplexml_load_file("VDF.xml") or die("Error: Cannot create object");
+	$xml->SolarSetting[0]->operationMode = $_POST["TempValue"];
+	echo $xml->asXML("VDF.xml");
+}
+
 
 function transfer_javascript($loginstatus, $adminstatus)	
 {

@@ -52,9 +52,14 @@
 	<PT1000Name>Bürotemperatur</PT1000Name>
 </PT1000>
 <CleaningInterval>
-	<Start>10:00</Start>
-	<Stop>10:30</Stop>
-	<Periode>00:30</Periode>
+	<Start>07:50</Start>
+	<Stop>11:00</Stop>
+	<Periode>03:10</Periode>
+</CleaningInterval>
+<CleaningInterval>
+	<Start>12:00</Start>
+	<Stop>13:00</Stop>
+	<Periode>01:00</Periode>
 </CleaningInterval>
 <CleaningInterval>
 	<Start>00:00</Start>
@@ -66,19 +71,13 @@
 	<Stop>00:00</Stop>
 	<Periode>00:00</Periode>
 </CleaningInterval>
-<CleaningInterval>
-	<Start>00:00</Start>
-	<Stop>00:00</Stop>
-	<Periode>00:00</Periode>
-</CleaningInterval>
+<CleaningSetting>
+	<OperationMode>AUTO</OperationMode>
+</CleaningSetting>
 <SolarSetting>
-	<operationMode>
-	</operationMode>
-	<backWatterTemp>
-	</backWatterTemp>
-	<diffTemp>
-	</diffTemp>
-	<tankTemp>
-	</tankTemp>
+	<operationMode>AUTO</operationMode>
+	<backWaterTemp>27</backWaterTemp>
+	<diffTemp>5</diffTemp>
+	<poolTemp>30</poolTemp>
 </SolarSetting>
 </wistcon-pool>

@@ -32,26 +32,26 @@
 					<div class="clo-xs-12 col-sm-6 col-md5" id="SolarCheckboxesOperationmode">
 						<div class="radio">
  						<label>
-      						<input type="radio" id="radioSolarOFF" name="OptionsRadios" value="" checked>
+      						<input type="radio" id="radioSolarOFF" name="OptionsRadios" value="OFF" onclick="setSolarModeXML('radioSolarOFF')">
 						<h4><b>AUS</b></h4>
    						</label>
 						</div>
 						<div class="radio">
  						<label>
-      						<input type="radio" id="radioSolarAutomatic" name="OptionsRadios" value="">
+      						<input type="radio" id="radioSolarAUTO" name="OptionsRadios" value="AUTO" onclick="setSolarModeXML('radioSolarAUTO')">
 						<h4><b>Automatic Mode</b></h4>
 						</label>
 						</div>
 					</div>	
 				</div>
-				<div class="row" id="SolarBackWatterTempField">	
+				<div class="row" id="SolarBackWaterTempField">	
     				<div class= "col-xs-12 col-sm-6 col-md-5">
 					<div style="padding-top:20px; max-width:350px;" class = "input-group">
 						<span class="input-group-addon" style="min-width:160px;">max. Rücklauftemp.</span>
 						<select id="SolarBackWaterTemp" class="form-control"></select>
 						<span class="input-group-addon">°C</span>
 						<span class="input-group-btn">
-							<button id="ButtonBackWatterTemp" class="btn btn-default" type="button" onclick="setCleaningIntervalTimeXML(0,'StartTime1','StopTime1','ButtonCleanTime1')">Set</button>
+							<button id="ButtonBackWaterTemp" class="btn btn-default" type="button" onclick="setSolarParameterXML('SolarBackWaterTemp','ButtonBackWaterTemp','TempBackWater')">Set</button>
 						</span>
 
 					</div>
@@ -64,7 +64,7 @@
 						<select id="SolarDifferenceTemp" class="form-control" ></select>
 						<span class="input-group-addon">°C</span>
 						<span class="input-group-btn">
-						<button id="ButtonDifferenceTemp" class="btn btn-default" type="button" onclick="setCleaningIntervalTimeXML(1,'StartTime2','StopTime2','ButtonCleanTime2')">Set</button>
+						<button id="ButtonDifferenceTemp" class="btn btn-default" type="button" onclick="setSolarParameterXML('SolarDifferenceTemp','ButtonDifferenceTemp','DifferenceTemp')">Set</button>
 					</div>
 				</div>
 				</div>
@@ -75,7 +75,7 @@
 						<select id="SolarPoolTemp" class="form-control"></select>
 						<span class="input-group-addon">°C</span>
 						<span class="input-group-btn">
-						<button id="ButtonPoolTemp" class="btn btn-default" type="button" onclick="setCleaningIntervalTimeXML(2,'StartTime3','StopTime3','ButtonCleanTime3')">Set</button>
+						<button id="ButtonPoolTemp" class="btn btn-default" type="button" onclick="setSolarParameterXML('SolarPoolTemp','ButtonPoolTemp','PoolTemp')">Set</button>
 						</span>
 					</div>
 				</div>

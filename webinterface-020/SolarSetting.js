@@ -36,47 +36,61 @@ function getloginstatus(callback1){
 		},"getLogData=g");		
 }
 
-function getSetXMLData(callback4){
+function getXMLData(callback4){
 	getData("GET","VDF.xml?sortoutcache="+sortoutcache.valueOf(),function(){
-		if (xhttp.readyState==4 && xhttp.status==200){
-			var getXMLData = xhttp.responseXML;
-			var w = getXMLData.getElementsByTagName("CleaningInterval");
-			var z = w.length;
-			var i=0;
-			for (i=0; i<z; i++){
-				j=i+1
-				document.getElementById("StartTime"+j).value = w[i].getElementsByTagName("Start")[0].childNodes[0].nodeValue;
-				document.getElementById("StopTime"+j).value = w[i].getElementsByTagName("Stop")[0].childNodes[0].nodeValue;
-				document.getElementById("CleanTimePeriode"+j).innerHTML = w[i].getElementsByTagName("Periode")[0].childNodes[0].nodeValue;				
-			}
-			if (callback4){
-				callback4();
-			}
+		
+	if (xhttp.readyState==4 && xhttp.status==200){
+		var getXMLData = xhttp.responseXML;
+		var w = getXMLData.getElementsByTagName("SolarSetting");
+		var operationMode = w[0].getElementsByTagName("operationMode")[0].childNodes[0].nodeValue;
+		if(operationMode =='OFF'){
+			document.getElementById("radioSolarOFF").checked = true;
+			document.getElementById("radioSolarAUTO").checked = false;
 		}
-		});
-	}	
+		if(operationMode =='AUTO'){
+			document.getElementById("radioSolarAUTO").checked = true;
+			document.getElementById("radioSolarOFF").checked = false;
+		}
+				
+		document.getElementById("SolarBackWaterTemp").value = w[0].getElementsByTagName("backWaterTemp")[0].childNodes[0].nodeValue;
+		document.getElementById("SolarDifferenceTemp").value = w[0].getElementsByTagName("diffTemp")[0].childNodes[0].nodeValue;
+		document.getElementById("SolarPoolTemp").value = w[0].getElementsByTagName("poolTemp")[0].childNodes[0].nodeValue;
+	}
+	if (callback4){
+		callback4();
+	}
+	});
+}	
 
 // Write cleaning interval time to XML - file.
-function setCleaningIntervalTimeXML(interval,start,stop,ButtonCleanTime){
+function setSolarParameterXML(select,button,TempTyp){
+
+	var TempValue = document.getElementById(select).value;		
 	
-	var CleanInterval = interval;
-	var StartTime = document.getElementById(start).value;	
-	var StopTime = document.getElementById(stop).value;
-		calcTimePeriode(start,stop,function(){
-		getData("post","CleaningInterval.php",function()
+		getData("post","SolarSetting.php",function()
 		{
 			if (xhttp.readyState==4 && xhttp.status==200)
 			{
-				document.getElementById(ButtonCleanTime).setAttribute("class","btn btn-success");
-				setTimeout(function(){document.getElementById(ButtonCleanTime).setAttribute("class","btn btn-default")},500);	
+				document.getElementById(button).setAttribute("class","btn btn-success");
+				setTimeout(function(){document.getElementById(button).setAttribute("class","btn btn-default")},500);	
 			}
 		},
-		"CleanInterval="+CleanInterval+
-		"&StartTime="+StartTime+
-		"&StopTime="+StopTime+
-		"&CleanIntervalPeriode="+TimeDifference+
-		"&setCleanTime=s");
-		});
+		"TempValue="+TempValue+
+		"&TempTyp="+TempTyp);
+}
+
+function setSolarModeXML(radioID){
+	var ModeStatus = document.getElementById(radioID).value;		
+	
+		getData("post","SolarSetting.php",function()
+		{
+			if (xhttp.readyState==4 && xhttp.status==200)
+			{
+				getXMLData(function(){});	
+			}
+		},
+		"TempValue="+ModeStatus+
+		"&TempTyp=operationMode");
 }
 
 function setSelectFieldsTemp(idName,StartTemp,StopTemp,interval){
@@ -103,8 +117,7 @@ function setSelectMenuesValues(callback5){
 function startatLoad(){
 	loadNavbar(function(){
 		setSelectMenuesValues(function(){
-				getSetXMLData(function(){
-					getOperationMode();
+				getXMLData(function(){
 				});
 			});
 		});

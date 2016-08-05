@@ -36,11 +36,24 @@
 						<h3 id="curTime"></h3>
 					</div>
 				</div>
-<!--				<div class="form-group has-error">
-  <label class="control-label" for="inputError1">Input with error</label>
-  <input type="text" class="form-control" id="inputError1">
-</div>
---!>
+			<div class="row" id="FilterModeField">
+					<div class="clo-xs-12 col-sm-6 col-md5" id="SolarCheckboxesOperationmode">
+						<div class="radio">
+ 						<label>
+      						<input type="radio" id="radioFilterOFF" name="OptionsRadios" value="OFF" onclick="setFilterModeXML('radioFilterOFF')">
+						<h4><b>AUS</b></h4>
+   						</label>
+						</div>
+						<div class="radio">
+ 						<label>
+      						<input type="radio" id="radioFilterAUTO" name="OptionsRadios" value="AUTO" onclick="setFilterModeXML('radioFilterAUTO')">
+						<h4><b>Automatik</b></h4>
+						</label>
+						</div>
+					</div>	
+				</div>
+
+
 		<table class="table">
 			<tr>
 				<th>

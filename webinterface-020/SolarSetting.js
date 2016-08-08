@@ -86,11 +86,12 @@ function setSolarModeXML(radioID){
 		{
 			if (xhttp.readyState==4 && xhttp.status==200)
 			{
-				getXMLData(function(){});	
+					
 			}
 		},
 		"TempValue="+ModeStatus+
 		"&TempTyp=operationMode");
+	//	setTimeout(function(){getXMLData()},3000);
 }
 
 function setSelectFieldsTemp(idName,StartTemp,StopTemp,interval){

@@ -1,4 +1,9 @@
 <?php
+//error_reporting(E_ALL | E_STRICT);
+// Um die Fehler auch auszugeben, aktivieren wir die Ausgabe
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+//
 include_once ('privateplc_php.ini.php');
 session_start();
 include_once ('authentification.inc.php');
@@ -11,6 +16,11 @@ unset($arr);
 $get = "g";
 $set = "s";
 
+//$adminstatus = true;
+//$loginstatus = true;
+//$setgetComposerProcessStatus = "s";
+//$setrunstopStatus = "0";
+
 if ($getLoginStatus == $get)
 {
 	transfer_javascript($loginstatus, $adminstatus);
@@ -21,7 +31,7 @@ if ($setgetComposerProcessStatus == $get)
 	$statusFile = fopen("/tmp/composerstatus.txt", "r");
 	if ($statusFile == false)
 	{
-		$statusFile = fopen("flock /tmp/composerstatuslock /tmp/composerstatus.txt", "w");
+		$statusFile = fopen("/tmp/composerstatus.txt", "w");
 		fwrite($statusFile, "stop");
 		fclose($statusFile);
 		$statusWord = "stop";
@@ -45,7 +55,7 @@ if ($setgetComposerProcessStatus == $get)
 
 if ($setgetComposerProcessStatus == $set)
 {
-	$statusFile = fopen("flock /tmp/composerstatuslock /tmp/composerstatus.txt", "w");
+	$statusFile = fopen("/tmp/composerstatus.txt", "w");
 	if ($statusFile == false)
 	{
 		$errorMsg = "Error: fopen\"/tmp/composerstatus.txt\", \"w\" ";
@@ -53,7 +63,7 @@ if ($setgetComposerProcessStatus == $set)
 	}
 	elseif ($statusFile)
 	{
-		switch ($setrunstopStatus){
+		switch (intval($setrunstopStatus)){
 			case 0:
 				$statusWord = "stop";
 				$runstop = 0;

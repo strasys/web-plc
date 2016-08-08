@@ -6,7 +6,6 @@
  * It will be read within the while loop of the composer.
  * This stops the composer.php process.
  */
-
 class composerloopcontrol
 {
 
@@ -16,7 +15,7 @@ $statusFile = fopen("/tmp/composerstatus.txt","r");
 if ($statusFile == false)
 {
 	fclose($statusFile);
-	$statusFile = fopen("flock /tmp/composerstatuslock /tmp/composerstatus.txt", "w");
+	$statusFile = fopen("/tmp/composerstatus.txt", "w");
 	fwrite($statusFile, "stop");
 	fclose($statusFile);
 	$statusbool = false;

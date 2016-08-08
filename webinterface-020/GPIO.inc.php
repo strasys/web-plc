@@ -3,7 +3,7 @@
 	class GPIO
 	
 	Johannes Strasser
-	07.10.2015
+	06.08.2016
 	www.strasys.at
 */
 class GPIO
@@ -19,7 +19,7 @@ class GPIO
 		for ($i = 0; $i<8; $i++)
 		{
 			
-			exec("flock /tmp/GPIOlock /usr/lib/cgi-bin/GPIOhandler s $i $out[$i]");
+			exec("flock /tmp/GPIOlock /usr/lib/cgi-bin/GPIOhandler_020 s $i $out[$i]");
 		}
 	}
 	/*
@@ -28,10 +28,10 @@ class GPIO
 	 *$i (0 to 7) is the number of the digital output.
 	 *$outs is 0 or 1 (0 = off, 1 = on) is the to be set value of the Output.
 	 */
-	function setOutsingle($outs, $i)
+	function setOutsingle($i, $outs)
 	{
 		
-		exec("flock /tmp/GPIOslock /usr/lib/cgi-bin/GPIOhandler s $i $outs");
+		exec("flock /tmp/GPIOslock /usr/lib/cgi-bin/GPIOhandler_020 s $i $outs");
 	}
 	/*
 	 * The function getOut returns an array numbered 0..7 (=OUT 1 to OUT 8)
@@ -39,9 +39,15 @@ class GPIO
 	function getOut()
 	{
 		unset($ausgabeOut);
-		exec(" /usr/lib/cgi-bin/GPIOhandler g O", $ausgabeOut);
+		exec(" /usr/lib/cgi-bin/GPIOhandler_020 g O", $ausgabeOut);
 		
 		return $ausgabeOut;
+	}
+
+	function getOutSingle($channel){
+		exec(" /usr/lib/cgi-bin/GPIOhandler_020 g O", $ausgabeOut);
+		$OutSingle = $ausgabeOut[$channel];
+		return (int) $OutSingle;
 	}
 	/*
 	 * The function getIn returns an array numbered 0..3 (=IN 1 to 4)
@@ -49,9 +55,16 @@ class GPIO
 	function getIn()
 	{
 		unset($ausgabeIn);
-		exec(" /usr/lib/cgi-bin/GPIOhandler g I", $ausgabeIn);
+		exec(" /usr/lib/cgi-bin/GPIOhandler_020 g I", $ausgabeIn);
 		
 		return $ausgabeIn;
+	}
+
+	function getInSingle($num){
+		unset($ausgabeIn);
+		exec(" /usr/lib/cgi-bin/GPIOhandler_020 g I", $ausgabeIn);
+		
+		return (int) $ausgabeIn[$num];
 	}
 }
 ?>

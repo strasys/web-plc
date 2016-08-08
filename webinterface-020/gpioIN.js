@@ -48,7 +48,8 @@ function setInputStatusHMI(callback3){
 	getGPIOinStatus(function()
 	{
 	for (i=0; i<4; i++){
-		if((IN[i]) == 0){nt.getElementById("InputStatusLED"+i).className = "led-blue";
+		if((IN[i]) == 0){
+			document.getElementById("InputStatusLED"+i).className = "led-blue";
 		}
 		else if ((IN[i]) == 1)
 		{

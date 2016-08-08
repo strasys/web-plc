@@ -109,8 +109,10 @@ function getSetXMLData(callback4){
 			if (callback4){
 				callback4();
 			}
+
 		}
 		});
+			
 	}	
 		
 
@@ -159,7 +161,8 @@ function clearCleaningIntervalTimeXML(interval,ButtonCleanTimeClear){
 			{
 				getSetXMLData(function(){
 				document.getElementById(ButtonCleanTimeClear).setAttribute("class","btn btn-success");
-				setTimeout(function(){document.getElementById(ButtonCleanTimeClear).setAttribute("class","btn btn-default")},500);					   });	
+				setTimeout(function(){document.getElementById(ButtonCleanTimeClear).setAttribute("class","btn btn-default")},500);					   
+				});
 			}
 		},
 		"CleanInterval="+CleanInterval+
@@ -171,17 +174,17 @@ function clearCleaningIntervalTimeXML(interval,ButtonCleanTimeClear){
 
 function setFilterModeXML(radioID){
 	var FilterMode = document.getElementById(radioID).value;		
-	
 		getData("post","CleaningInterval.php",function()
 		{
 			if (xhttp.readyState==4 && xhttp.status==200)
-			{
-				getSetXMLData(function(){});	
+			{		
+		//	setTimeout(getSetXMLData(),100);
 			}
 		},
 		"FilterMode="+FilterMode+
 		"&setFilterMode=s");
-}
+	
+	}
 
 //Workaround since span text can not be read with all browser
 //

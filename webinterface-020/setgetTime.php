@@ -34,13 +34,13 @@ if($flag)
 	}
 	
 	$arr = array(	'Day' => $ausgabe[0],
-					'Month' => $ausgabe[1],
-					'Year' => $ausgabe[2],
-					'hh' => $ausgabe[3],
-					'mm' => $ausgabe[4],
-					'ss' => $ausgabe[5],
-					'loginstatus' => $loginstatus,
-					'adminstatus' => $adminstatus
+			'Month' => $ausgabe[1],
+			'Year' => $ausgabe[2],
+			'hh' => $ausgabe[3],
+			'mm' => $ausgabe[4],
+			'ss' => $ausgabe[5],
+			'loginstatus' => $loginstatus,
+			'adminstatus' => $adminstatus
 	);
 }
 else 

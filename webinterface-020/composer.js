@@ -141,5 +141,5 @@ window.onload=startatLoad();
 	 	setgetStatusComposerProcess("g","", function(){
 			setButtonColorBadge(0);
 		});
-		setTimeout(function(){refreshStatus()}, 2000);
+		setTimeout(function(){refreshStatus()}, 10000);
 	}

@@ -47,8 +47,7 @@ function getOutstatus(callback1){
 				callback1();
 			}
 			}
-		}, "setgetGPIO=g" +
-		   "&InOut=o");		
+		}, "setgetGPIO=g&InOut=o");		
 }
 
 
@@ -103,17 +102,17 @@ function setButtonOut(){
 // set of the button naming.
 // The names of the button are stored in a XML file on the server.
 function getGPIOoutXMLData(callback2){
-	getGPIOoutXMLDa("GET","GPIOout.xml?sortoutcache="+sortoutcache.valueOf(),function()
+	getGPIOoutXMLDa("GET","VDF.xml?sortoutcache="+sortoutcache.valueOf(),function()
 			{
 				if (xhttp.readyState==4 && xhttp.status==200)
 					{
 					var getGPIOoutXML = xhttp.responseXML;
-					var w = getGPIOoutXML.getElementsByTagName("ButtonName");
-					var z = getGPIOoutXML.getElementsByTagName("ButtonName");
+					var w = getGPIOoutXML.getElementsByTagName("GPIOOUT");
+					var z = getGPIOoutXML.getElementsByTagName("GPIOOUT").length;
 					var i = 0;
-					for (i=0; i<w.length; i++){
-						document.getElementById("buttonOutText"+i).innerHTML=z[i].childNodes[0].nodeValue;	
-						}
+				//	document.getElementById("test0").innerHTML=z;
+					for (i=0; i<z; i++){
+						document.getElementById("buttonOutText"+i).innerHTML=w[i].getElementsByTagName("OutputName")[0].childNodes[0].nodeValue;						}
 					if (callback2){
 						callback2();
 					}
@@ -127,16 +126,16 @@ function getGPIOoutXMLData(callback2){
 // into the input fields.
 
 function getGPIOoutXMLDataInput(){
-	getGPIOoutXMLDa("GET", "GPIOout.xml?sortoutcache="+sortoutcache.valueOf(),function()
+	getGPIOoutXMLDa("GET", "VDF.xml?sortoutcache="+sortoutcache.valueOf(),function()
 	{
 		if (xhttp.readyState==4 && xhttp.status==200)
 			{
 				var getGPIOoutXML = xhttp.responseXML;
-				var x = getGPIOoutXML.getElementsByTagName("ButtonName");
-				var y = getGPIOoutXML.getElementsByTagName("ButtonName");
-		
-				for (i=0; i<y.length; i++){
-				document.getElementById("setButtonNameInputOut"+i).value=x[i].childNodes[0].nodeValue;	
+				var w = getGPIOoutXML.getElementsByTagName("GPIOOUT");
+				var z = getGPIOoutXML.getElementsByTagName("GPIOOUT").length;
+				var i = 0;
+				for (i=0; i<z; i++){
+				document.getElementById("setButtonNameInputOut"+i).value=w[i].getElementsByTagName("OutputName")[0].childNodes[0].nodeValue;	
 				}
 			}
 	});
@@ -201,8 +200,9 @@ function CancelSetButtonName(){
 }
 
 function CollapseSetButtonName(){
-		  $("#setButtonNameDiv").hide();
-		  $("#showSetButtonName").show();
+		$("#setButtonNameDiv").hide();
+		$("#showSetButtonName").show();
+		location.reload(true);
 		 
 }
 
@@ -245,7 +245,6 @@ function loadNavbar(callback1)
 		}
 	});
 }
-
 
 //load functions ad webpage opening
 window.onload=function(){

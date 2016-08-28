@@ -18,8 +18,8 @@ ini_set('allow_url_fopen',1);
 unset($deviceID);
 $deviceID = $_POST['deviceID'];
 $ip = $_SERVER['REMOTE_ADDR'];
-echo "Remote Address = ".$ip."<br>";
-echo "Post = ". $deviceID."<br>";
+//echo "Remote Address = ".$ip."<br>";
+//echo "Post = ". $deviceID."<br>";
 
 $artemp = array();
 $i=0;

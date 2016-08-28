@@ -1,7 +1,7 @@
 #!/bin/sh
 # Installation script to start the initial installation process!
 # Johannes Strasser
-# 3.1.2016
+# 25.08.2016
 # www.strasys.at
 #
 #Installation description:

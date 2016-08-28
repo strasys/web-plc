@@ -1,4 +1,9 @@
 <?php
+//error_reporting(E_ALL | E_STRICT);
+// Um die Fehler auch auszugeben, aktivieren wir die Ausgabe
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+//
 include_once ('privateplc_php.ini.php');
 session_start();
 include_once ('authentification.inc.php');
@@ -45,7 +50,7 @@ if ($flag)
 
 	if (($setgetGPIO == $g) && $loginstatus){
 		if ($InOut == $O){
-			exec(" /usr/lib/cgi-bin/GPIOhandler g O", $ausgabe);
+			exec(" /usr/lib/cgi-bin/GPIOhandler_020 g O", $ausgabe);
 			
 			$arr = array(	'OUT1' => $ausgabe[0],
 							'OUT2' => $ausgabe[1],
@@ -60,7 +65,7 @@ if ($flag)
 						);
 			}
 		elseif ($InOut == $I){
-			exec(" /usr/lib/cgi-bin/GPIOhandler g I", $ausgabe);
+			exec(" /usr/lib/cgi-bin/GPIOhandler_020 g I", $ausgabe);
 			
 			$arr = array(	'IN1' => $ausgabe[0],
 							'IN2' => $ausgabe[1],
@@ -72,23 +77,23 @@ if ($flag)
 			}
 		}
 	elseif (($setgetGPIO == $s) && $loginstatus){
-			exec(" /usr/lib/cgi-bin/GPIOhandler s $GPIOnum $GPIOvalue", $ausgabe);
+			exec(" /usr/lib/cgi-bin/GPIOhandler_020 s $GPIOnum $GPIOvalue", $ausgabe);
 			}
 		
 	if (($ButtonFlag == $Bf) && $adminstatus){
-	$xml=simplexml_load_file("GPIOout.xml") or die("Error: Cannot create object");
+		$xml=simplexml_load_file("VDF.xml") or die("Error: Cannot create object");
 		for ($i=0; $i<8; $i++){
-		$xml->OUT[$i]->ButtonName = $ButtonText[$i];
+		$xml->GPIOOUT[$i]->OutputName = $ButtonText[$i];
 		}
-		echo $xml->asXML("GPIOout.xml");
+		echo $xml->asXML("VDF.xml");
 	}
 	
 	elseif (($InputFlag == $If) && $adminstatus){
-		$xml=simplexml_load_file("GPIOin.xml") or die("Error: Cannot create object");
+		$xml=simplexml_load_file("VDF.xml") or die("Error: Cannot create object");
 		for ($i=0; $i<4; $i++){
-		$xml->IN[$i]->InputName = $InputText[$i];
+		$xml->GPIOIN[$i]->InputName = $InputText[$i];
 		}
-		echo $xml->asXML("GPIOin.xml");
+		echo $xml->asXML("VDF.xml");
 	}
 }
 else

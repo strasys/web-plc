@@ -23,24 +23,24 @@ include_once ('authentification.inc.php');
 if($flag)
 {
 	if ($td == $t){
-		exec("flock /tmp/flockRTChandler /usr/lib/cgi-bin/RTChandler s t $hh $mm $ss", $ausgabe);
+		exec("flock /tmp/flockRTChandler020 /usr/lib/cgi-bin/RTChandler020 s t $hh $mm $ss", $ausgabe);
 		}
 	elseif ($td == $d){
-		exec("flock /tmp/flockRTChandler /usr/lib/cgi-bin/RTChandler s d $Day $Month $Year", $ausgabe);
+		exec("flock /tmp/flockRTChandler020 /usr/lib/cgi-bin/RTChandler020 s d $Day $Month $Year", $ausgabe);
 		}
 	elseif ($td == 0) {
 	//chdir('/usr/lib/cgi-bin');
-	exec(" /usr/lib/cgi-bin/RTChandler", $ausgabe);	
+	exec(" /usr/lib/cgi-bin/RTChandler020", $ausgabe);	
 	}
 	
 	$arr = array(	'Day' => $ausgabe[0],
-					'Month' => $ausgabe[1],
-					'Year' => $ausgabe[2],
-					'hh' => $ausgabe[3],
-					'mm' => $ausgabe[4],
-					'ss' => $ausgabe[5],
-					'loginstatus' => $loginstatus,
-					'adminstatus' => $adminstatus
+			'Month' => $ausgabe[1],
+			'Year' => $ausgabe[2],
+			'hh' => $ausgabe[3],
+			'mm' => $ausgabe[4],
+			'ss' => $ausgabe[5],
+			'loginstatus' => $loginstatus,
+			'adminstatus' => $adminstatus
 	);
 }
 else 

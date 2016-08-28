@@ -106,7 +106,7 @@ sortoutcache = new Date();
 //This function will be called once on start.
 //The names of the inputs are stored in a XML file on the server.
 function getNamingXMLData(callback3){
-	setgetServer("GET","GPIOin.xml?sortoutcache="+sortoutcache.valueOf(),function()
+	setgetServer("GET","VDF.xml?sortoutcache="+sortoutcache.valueOf(),function()
 			{
 				if (xhttp.readyState==4 && xhttp.status==200)
 					{

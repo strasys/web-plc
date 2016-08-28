@@ -26,7 +26,7 @@ function getGPIOinStatus(callback1){
 			if (xhttp.readyState==4 && xhttp.status==200)
 			{
 			var getIN = JSON.parse(xhttp.responseText); 
-			
+		
 			IN =  [parseInt(getIN.IN1),
 		           parseInt(getIN.IN2),
 		           parseInt(getIN.IN3),
@@ -66,16 +66,16 @@ function setInputStatusHMI(callback3){
 // set of the input naming.
 // The names of the inputs are stored in a XML file on the server.
 function getGPIOinXMLData(callback2){
-	getGPIOinXMLDa("GET","GPIOin.xml?sortoutcache="+sortoutcache.valueOf(),function()
+	getGPIOinXMLDa("GET","VDF.xml?sortoutcache="+sortoutcache.valueOf(),function()
 			{
 				if (xhttp.readyState==4 && xhttp.status==200)
 					{
 					var getGPIOinXML = xhttp.responseXML;
-					var w = getGPIOinXML.getElementsByTagName("InputName");
-					var z = getGPIOinXML.getElementsByTagName("InputName");
+					var w = getGPIOinXML.getElementsByTagName("GPIOIN");
+					var z = w.length;
 					var i = 0;
-					for (i=0; i<w.length; i++){
-						document.getElementById("InputInText"+i).innerHTML=z[i].childNodes[0].nodeValue;	
+					for (i=0; i<z; i++){
+						document.getElementById("InputInText"+i).innerHTML = w[i].getElementsByTagName("InputName")[0].childNodes[0].nodeValue;
 						}
 					if (callback2){
 						callback2();
@@ -90,20 +90,19 @@ function getGPIOinXMLData(callback2){
 //into the input fields.
 
 function getGPIOinXMLDataInput(){
-	getGPIOinXMLDa("GET", "GPIOin.xml?sortoutcache="+sortoutcache.valueOf(),function()
+	getGPIOinXMLDa("GET", "VDF.xml?sortoutcache="+sortoutcache.valueOf(),function()
 	{
 		if (xhttp.readyState==4 && xhttp.status==200)
 			{
-				var getGPIOinXML = xhttp.responseXML;
-				var x = getGPIOinXML.getElementsByTagName("InputName");
-				var y = getGPIOinXML.getElementsByTagName("InputName");
-		
-				for (i=0; i<y.length; i++){
-				document.getElementById("setInputNameInputIn"+i).value=x[i].childNodes[0].nodeValue;	
+				var getGPIOinXML = xhttp.responseXML;	
+				var w = getGPIOinXML.getElementsByTagName("GPIOIN");
+				var z = w.length;
+				var i = 0;
+				for (i=0; i<z; i++){
+			 		document.getElementById("setInputNameInputIn"+i).value= w[i].getElementsByTagName("InputName")[0].childNodes[0].nodeValue;
 				}
 			}
-	});
-	
+	});	
 }
 
 //After pressing the button "Änderungen speichern" in the button name change menue.
@@ -156,7 +155,8 @@ function CancelSetInputName(){
 
 function CollapseSetInputName(){
 		  $("#setInputNameDiv").hide();
-		  $("#showSetInputName").show();	 
+		  $("#showSetInputName").show();
+	 	  location.reload(true);	  
 }
 //Load the top fixed navigation bar and highlight the 
 //active site roots.

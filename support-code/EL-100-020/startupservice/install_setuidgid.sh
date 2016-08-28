@@ -1,7 +1,7 @@
 #!/bin/sh
 # Set the correct uid and gid of files
 # Johannes Strasser
-# 1.1.2016
+# 25.08.2016
 # www.strasys.at
 #
 

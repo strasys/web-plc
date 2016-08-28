@@ -1,9 +1,9 @@
 <?php
 // Gibt an welche PHP-Fehler �berhaupt angezeigt werden
-error_reporting(E_ALL | E_STRICT);
+//error_reporting(E_ALL | E_STRICT);
 // Um die Fehler auch auszugeben, aktivieren wir die Ausgabe
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
 // Da man in einem Produktivsystem �blicherweise keine Fehler ausgeben
 // will sondern sie nur mitloggen will, bietet es sich an dort die
 // Ausgabe der Fehler zu deaktivieren und sie stattdessen in ein Log-File
@@ -18,7 +18,9 @@ $dnsloop = new dnsloopcontrol();
 
 $loopstatus = true;
 //The device ID shall be stored in the final basic setup *.xml.
-$deviceIDinfo = "00022016";
+$xml = simplexml_load_file("VDF.xml");
+$deviceIDinfo = (string) $xml->DeviceInfo[0]->DeviceID;
+echo $deviceIDinfo;
 
 $data = array(
 	'deviceID' => $deviceIDinfo
@@ -26,11 +28,11 @@ $data = array(
 $data_string="";
 foreach($data as $key=>$value) 
 {
- $data_string.= $key.'='.$value.'&'; 
+ $data_string = $key.'='.$value.'&'; 
 }
 
 $trimmed = rtrim($data_string, '&');
-echo $trimmed."<br>";
+//echo $trimmed."<br>";
 	
 //To lock the service for the user a lock key must be set as well in the password file.
 //echo http_build_query($data) . "\n";
@@ -40,7 +42,7 @@ while ($loopstatus)
 	set_time_limit(5);
 	//sudo apt-get install php5-curl => needed
 	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, 'https://strasys.at/dns/getclientIP.php');
+	curl_setopt($ch, CURLOPT_URL, 'https://www.strasys.at/dns/getclientIP.php');
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 	curl_setopt($ch, CURLOPT_POST, count($data));
@@ -59,7 +61,7 @@ while ($loopstatus)
 			CURLOPT_SSL_VERIFYPEER
 	curl_exec($ch);
 	curl_close($ch);
-	*/
+ */
 	sleep(60);
 }
 

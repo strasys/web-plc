@@ -213,7 +213,7 @@ function calcTimePeriode(StartTime,StopTime,callback6){
 
 
 function setSelectTime(idName){
-	for(i=0;i<24;i++){
+	for(i=0;i<=24;i++){
 		for(x=0;x<60;x=x+5){
 			var y = document.getElementById(idName);
 			var option1 = document.createElement("option");

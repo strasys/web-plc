@@ -36,7 +36,7 @@ elseif ($statusFile == true)
 	}
 }
 
-return $statusbool; 
+return (bool) $statusbool; 
 }
 
 }

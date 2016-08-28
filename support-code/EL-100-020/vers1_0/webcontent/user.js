@@ -160,13 +160,8 @@ function loadNavbar(){
 		{
 			window.location.replace("login.html");
 		}
-		if (callback1)
-		{
-			callback1();
-		}
 	});
-		
-	}
+}
 
 
 

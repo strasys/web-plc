@@ -73,8 +73,8 @@ void round05(double *valtoberound, double *roundresult){
 int main(int argc, char *argv[], char *env[]){
 
 char input[3];
-double t_celsius[1], t_kelvin[1], t_celsiusround[1];
-int i, channel;
+double t_celsius[1], t_kelvin[1], t_celsiusround[1], averagetemp, temp;
+int i, channel, x;
 
 //read in arguments
 for (i=1;i<argc;i++){
@@ -95,11 +95,20 @@ case 'g':
 		fprintf(stderr, "PT1000handler: missing argument! => %s\n", strerror(errno));
 	} else {
 		channel = atoi(argv[2]);
-		calctemp_Celsius(channel, t_celsius);
-		calctemp_Kelvin(channel, t_kelvin);
-		round05(&t_celsius[0], t_celsiusround);
 
-		printf("%.01f\n", t_celsiusround[0]);
+		calctemp_Kelvin(channel, t_kelvin);
+
+		for (x=0;x<20;x++){
+			calctemp_Celsius(channel, t_celsius);
+			temp = temp + t_celsius[0];
+			usleep(1000);
+		}
+		averagetemp = temp/20;
+
+	//	round05(&t_celsius[0], t_celsiusround);
+	//	round05(&averagetemp, t_celsiusround);
+	//  printf("%.01f\n", t_celsiusround[0]);
+		printf("%.0f\n", averagetemp);
 
 	}
 	break;

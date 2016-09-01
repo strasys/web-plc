@@ -68,16 +68,16 @@
 </CleaningInterval>
 <CleaningInterval>
 	<Start>18:00</Start>
-	<Stop>23:55</Stop>
-	<Periode>05:55</Periode>
+	<Stop>20:00</Stop>
+	<Periode>02:00</Periode>
 </CleaningInterval>
 <CleaningSetting>
 	<OperationMode>OFF</OperationMode>
 </CleaningSetting>
 <SolarSetting>
-	<operationMode>OFF</operationMode>
+	<operationMode>AUTO</operationMode>
 	<backWaterTemp>30</backWaterTemp>
-	<diffTemp>6</diffTemp>
+	<diffTemp>5</diffTemp>
 	<poolTemp>28</poolTemp>
 </SolarSetting>
 <DeviceInfo>

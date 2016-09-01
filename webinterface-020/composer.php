@@ -6,12 +6,16 @@ ini_set('display_startup_errors', 1);
 //
 
 include "GPIO.inc.php";
+include "PT1000.inc.php";
+include "RTC.inc.php";
 include "composerloopcontrol.inc.php";
 include "PoolCleaninterval.inc.php";
+include "PoolSolar.inc.php";
 
 $DIGI = new GPIO();
 $loopstatuscontrol = new composerloopcontrol();
 $Cleaning = new CleaningInterval();
+$Solar = new Solar();
 
 date_default_timezone_set('CET');
 
@@ -38,7 +42,7 @@ $OUT = array (	0 => 0,
 
 $DIGI->setOut($OUT);
 
-while ($loopstatus){
+//while ($loopstatus){
 	/*
 	 * Loop control function.
 	 * Attention: Without the implementation of the 
@@ -71,6 +75,38 @@ while ($loopstatus){
 	}
 
 	/*
+	 * Following block controls the Solar functionality.
+	 */
+	(bool) $SolarMixerFlag = false;
+
+	if ($Solar->getopModeFlag() && $Solar->getSolarFlag())
+	{
+		$PumpFlag = true;
+		$SolarMixerFlag = true;	
+	}
+
+	/*
+	 * Solar Mixer Status control
+	 */
+
+	//TODO: Add solar Mixer movement evaluation and display error if Solar mixer does not reach the position.
+
+	(bool) $MixerOFF = false;
+	if ($DIGI->getOutSingle(0) == 0)
+	{
+		(bool) $MixerOFF = true;
+	}
+
+	if ($SolarMixerFlag && $MixerOFF)
+	{
+		$DIGI->setOutsingle(0,1);
+	}
+	elseif ($SolarMixerFlag == false)
+	{
+		$DIGI->setOutsingle(0,0);	
+	}
+
+	/*
 	 * Pump on off based on above function decissions 
 	 */
 
@@ -79,7 +115,6 @@ while ($loopstatus){
 	{
 		(bool) $PumpOFF = true;
 	}
-
 
 	if ($PumpFlag && $PumpOFF)
 	{
@@ -99,7 +134,7 @@ while ($loopstatus){
 	 * Clarify what the DigiOut and Analogue Out settings should be
 	 * in case of a stop of the script.
 	 */
-	
+/*	
 	if ($loopstatus == false)
 	{
 		$OUT = array (	0 => 0,
@@ -113,5 +148,6 @@ while ($loopstatus){
 		);
 		$DIGI->setOut($OUT);
 	}
-}
+*/
+//}
 ?>

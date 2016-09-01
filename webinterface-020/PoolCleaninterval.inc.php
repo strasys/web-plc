@@ -8,7 +8,7 @@
  *
  */
 
-include "RTC.inc.php";
+//include "RTC.inc.php"; => must be set once in the code
 
 
 class CleaningInterval

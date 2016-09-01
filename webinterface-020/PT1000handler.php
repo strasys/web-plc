@@ -21,7 +21,7 @@ $PTFlag = 1;
 
 //get temperature from all channels
 if (($setgetPT1000handler == $get) && ($flag)){
-//	for ($i=1; $i<3; $i++){	
+
 		exec("flock /tmp/PT1000handlerlock /usr/lib/cgi-bin/PT1000handler_020 g 0", $output);
 		exec("flock /tmp/PT1000handlerlock /usr/lib/cgi-bin/PT1000handler_020 g 1", $output);
 		exec("flock /tmp/PT1000handlerlock /usr/lib/cgi-bin/PT1000handler_020 g 2", $output);

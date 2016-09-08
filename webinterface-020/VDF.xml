@@ -13,7 +13,6 @@
 <GPIOIN>
 	<InputName>nn</InputName>
 </GPIOIN>
-
 <GPIOOUT>
 	<OutputName>Mischer</OutputName>
 </GPIOOUT>
@@ -38,7 +37,6 @@
 <GPIOOUT>
 	<OutputName>Out 8</OutputName>
 </GPIOOUT>
-
 <PT1000>
 	<PT1000Name>Becken</PT1000Name>
 </PT1000>
@@ -73,13 +71,18 @@
 </CleaningInterval>
 <CleaningSetting>
 	<OperationMode>OFF</OperationMode>
+	<tipCleaningTime></tipCleaningTime>
 </CleaningSetting>
 <SolarSetting>
-	<operationMode>AUTO</operationMode>
-	<backWaterTemp>30</backWaterTemp>
-	<diffTemp>5</diffTemp>
-	<poolTemp>28</poolTemp>
+	<operationMode>OFF</operationMode>
+	<backWaterTemp>27</backWaterTemp>
+	<diffTemp>7</diffTemp>
+	<poolTemp>29</poolTemp>
 </SolarSetting>
+<LevelControl>
+	<operationMode>OFF</operationMode>
+	<Overtraveltime></Overtraveltime>
+</LevelControl>
 <DeviceInfo>
 	<DeviceID>14724111802896HwtGhV6vRQDwG9ApHRsmfnMTrph7xnQ6eJyLd21XxRGcz1</DeviceID>
 </DeviceInfo>

@@ -29,17 +29,14 @@ class Solar
 		$setPoolTemp = (int) $xml->SolarSetting[0]->poolTemp;
 		$setCyclingWaterTemp = (int) $xml->SolarSetting[0]->backWaterTemp;
 		$setDiffTemp = (int) $xml->SolarSetting[0]->diffTemp;
-
+	
 		$PoolTemp = $Temp->getPT1000(0);
 		$RoofTemp = $Temp->getPT1000(2);
 		$CyclingTemp = $Temp->getPT1000(3);
-	//	$PoolTemp = 25;
-	//	$RoofTemp = 32;
-
-
+		
 		//Unix time
 		$actualTime = strtoTime($RTC->getstrTimeHHMM()); 
-
+	
 		// In a text file waiting times are stored.
 		// waitmintime = UnixTime + x minutes => This is the minimum time the heating cycle is off after switch off.
 		// runmintime = UnixTime + x minutes => This is the minimum time the heating cycle is on after switch on.
@@ -89,14 +86,14 @@ class Solar
 				$SolarFlag = true;
 			
 				if ($artemp[5] == 0){
-					$artemp[3] = $actualTime + (60*2);
+					$artemp[3] = $actualTime + (60*4);
 					$artemp[5] = 1;
 				}	
 			} else {
 				$SolarFlag = false;
 
 				if ($artemp[5] == 1){
-					$artemp[1] = $actualTime + (60*2);
+					$artemp[1] = $actualTime + (60*4);
 					$artemp[5] = 0;	
 					$SolarFlag = true;
 				}
@@ -132,7 +129,5 @@ class Solar
 
 		return (bool) $OperationFlag;
 	}
-
-
 }
 ?>

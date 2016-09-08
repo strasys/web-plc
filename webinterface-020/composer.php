@@ -42,7 +42,7 @@ $OUT = array (	0 => 0,
 
 $DIGI->setOut($OUT);
 
-//while ($loopstatus){
+while ($loopstatus){
 	/*
 	 * Loop control function.
 	 * Attention: Without the implementation of the 
@@ -125,8 +125,6 @@ $DIGI->setOut($OUT);
 		$DIGI->setOutsingle(1,0);
 	}
 	
-
-
 	usleep(150000); //Time set in µs!
 	
 	/*
@@ -134,7 +132,7 @@ $DIGI->setOut($OUT);
 	 * Clarify what the DigiOut and Analogue Out settings should be
 	 * in case of a stop of the script.
 	 */
-/*	
+	
 	if ($loopstatus == false)
 	{
 		$OUT = array (	0 => 0,
@@ -148,6 +146,6 @@ $DIGI->setOut($OUT);
 		);
 		$DIGI->setOut($OUT);
 	}
-*/
-//}
+
+}
 ?>

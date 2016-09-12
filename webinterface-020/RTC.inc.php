@@ -1,11 +1,12 @@
 <?php
 /*
-	class RTC
+	class_RTC
 	
 	Johannes Strasser
 	07.08.2016
 	www.strasys.at
 */
+
 class RTC
 {
 	function getDay()

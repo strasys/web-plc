@@ -9,15 +9,13 @@ session_start();
 include_once ('authentification.inc.php');
 $arr;
 unset($arr);
-unset($TempTyp, $TempValue);
+unset($ValueTyp, $Value);
 $getLogData = $_POST["getLogData"];
 $Value = $_POST["Value"];
 $ValueTyp = $_POST["ValueTyp"];
 $get = "g";
 $set = "s";
-$TempBackWater = "TempBackWater";
-$DifferenceTemp = "DifferenceTemp";
-$PoolTemp = "PoolTemp";
+$NiveauOvertraveltime = "NiveauOvertraveltime";
 $operationMode = "operationMode";
 
 //get Log status
@@ -25,27 +23,15 @@ if ($getLogData == $get){
 	transfer_javascript($loginstatus, $adminstatus);
 }
 
-if (($TempTyp == $TempBackWater) && ($adminstatus)){
+if (($ValueTyp == $NiveauOvertraveltime) && ($adminstatus)){
 	$xml=simplexml_load_file("VDF.xml") or die("Error: Cannot create object");
-	$xml->SolarSetting[0]->backWaterTemp = $_POST["TempValue"];
+	$xml->LevelControl[0]->Overtraveltime = $_POST["Value"];
 	echo $xml->asXML("VDF.xml");
 }
 
-if (($TempTyp == $DifferenceTemp) && ($adminstatus)){
+if (($ValueTyp == $operationMode) && ($adminstatus)){
 	$xml=simplexml_load_file("VDF.xml") or die("Error: Cannot create object");
-	$xml->SolarSetting[0]->diffTemp = $_POST["TempValue"];
-	echo $xml->asXML("VDF.xml");
-}
-
-if (($TempTyp == $PoolTemp) && ($adminstatus)){
-	$xml=simplexml_load_file("VDF.xml") or die("Error: Cannot create object");
-	$xml->SolarSetting[0]->poolTemp = $_POST["TempValue"];
-	echo $xml->asXML("VDF.xml");
-}
-
-if (($TempTyp == $operationMode) && ($adminstatus)){
-	$xml=simplexml_load_file("VDF.xml") or die("Error: Cannot create object");
-	$xml->SolarSetting[0]->operationMode = $_POST["TempValue"];
+	$xml->LevelControl[0]->operationMode = $_POST["Value"];
 	echo $xml->asXML("VDF.xml");
 }
 

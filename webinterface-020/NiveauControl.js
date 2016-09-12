@@ -50,7 +50,7 @@ function getXMLData(callback4){
 			document.getElementById("radioNiveauOFF").checked = false;
 		}
 				
-		document.getElementById("NiveauOvertraveltime").value = w[0].getElementsByTagName("backWaterTemp")[0].childNodes[0].nodeValue;
+		document.getElementById("Niveautime").value = w[0].getElementsByTagName("Overtraveltime")[0].childNodes[0].nodeValue;
 	}
 	if (callback4){
 		callback4();
@@ -59,23 +59,23 @@ function getXMLData(callback4){
 }	
 
 // Write cleaning interval time to XML - file.
-function setSolarParameterXML(select,button,TempTyp){
+function setNiveauParameterXML(select,button,ValueTyp){
 
-	var TempValue = document.getElementById(select).value;		
+	var Value = document.getElementById(select).value;		
 	
 		getData("post","NiveauControl.php",function()
 		{
 			if (xhttp.readyState==4 && xhttp.status==200)
 			{
 				document.getElementById(button).setAttribute("class","btn btn-success");
-				setTimeout(function(){document.getElementById(button).setAttribute("class","btn btn-default")},500);	
+				setTimeout(function(){document.getElementById(button).setAttribute("class","btn btn-default")},500);
 			}
 		},
-		"TempValue="+TempValue+
-		"&TempTyp="+TempTyp);
+		"Value="+Value+
+		"&ValueTyp="+ValueTyp);
 }
 
-function setSolarModeXML(radioID){
+function setNiveauModeXML(radioID){
 	var ModeStatus = document.getElementById(radioID).value;		
 	
 		getData("post","NiveauControl.php",function()
@@ -85,12 +85,11 @@ function setSolarModeXML(radioID){
 					
 			}
 		},
-		"TempValue="+ModeStatus+
-		"&TempTyp=operationMode");
-	//	setTimeout(function(){getXMLData()},3000);
+		"Value="+ModeStatus+
+		"&ValueTyp=operationMode");
 }
 
-function setSelectFieldsTemp(idName,StartTemp,StopTemp,interval){
+function setSelectFieldsTime(idName,StartTemp,StopTemp,interval){
 	var x = 0;	
 	for(x=StartTemp;x<=StopTemp;x=x+interval){
 		var y = document.getElementById(idName);
@@ -101,9 +100,7 @@ function setSelectFieldsTemp(idName,StartTemp,StopTemp,interval){
 }
 
 function setSelectMenuesValues(callback5){
-	setSelectFieldsTemp("SolarBackWaterTemp",18,36,1);
-	setSelectFieldsTemp("SolarDifferenceTemp",1,12,1);
-	setSelectFieldsTemp("SolarPoolTemp",18,36,1);		
+	setSelectFieldsTime("Niveautime",0,60,1);		
 	
 	if (callback5){
 		callback5();
@@ -131,7 +128,7 @@ function loadNavbar(callback1){
 			$(document).ready(function(){
 				$("#mainNavbar").load("navbar.html", function(){
 					$("#navbarFunction").addClass("active");
-					$("#navbarItemSolarSetting").addClass("active");
+					$("#navbarItemNiveauSetting").addClass("active");
 					$("#navbarlogin").hide();
 					$("#navbarSet").hide();
 					$("#inputhh").prop("disabled", true);

@@ -66,22 +66,22 @@
 </CleaningInterval>
 <CleaningInterval>
 	<Start>18:00</Start>
-	<Stop>20:00</Stop>
-	<Periode>02:00</Periode>
+	<Stop>22:10</Stop>
+	<Periode>04:10</Periode>
 </CleaningInterval>
 <CleaningSetting>
-	<OperationMode>OFF</OperationMode>
-	<tipCleaningTime></tipCleaningTime>
+	<OperationMode>AUTO</OperationMode>
+	<tipCleaningTime>0</tipCleaningTime>
 </CleaningSetting>
 <SolarSetting>
-	<operationMode>OFF</operationMode>
-	<backWaterTemp>27</backWaterTemp>
+	<operationMode>AUTO</operationMode>
+	<backWaterTemp>30</backWaterTemp>
 	<diffTemp>7</diffTemp>
 	<poolTemp>29</poolTemp>
 </SolarSetting>
 <LevelControl>
 	<operationMode>OFF</operationMode>
-	<Overtraveltime></Overtraveltime>
+	<Overtraveltime>12</Overtraveltime>
 </LevelControl>
 <DeviceInfo>
 	<DeviceID>14724111802896HwtGhV6vRQDwG9ApHRsmfnMTrph7xnQ6eJyLd21XxRGcz1</DeviceID>

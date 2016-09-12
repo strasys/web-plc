@@ -5,12 +5,12 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 //
 
-include "GPIO.inc.php";
-include "PT1000.inc.php";
-include "RTC.inc.php";
-include "composerloopcontrol.inc.php";
-include "PoolCleaninterval.inc.php";
-include "PoolSolar.inc.php";
+include_once "GPIO.inc.php";
+include_once "PT1000.inc.php";
+include_once "RTC.inc.php";
+include_once "composerloopcontrol.inc.php";
+include_once "PoolCleaninterval.inc.php";
+include_once "PoolSolar.inc.php";
 
 $DIGI = new GPIO();
 $loopstatuscontrol = new composerloopcontrol();

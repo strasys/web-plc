@@ -8,8 +8,8 @@
  *
  */
 
-//include "PT1000.inc.php"; => must be set once in the code
-//include "RTC.inc.php"; => must be set once in the code
+include_once "PT1000.inc.php";
+include_once "RTC.inc.php";
 
 class Solar
 {
@@ -81,19 +81,19 @@ class Solar
 		}
 
 		if ($waitFlag == false){
-			if ((($RoofTemp - $PoolTemp) >= $setDiffTemp) && ($PoolTemp <= $setPoolTemp))
+			if ((($RoofTemp - $CyclingTemp) >= $setDiffTemp) && ($CyclingTemp <= $setPoolTemp))
 			{
 				$SolarFlag = true;
 			
 				if ($artemp[5] == 0){
-					$artemp[3] = $actualTime + (60*4);
+					$artemp[3] = $actualTime + (60*10);
 					$artemp[5] = 1;
 				}	
 			} else {
 				$SolarFlag = false;
 
 				if ($artemp[5] == 1){
-					$artemp[1] = $actualTime + (60*4);
+					$artemp[1] = $actualTime + (60*10);
 					$artemp[5] = 0;	
 					$SolarFlag = true;
 				}

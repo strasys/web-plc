@@ -47,9 +47,9 @@
 				<div class="row" id="SolarBackWaterTempField">	
     				<div class= "col-xs-12 col-sm-6 col-md-5">
 					<div style="padding-top:20px; max-width:350px;" class = "input-group">
-						<span class="input-group-addon" style="min-width:160px;">max. Rücklauftemp.</span>
+						<span class="input-group-addon" style="min-width:180px;">Soll Temperatur</span>
 						<select id="SolarBackWaterTemp" class="form-control"></select>
-						<span class="input-group-addon">°C</span>
+						<span class="input-group-addon" style="min-width:60px;">°C</span>
 						<span class="input-group-btn">
 							<button id="ButtonBackWaterTemp" class="btn btn-default" type="button" onclick="setSolarParameterXML('SolarBackWaterTemp','ButtonBackWaterTemp','TempBackWater')">Set</button>
 						</span>
@@ -57,29 +57,54 @@
 					</div>
 				</div>							
 				</div>
-				<div class="row" id="SolarDifferenceTempField">	
+				<div class="row" id="SolarDifferenceONTempField">	
     				<div class= "col-xs-12 col-sm-6 col-md-5">
 					<div style="padding-top:20px; max-width:350px;" class = "input-group">
-						<span class="input-group-addon" style="min-width:160px;">Temperatur Differenz</span>
-						<select id="SolarDifferenceTemp" class="form-control" ></select>
-						<span class="input-group-addon">°C</span>
+						<span class="input-group-addon" style="min-width:180px;">Einschalt Differenz</span>
+						<select id="SolarDifferenceONTemp" class="form-control" ></select>
+						<span class="input-group-addon" style="min-width:60px;">°C</span>
 						<span class="input-group-btn">
-						<button id="ButtonDifferenceTemp" class="btn btn-default" type="button" onclick="setSolarParameterXML('SolarDifferenceTemp','ButtonDifferenceTemp','DifferenceTemp')">Set</button>
+						<button id="ButtonDifferenceONTemp" class="btn btn-default" type="button" onclick="setSolarParameterXML('SolarDifferenceONTemp','ButtonDifferenceONTemp','DifferenceONTemp')">Set</button>
 					</div>
 				</div>
 				</div>
-				<div class="row" id="SolarPoolTempField">	
+				<div class="row" id="SolarDifferenceOFFTempField">	
     				<div class= "col-xs-12 col-sm-6 col-md-5">
 					<div style="padding-top:20px; max-width:350px;" class = "input-group">
-						<span class="input-group-addon" style="min-width:160px;">Becken Temperatur</span>
-						<select id="SolarPoolTemp" class="form-control"></select>
-						<span class="input-group-addon">°C</span>
+						<span class="input-group-addon" style="min-width:180px;">Ausschalt Differenz</span>
+						<select id="SolarDifferenceOFFTemp" class="form-control"></select>
+						<span class="input-group-addon" style="min-width:60px;">°C</span>
 						<span class="input-group-btn">
-						<button id="ButtonPoolTemp" class="btn btn-default" type="button" onclick="setSolarParameterXML('SolarPoolTemp','ButtonPoolTemp','PoolTemp')">Set</button>
+						<button id="ButtonDifferenceOFFTemp" class="btn btn-default" type="button" onclick="setSolarParameterXML('SolarDifferenceOFFTemp','ButtonDifferenceOFFTemp','DifferenceOFFTemp')">Set</button>
 						</span>
 					</div>
 				</div>
 				</div>
+				<div class="row" id="SolarSwitchOFFdelayField">	
+    				<div class= "col-xs-12 col-sm-6 col-md-5">
+					<div style="padding-top:20px; max-width:350px;" class = "input-group">
+						<span class="input-group-addon" style="min-width:180px;">Ausschalt Verzögerung</span>
+						<select id="SolarSwitchOFFdelay" class="form-control"></select>
+						<span class="input-group-addon" style="min-width:60px;">min.</span>
+						<span class="input-group-btn">
+						<button id="ButtonSwitchOFFdelay" class="btn btn-default" type="button" onclick="setSolarParameterXML('SolarSwitchOFFdelay','ButtonSwitchOFFdelay','SwitchOFFdelay')">Set</button>
+						</span>
+					</div>
+				</div>
+				</div>
+				<div class="row" id="SolarSwitchONdelayField">	
+    				<div class= "col-xs-12 col-sm-6 col-md-5">
+					<div style="padding-top:20px; max-width:350px;" class = "input-group">
+						<span class="input-group-addon" style="min-width:180px;">Einschalt Verzögerung</span>
+						<select id="SolarSwitchONdelay" class="form-control"></select>
+						<span class="input-group-addon" style="min-width:60px;">min.</span>
+						<span class="input-group-btn">
+						<button id="ButtonSwitchONdelay" class="btn btn-default" type="button" onclick="setSolarParameterXML('SolarSwitchONdelay','ButtonSwitchONdelay','SwitchONdelay')">Set</button>
+						</span>
+					</div>
+				</div>
+				</div>
+	
 	</div>
 		<div><h3 id="test0"></h3></div>
 		<div><h3 id="test1"></h3></div>

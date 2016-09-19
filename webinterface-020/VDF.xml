@@ -51,8 +51,8 @@
 </PT1000>
 <CleaningInterval>
 	<Start>08:00</Start>
-	<Stop>09:55</Stop>
-	<Periode>01:55</Periode>
+	<Stop>09:00</Stop>
+	<Periode>01:00</Periode>
 </CleaningInterval>
 <CleaningInterval>
 	<Start>10:00</Start>
@@ -61,13 +61,13 @@
 </CleaningInterval>
 <CleaningInterval>
 	<Start>13:45</Start>
-	<Stop>17:00</Stop>
-	<Periode>03:15</Periode>
+	<Stop>14:45</Stop>
+	<Periode>01:00</Periode>
 </CleaningInterval>
 <CleaningInterval>
 	<Start>18:00</Start>
-	<Stop>22:10</Stop>
-	<Periode>04:10</Periode>
+	<Stop>19:00</Stop>
+	<Periode>01:00</Periode>
 </CleaningInterval>
 <CleaningSetting>
 	<OperationMode>AUTO</OperationMode>
@@ -76,12 +76,15 @@
 <SolarSetting>
 	<operationMode>AUTO</operationMode>
 	<backWaterTemp>30</backWaterTemp>
-	<diffTemp>7</diffTemp>
-	<poolTemp>29</poolTemp>
+	<diffONTemp>7</diffONTemp>
+	<diffOFFTemp>5</diffOFFTemp>
+	<SwitchOFFdelay>5</SwitchOFFdelay>
+	<SwitchONdelay>5</SwitchONdelay>
 </SolarSetting>
 <LevelControl>
-	<operationMode>OFF</operationMode>
-	<Overtraveltime>12</Overtraveltime>
+	<operationMode>AUTO</operationMode>
+	<Overtraveltime>2</Overtraveltime>
+	<SensorONTime>2</SensorONTime>
 </LevelControl>
 <DeviceInfo>
 	<DeviceID>14724111802896HwtGhV6vRQDwG9ApHRsmfnMTrph7xnQ6eJyLd21XxRGcz1</DeviceID>

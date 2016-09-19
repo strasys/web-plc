@@ -16,7 +16,9 @@ $ValueTyp = $_POST["ValueTyp"];
 $get = "g";
 $set = "s";
 $NiveauOvertraveltime = "NiveauOvertraveltime";
+$SensorONTime = "NiveauSensorONtime";
 $operationMode = "operationMode";
+
 
 //get Log status
 if ($getLogData == $get){
@@ -27,6 +29,12 @@ if (($ValueTyp == $NiveauOvertraveltime) && ($adminstatus)){
 	$xml=simplexml_load_file("VDF.xml") or die("Error: Cannot create object");
 	$xml->LevelControl[0]->Overtraveltime = $_POST["Value"];
 	echo $xml->asXML("VDF.xml");
+}
+
+if (($ValueTyp == $SensorONTime) && ($adminstatus)){
+	$xml=simplexml_load_file("VDF.xml") or die("Error: Cannot create object");
+	$xml->LevelControl[0]->SensorONTime = $_POST["Value"];
+	echo $xml->asXML("VDF.xml");	
 }
 
 if (($ValueTyp == $operationMode) && ($adminstatus)){

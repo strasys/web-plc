@@ -53,8 +53,12 @@ function getXMLData(callback4){
 		}
 				
 		document.getElementById("SolarBackWaterTemp").value = w[0].getElementsByTagName("backWaterTemp")[0].childNodes[0].nodeValue;
-		document.getElementById("SolarDifferenceTemp").value = w[0].getElementsByTagName("diffTemp")[0].childNodes[0].nodeValue;
-		document.getElementById("SolarPoolTemp").value = w[0].getElementsByTagName("poolTemp")[0].childNodes[0].nodeValue;
+		document.getElementById("SolarDifferenceONTemp").value = w[0].getElementsByTagName("diffONTemp")[0].childNodes[0].nodeValue;
+		document.getElementById("SolarDifferenceOFFTemp").value = w[0].getElementsByTagName("diffOFFTemp")[0].childNodes[0].nodeValue;
+		document.getElementById("SolarSwitchOFFdelay").value = w[0].getElementsByTagName("SwitchOFFdelay")[0].childNodes[0].nodeValue;
+		document.getElementById("SolarSwitchONdelay").value = w[0].getElementsByTagName("SwitchONdelay")[0].childNodes[0].nodeValue;
+
+
 	}
 	if (callback4){
 		callback4();
@@ -106,8 +110,11 @@ function setSelectFieldsTemp(idName,StartTemp,StopTemp,interval){
 
 function setSelectMenuesValues(callback5){
 	setSelectFieldsTemp("SolarBackWaterTemp",18,36,1);
-	setSelectFieldsTemp("SolarDifferenceTemp",1,12,1);
-	setSelectFieldsTemp("SolarPoolTemp",18,36,1);		
+	setSelectFieldsTemp("SolarDifferenceONTemp",1,12,1);
+	setSelectFieldsTemp("SolarDifferenceOFFTemp",1,12,1);
+	setSelectFieldsTemp("SolarSwitchOFFdelay",1,15,1);
+	setSelectFieldsTemp("SolarSwitchONdelay",1,15,1);
+
 	
 	if (callback5){
 		callback5();

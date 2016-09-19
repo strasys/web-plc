@@ -25,15 +25,17 @@ class Solar
 		$RTC = new RTC();
 		(bool) $SolarFlag = false;
 		(bool) $waitFlag = false;
+		(bool) $waitFlagRoofCycling = false;
 		
-		$setPoolTemp = (int) $xml->SolarSetting[0]->poolTemp;
 		$setCyclingWaterTemp = (int) $xml->SolarSetting[0]->backWaterTemp;
-		$setDiffTemp = (int) $xml->SolarSetting[0]->diffTemp;
-	
+		$setdiffONTemp = (int) $xml->SolarSetting[0]->diffONTemp;
+		$setdiffOFFTemp = (int) $xml->SolarSetting[0]->diffOFFTemp;
+		$setSwitchOFFdelay = (int) $xml->SolarSetting[0]->SwitchOFFdelay;	
+		$setSwitchONdelay = (int) $xml->SolarSetting[0]->SwitchONdelay;		
 		$PoolTemp = $Temp->getPT1000(0);
 		$RoofTemp = $Temp->getPT1000(2);
 		$CyclingTemp = $Temp->getPT1000(3);
-		
+
 		//Unix time
 		$actualTime = strtoTime($RTC->getstrTimeHHMM()); 
 	
@@ -46,9 +48,9 @@ class Solar
 		$TempControlFile = fopen("/tmp/PoolTempControlFile.txt", "r");
 		if ($TempControlFile == false){
 			$TempControlFile = fopen("/tmp/PoolTempControlFile.txt","w");
-			fwrite($TempControlFile,"waitmintime:0\r\n");
-			fwrite($TempControlFile,"runmintime:0\r\n");
-			fwrite($TempControlFile,"StatusSolar:0\r\n");
+			fwrite($TempControlFile,"SwitchONdelay:0\r\n");
+			fwrite($TempControlFile,"SwitchOFFdelay:0\r\n");
+			fwrite($TempControlFile,"SolarON:0\r\n");
 			fclose($TempControlFile);
 			$TempControlFile = fopen("/tmp/PoolTempControlFile.txt", "r");
 		}
@@ -57,7 +59,7 @@ class Solar
 			for($i=0;$i<3;$i++)
 			{
 				$line = fgets($TempControlFile,200);
-				echo $line;
+			//	echo $line;
 				$line = trim($line);
 				list($var,$varval) = explode(":",$line);
 				$artemp[$x] = $var;
@@ -73,39 +75,33 @@ class Solar
 			$waitFlag = true;
 		}
 
-		if (($artemp[5] == 1)&&($waitFlag == true)){
+		if ((($RoofTemp - $CyclingTemp) >= $setdiffONTemp)&&($artemp[5] == 0)&&($waitFlag == false)&&($CyclingTemp <= $setCyclingWaterTemp))
+		{
 			$SolarFlag = true;
+			$artemp[5] = 1;
+			$artemp[3] = $actualTime + ($setSwitchOFFdelay * 60);
+		}
+		else if (((($RoofTemp - $CyclingTemp) <= $setdiffOFFTemp)&&($artemp[5] == 1)&&($waitFlag == false))||($CyclingTemp >= $setCyclingWaterTemp))
+		{
+			$artemp[1] = $actualTime + ($setSwitchONdelay * 60);
+			$artemp[5] = 0;
+			$SolarFlag = false;
 		}
 		else if (($artemp[5] == 0)&&($waitFlag == true)){
 			$SolarFlag = false;
 		}
-
-		if ($waitFlag == false){
-			if ((($RoofTemp - $CyclingTemp) >= $setDiffTemp) && ($CyclingTemp <= $setPoolTemp))
-			{
-				$SolarFlag = true;
-			
-				if ($artemp[5] == 0){
-					$artemp[3] = $actualTime + (60*10);
-					$artemp[5] = 1;
-				}	
-			} else {
-				$SolarFlag = false;
-
-				if ($artemp[5] == 1){
-					$artemp[1] = $actualTime + (60*10);
-					$artemp[5] = 0;	
-					$SolarFlag = true;
-				}
-			}
-
-			$TempControlFile = fopen("/tmp/PoolTempControlFile.txt", "w");
-			$i = 0;
-			for ($i=0;$i<6;$i=$i+2){
-				fwrite($TempControlFile,$artemp[$i].":".$artemp[$i+1]."\r\n");	
-			}	
-		 	fclose($TempControlFile);	
+		else if (($artemp[5] == 1)&&($waitFlag == true)){
+			$SolarFlag = true;
 		}
+		
+	
+		$TempControlFile = fopen("/tmp/PoolTempControlFile.txt", "w");
+		$i = 0;
+		for ($i=0;$i<6;$i=$i+2){
+			fwrite($TempControlFile,$artemp[$i].":".$artemp[$i+1]."\r\n");	
+		}	
+		 fclose($TempControlFile);	
+		
 
 		return (bool) $SolarFlag;
 	}

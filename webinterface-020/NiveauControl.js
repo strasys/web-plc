@@ -51,6 +51,8 @@ function getXMLData(callback4){
 		}
 				
 		document.getElementById("Niveautime").value = w[0].getElementsByTagName("Overtraveltime")[0].childNodes[0].nodeValue;
+		document.getElementById("NiveautimeSensorON").value = w[0].getElementsByTagName("SensorONTime")[0].childNodes[0].nodeValue;
+
 	}
 	if (callback4){
 		callback4();
@@ -100,7 +102,8 @@ function setSelectFieldsTime(idName,StartTemp,StopTemp,interval){
 }
 
 function setSelectMenuesValues(callback5){
-	setSelectFieldsTime("Niveautime",0,60,1);		
+	setSelectFieldsTime("Niveautime",1,60,1);
+	setSelectFieldsTime("NiveautimeSensorON",1,60,1);	
 	
 	if (callback5){
 		callback5();

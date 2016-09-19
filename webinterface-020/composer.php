@@ -11,11 +11,13 @@ include_once "RTC.inc.php";
 include_once "composerloopcontrol.inc.php";
 include_once "PoolCleaninterval.inc.php";
 include_once "PoolSolar.inc.php";
+include_once "PoolNiveau.inc.php";
 
 $DIGI = new GPIO();
 $loopstatuscontrol = new composerloopcontrol();
 $Cleaning = new CleaningInterval();
 $Solar = new Solar();
+$Niveau = new Niveau();
 
 date_default_timezone_set('CET');
 
@@ -90,7 +92,7 @@ while ($loopstatus){
 	 */
 
 	//TODO: Add solar Mixer movement evaluation and display error if Solar mixer does not reach the position.
-
+	
 	(bool) $MixerOFF = false;
 	if ($DIGI->getOutSingle(0) == 0)
 	{
@@ -105,6 +107,26 @@ while ($loopstatus){
 	{
 		$DIGI->setOutsingle(0,0);	
 	}
+
+	/*
+	 * Watter level control function
+	 */
+	echo "Watter<br>";
+	(bool) $WatterValveON = false;
+	if ($Niveau->getNiveauFlag() && $Niveau->getopModeFlag())
+	{
+		$WatterValveON = true;
+	}
+
+	if (($DIGI->getOutSingle(4) == 0)&&($WatterValveON == true))
+	{
+		$DIGI->setOutsingle(4,1);	
+	}
+	else if (($DIGI->getOutSingle(4) == 1)&&($WatterValveON == false))
+	{
+		$DIGI->setOutsingle(4,0);
+	}
+	
 
 	/*
 	 * Pump on off based on above function decissions 

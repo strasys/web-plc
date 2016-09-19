@@ -47,7 +47,7 @@
 				<div class="row" id="NiveauOvertraveltimeField">	
     				<div class= "col-xs-12 col-sm-6 col-md-5">
 					<div style="padding-top:20px; max-width:350px;" class = "input-group">
-						<span class="input-group-addon" style="min-width:160px;">Nachlaufzeit</span>
+						<span class="input-group-addon" style="min-width:160px;">Nachspeisezeit</span>
 						<select id="Niveautime" class="form-control"></select>
 						<span class="input-group-addon">min.</span>
 						<span class="input-group-btn">
@@ -55,9 +55,23 @@
 						</span>
 
 					</div>
-				</div>							
 				</div>
 				</div>
+				<div class="row" id="NiveautimeSensorONField">	
+				<div class= "col-xs-12 col-sm-6 col-md-5">
+					<div style="padding-top:20px; max-width:350px;" class = "input-group">
+						<span class="input-group-addon" style="min-width:160px;">Beruhigungszeit</span>
+						<select id="NiveautimeSensorON" class="form-control"></select>
+						<span class="input-group-addon">min.</span>
+						<span class="input-group-btn">
+							<button id="ButtonNiveauSensorONtime" class="btn btn-default" type="button" onclick="setNiveauParameterXML('NiveautimeSensorON','ButtonNiveauSensorONtime','NiveauSensorONtime')">Set</button>
+						</span>
+
+					</div>
+				</div>
+				</div>
+				
+			</div>
 		<div><h3 id="test0"></h3></div>
 		<div><h3 id="test1"></h3></div>
 		<div><h3 id="test2"></h3></div>

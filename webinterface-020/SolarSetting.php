@@ -16,8 +16,10 @@ $TempTyp = $_POST["TempTyp"];
 $get = "g";
 $set = "s";
 $TempBackWater = "TempBackWater";
-$DifferenceTemp = "DifferenceTemp";
-$PoolTemp = "PoolTemp";
+$DifferenceONTemp = "DifferenceONTemp";
+$DifferenceOFFTemp = "DifferenceOFFTemp";
+$SwitchOFFdelay = "SwitchOFFdelay";
+$SwitchONdelay = "SwitchONdelay";
 $operationMode = "operationMode";
 
 //get Log status
@@ -31,15 +33,27 @@ if (($TempTyp == $TempBackWater) && ($adminstatus)){
 	echo $xml->asXML("VDF.xml");
 }
 
-if (($TempTyp == $DifferenceTemp) && ($adminstatus)){
+if (($TempTyp == $DifferenceONTemp) && ($adminstatus)){
 	$xml=simplexml_load_file("VDF.xml") or die("Error: Cannot create object");
-	$xml->SolarSetting[0]->diffTemp = $_POST["TempValue"];
+	$xml->SolarSetting[0]->diffONTemp = $_POST["TempValue"];
 	echo $xml->asXML("VDF.xml");
 }
 
-if (($TempTyp == $PoolTemp) && ($adminstatus)){
+if (($TempTyp == $DifferenceOFFTemp) && ($adminstatus)){
 	$xml=simplexml_load_file("VDF.xml") or die("Error: Cannot create object");
-	$xml->SolarSetting[0]->poolTemp = $_POST["TempValue"];
+	$xml->SolarSetting[0]->diffOFFTemp = $_POST["TempValue"];
+	echo $xml->asXML("VDF.xml");
+}
+
+if (($TempTyp == $SwitchOFFdelay) && ($adminstatus)){
+	$xml=simplexml_load_file("VDF.xml") or die("Error: Cannot create object");
+	$xml->SolarSetting[0]->SwitchOFFdelay = $_POST["TempValue"];
+	echo $xml->asXML("VDF.xml");
+}
+
+if (($TempTyp == $SwitchONdelay) && ($adminstatus)){
+	$xml=simplexml_load_file("VDF.xml") or die("Error: Cannot create object");
+	$xml->SolarSetting[0]->SwitchONdelay = $_POST["TempValue"];
 	echo $xml->asXML("VDF.xml");
 }
 

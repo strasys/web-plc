@@ -111,7 +111,6 @@ while ($loopstatus){
 	/*
 	 * Watter level control function
 	 */
-	echo "Watter<br>";
 	(bool) $WatterValveON = false;
 	if ($Niveau->getNiveauFlag() && $Niveau->getopModeFlag())
 	{

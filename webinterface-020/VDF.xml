@@ -75,11 +75,11 @@
 </CleaningSetting>
 <SolarSetting>
 	<operationMode>AUTO</operationMode>
-	<backWaterTemp>30</backWaterTemp>
+	<backWaterTemp>24</backWaterTemp>
 	<diffONTemp>7</diffONTemp>
 	<diffOFFTemp>5</diffOFFTemp>
-	<SwitchOFFdelay>5</SwitchOFFdelay>
-	<SwitchONdelay>5</SwitchONdelay>
+	<SwitchOFFdelay>2</SwitchOFFdelay>
+	<SwitchONdelay>2</SwitchONdelay>
 </SolarSetting>
 <LevelControl>
 	<operationMode>AUTO</operationMode>

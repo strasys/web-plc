@@ -59,7 +59,7 @@ class Solar
 			for($i=0;$i<3;$i++)
 			{
 				$line = fgets($TempControlFile,200);
-			//	echo $line;
+				echo $line."<br>";
 				$line = trim($line);
 				list($var,$varval) = explode(":",$line);
 				$artemp[$x] = $var;
@@ -81,12 +81,23 @@ class Solar
 			$artemp[5] = 1;
 			$artemp[3] = $actualTime + ($setSwitchOFFdelay * 60);
 		}
-		else if (((($RoofTemp - $CyclingTemp) <= $setdiffOFFTemp)&&($artemp[5] == 1)&&($waitFlag == false))||($CyclingTemp >= $setCyclingWaterTemp))
+		else if (($artemp[5] == 1)&&($waitFlag == false)&&($CyclingTemp > $setCyclingWaterTemp))
 		{
 			$artemp[1] = $actualTime + ($setSwitchONdelay * 60);
 			$artemp[5] = 0;
 			$SolarFlag = false;
 		}
+		else if ((($RoofTemp - $CyclingTemp) <= $setdiffOFFTemp)&&($artemp[5] == 1)&&($waitFlag == false))
+		{
+			$artemp[1] = $actualTime + ($setSwitchONdelay * 60);
+			$artemp[5] = 0;
+			$SolarFlag = false;
+		}
+		else if ((($RoofTemp - $CyclingTemp) >= $setdiffOFFTemp)&&($artemp[5] == 1)&&($waitFlag == false))
+		{
+			$SolarFlag = true;
+		}
+
 		else if (($artemp[5] == 0)&&($waitFlag == true)){
 			$SolarFlag = false;
 		}
@@ -94,7 +105,6 @@ class Solar
 			$SolarFlag = true;
 		}
 		
-	
 		$TempControlFile = fopen("/tmp/PoolTempControlFile.txt", "w");
 		$i = 0;
 		for ($i=0;$i<6;$i=$i+2){
@@ -102,7 +112,6 @@ class Solar
 		}	
 		 fclose($TempControlFile);	
 		
-
 		return (bool) $SolarFlag;
 	}
 	/*

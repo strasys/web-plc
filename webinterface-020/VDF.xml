@@ -20,10 +20,10 @@
 	<OutputName>Pumpe</OutputName>
 </GPIOOUT>
 <GPIOOUT>
-	<OutputName>Pool - Beleuchtung</OutputName>
+	<OutputName>Becken Licht</OutputName>
 </GPIOOUT>
 <GPIOOUT>
-	<OutputName>Beleuchtung</OutputName>
+	<OutputName>Außen Licht</OutputName>
 </GPIOOUT>
 <GPIOOUT>
 	<OutputName>Frischwasserventil</OutputName>

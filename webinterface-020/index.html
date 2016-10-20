@@ -13,6 +13,7 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/strasys-custom.css" rel="stylesheet">
 	
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -26,14 +27,111 @@
   <div id="mainNavbar">
   </div>
 
-		<div style = "padding-top:70px;" class="container">
-			<div class="jumbotron">
- 	 			<h1>Hallo!</h1>
-  			<p>Willkommen auf Deiner Steuerung.</p>
-  			<p><a class="btn btn-success btn-lg" href="#" role="button">Start</a></p>
+  <div style = "padding-top:70px; padding-left:20px; padding-right:20px" class="container">
+	  <div class="panel panel-info">
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-4 col-sm-6 col-xs-12">
+				<h4>
+					<span class="badge alert-info" id="badgeTempPool" style = "font-size:125%; min-width:80px;"></span>
+					<strong id="labelTempPool" style = "font-size:125%;"></strong>	
+				</h4>
+				</div>
+				<div class="col-md-4 col-sm-6 col-xs-12">
+				<h4>
+					<span class="badge alert-info" id="badgeTempOutside" style = "font-size:125%; min-width:80px;"></span>
+					<strong id="labelTempOutside" style = "font-size:125%;"></strong>
+				</h4>
+				</div>
 			</div>
 		</div>
+	</div>
+	<div class="panel panel-info" id="panelStatusOperation">
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-4 col-sm-6 col-xs-12">
+				<h4>
+					<span class="badge alert-info" id="badgeOperationMode" style = "font-size:125%; min-width:80px;"></span>
+					<strong id="labelOperationMode" style = "font-size:125%;">Betriebsart</strong>	
+				</h4>
+				</div>
+			</div>
+		</div>
+	</div>
 
+	<div class="panel panel-info">
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-4 col-sm-6 col-xs-12">
+				<h3>
+				<button class="btn btn-default" type="button" id="buttonOut2" onclick="setOutstatus(2)" style = "width:100%;">
+ 	 				<h4> 
+ 	 					<strong id="buttonOutText2"></strong>
+ 	 					<span class="badge" id="badgeOut2"></span>
+ 	 				</h4>
+				</button>
+				</h3>
+			</div>
+				<div class="col-md-4 col-sm-6 col-xs-12">
+				<h3>
+				<button class="btn btn-default" type="button" id="buttonOut3" onclick="setOutstatus(3)" style = "width:100%;">
+ 	 				<h4> 
+ 	 					<strong id="buttonOutText3"></strong>
+ 	 					<span class="badge" id="badgeOut3"></span>
+ 	 				</h4>
+				</button>
+				</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="panel panel-info" id="panelStatusActuators">
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-4 col-sm-6 col-xs-12">
+				<h4>
+					<span class="badge alert-info" id="badgeStatusPump" style = "font-size:125%; min-width:80px;"></span>
+					<strong id="labelStatusPump" style = "font-size:125%;"></strong>	
+				</h4>
+				</div>
+				<div class="col-md-4 col-sm-6 col-xs-12">
+				<h4>
+					<span class="badge alert-info" id="badgeStatusWaterValve" style = "font-size:125%; min-width:80px;"></span>
+					<strong id="labelStatusWaterValve" style = "font-size:125%;"></strong>
+				</h4>
+				</div>
+				<div class="col-md-4 col-sm-6 col-xs-12">
+				<h4>
+					<span class="badge alert-info" id="badgeStatusNiveauSensor" style = "font-size:125%; min-width:80px;"></span>
+					<strong id="labelStatusNiveauSensor" style = "font-size:125%;"></strong>
+				</h4>
+				</div>
+
+				<div class="col-md-4 col-sm-6 col-xs-12">
+				<h4>
+					<span class="badge alert-info" id="badgeStatusMixer" style = "font-size:125%; min-width:80px;"></span>
+					<strong id="labelStatusMixer" style = "font-size:125%;"></strong>
+				</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel" id="panelAdditionalFunctions">
+			<div class="row" style="padding-bottom:50px;">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+				<h3>
+				<button class="btn btn-default" type="button" id="buttonOut0" onclick="setOutstatus(0)" style = "width:100%;">
+ 	 				<h4> 
+ 	 					<strong id="buttonOutText0">Bedienfunktionen</strong>
+ 	 			 	 </h4>
+				</button>
+				</h3>
+				</div>
+			</div>
+	</div>
+
+</div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="jQuery/2.1.3/jquery.min.js"></script> 
     <!-- Include all compiled plugins (below), or include individual files as needed -->

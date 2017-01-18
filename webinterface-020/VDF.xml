@@ -70,11 +70,11 @@
 	<Periode>01:00</Periode>
 </CleaningInterval>
 <CleaningSetting>
-	<OperationMode>AUTO</OperationMode>
+	<OperationMode>OFF</OperationMode>
 	<tipCleaningTime>0</tipCleaningTime>
 </CleaningSetting>
 <SolarSetting>
-	<operationMode>AUTO</operationMode>
+	<operationMode>OFF</operationMode>
 	<backWaterTemp>24</backWaterTemp>
 	<diffONTemp>7</diffONTemp>
 	<diffOFFTemp>5</diffOFFTemp>
@@ -82,10 +82,14 @@
 	<SwitchONdelay>2</SwitchONdelay>
 </SolarSetting>
 <LevelControl>
-	<operationMode>AUTO</operationMode>
-	<Overtraveltime>2</Overtraveltime>
+	<operationMode>OFF</operationMode>
+	<Overtraveltime>7</Overtraveltime>
 	<SensorONTime>2</SensorONTime>
 </LevelControl>
+<Owner>
+	<email>0<email/>
+	<userName>0<userName/>
+</Owner>
 <DeviceInfo>
 	<DeviceID>14724111802896HwtGhV6vRQDwG9ApHRsmfnMTrph7xnQ6eJyLd21XxRGcz1</DeviceID>
 </DeviceInfo>

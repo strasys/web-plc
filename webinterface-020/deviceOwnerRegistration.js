@@ -8,6 +8,8 @@
  */
 
 var sortoutcache = new Date();
+var email;
+var username;
 
 function getData(setget, url, cfunc, senddata){
 	xhttp = new XMLHttpRequest();
@@ -103,36 +105,86 @@ function RegisterOwnerUser(gender, firstName_str, FamilyName_str, street_str, nu
 	"&City="+City_str+
 	"&Country="+Country_str+
 	"&email="+email_str+
-	"&password"+password_str+
+	"&password="+password_str+
 	"&OwnerRegistration=w"
 	);
 }
 
-function submit_veri_code(){
-	
-}
-
 // Submit verification code
-function handler_submit_veri_code(veriCode, callback){	
+function handler_submit_very_code(veryCode, email, username, callback){	
 	getData("post","deviceOwnerRegistration.php",function()
 	{
 		if (xhttp.readyState==4 && xhttp.status==200)
 		{
-			var getVeriData = JSON.parse(xhttp.responseText);
-			ownerRegisterStatus_veri = [
-						(getVeriData.approvaFlag),
-						(getVeriData.email),
-						(getVeriData.username)
+			var getVeryData = JSON.parse(xhttp.responseText);
+			ownerRegisterStatus_very = [
+						(getVeryData.writeVeryData),
+						(getVeryData.veryCodeVerification),
+						(getVeryData.email),
+						(getVeryData.username)
 						];
 			if(callback){
 				callback();
 			}
 		}
 	},
-	"veriCode="+veriCode+
+	"veryCode="+veryCode+
 	"&email="+email+
-	"&CheckVeriCode=c"
+	"&username="+username+
+	"&CheckVeryCode=c"
 	);
+}
+
+function submit_very_code(){
+	var veryCode = document.getElementById("very_code").value;
+
+	handler_submit_very_code(veryCode, email, username, function(){
+		if ((ownerRegisterStatus_very[0] == 1) && (ownerRegisterStatus_very[1] == 1)){
+			$("#veri_code_div").hide();
+			$("#SubmitProductReg").hide();
+			$("#veriCode").val('');
+			$("#reg_owner_answer_header").addClass("text-sucess");
+			$("#reg_owner_answer_header").html("<strong>Erfolgreich Registriert</strong>");
+			$("#reg_owner_answer_p").html("Sie können sich nun über <a href=\"www.wistcon.de\">www.wistcon.de</a> anmelden	und erweitere Funktionen für ihr Produkt nutzen.<br>Eine wesentliche Funktion ist der Zugriff auf Ihr Produkt von außerhalb Ihres Heimnetzwerks.<br><strong>Achtung:<strong> Hierfür müssen Sie Ihre DNS Funktion auf dem Gerät aktivieren.");
+			$("#reg_owner_email_p").html("Registrierungs e-mail: "+email+"<br>");
+			$("#reg_owner_username_p").html("Folgender Benutzername wurde Ihnen zugewiesen.<br>Benutzername: "+username);
+		} else if ((ownerRegisterStatus_very[0] == -1) && (ownerRegisterStatus_very[1] == 1))
+       			{
+			$("#veriCode").val('');
+			$("#veri_code_div").show();
+			$("#SubmitProductReg").hide();
+			$("#reg_owner_answer_header").addClass("text-danger");
+			$("#reg_owner_answer_header").html("<strong>Verifizierung Fehlgeschlagen!</strong>");
+			$("#reg_owner_answer_p").html("Der Registrierungs Server ist nicht bereit. Bitte versuchen Sie es zu einem späteren Zeitpunkt nochmals!");
+			//Button configuration 	
+			var buttonProperties = document.getElementById("SubmitProductReg");
+			buttonProperties.value = "Neuen Verifizierungscode anfordern";
+			buttonProperties.onclick = function () {getNewVeryCode()};
+			$("#SubmitProductReg").prop('disabled', true);
+			$("#SubmitProductReg").show();
+
+		} else if ((ownerRegisterStatus_very[0] == 0) && (ownerRegisterStatus_very[1] == -1))
+			{
+			$("#veriCode").val('');
+			$("#veri_code_div").show();
+			$("#SubmitProductReg").hide();
+			$("#reg_owner_answer_header").addClass("text-danger");
+			$("#reg_owner_answer_header").html("<strong>Verifizierung Fehlgeschlagen!</strong>");
+			$("#reg_owner_answer_p").html("Der Registrierungs Server ist nicht bereit. Bitte versuchen Sie es zu einem späteren Zeitpunkt nochmals!");
+			//Button configuration 	
+			var buttonProperties = document.getElementById("SubmitProductReg");
+			buttonProperties.value = "Neuen Verifizierungscode anfordern";
+			buttonProperties.onclick = function () {getNewVeryCode()};
+			$("#SubmitProductReg").prop('disabled', true);
+			$("#SubmitProductReg").show();
+			}
+
+		$("#reg_owner_answer_positiv").show();
+	});
+}
+
+function getNewVeryCode(){
+	// add code
 }
 
 function setSelectMenuesValues(){
@@ -446,12 +498,18 @@ function checkProductRegistrationEntry(){
 				$("#reg_owner_answer_header").html("<strong>Nur noch ein Schritt zur erfolgreichen Registrierung</strong>");
 				$("#reg_owner_answer_p").html("Wir haben Ihnen eine Bestätigungs<br>e-mail an: "+ownerRegisterStatus[7]+"<br> gesendet.<br>Bitte tragen Sie den 5 - stelligen Code zur Bestätigung der Registrierung in das untere Feld ein<br> clicken Sie \"Registrierung abschliessen\"");
 			//	$("#reg_owner_email_p").html("<br><strong>Registrierte e-mail: "+ownerRegisterStatus[7]+"<strong>");
-			//	$("#reg_owner_username_p").html("<strong>Benutzername: "+ownerRegisterStatus[8]+"<strong>");
+				//	$("#reg_owner_username_p").html("<strong>Benutzername: "+ownerRegisterStatus[8]+"<strong>");
+				//empty input field
+				$("#very_code").val("");
 				$("#SubmitProductReg").prop('value', 'Registrierung abschliessen');
 				$("#SubmitProductReg").prop('disabled', true);
+				//set global email and username variable
+				email = ownerRegisterStatus[7];
+				username = ownerRegisterStatus[8];
 				//Button function
 				//Button configuration 	
-				buttonProperties.onclick = function () {submit_veri_code()};
+				var buttonProperties = document.getElementById("SubmitProductReg");
+				buttonProperties.onclick = function () {submit_very_code()};
 				$("#SubmitProductReg").prop('disabled', false);
 				$("#veri_code_div").show();
 			}

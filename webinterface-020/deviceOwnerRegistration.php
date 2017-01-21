@@ -26,14 +26,14 @@ if ($getLogData == $get){
 	transfer_javascript($loginstatus, $adminstatus);
 }
 
-if (($_POST['CheckVeriCode'] == $check) && ($adminstatus)){ 
+if (($_POST['CheckVeryCode'] == $check) && ($adminstatus)){ 
 
 	unset ($data_string, $data, $deviceIDval);
 	$deviceIDval = trim(getDeviceID());
 
 	$data = array(
 		'deviceID' => $deviceIDval,
-		'veriCode' => $_POST['veriCode'],
+		'veriCode' => $_POST['veryCode'],
 		'email' => $_POST['email'],
 		'progkey' => "V"
 	);
@@ -55,22 +55,30 @@ if (($_POST['CheckVeriCode'] == $check) && ($adminstatus)){
 	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
 	$return = curl_exec($ch);
 	curl_close($ch);
-	
-	Verification_return($return);	
+
+	Verification_return($return,$_POST['email'],$_POST['username']);	
 }
 
-/*
+function Verification_return($return,$email,$username){
 
+	$returnData = explode("&", $return);
+	$returnDataValues = array();
+	for ($i=0;$i<2;$i++){
+		$temp = explode(":", $returnData[$i]);
+		$returnDataValues[$i] = $temp[1];
+	}
 
-if (($setCleanTime == $set) && ($adminstatus)){
-	$xml=simplexml_load_file("VDF.xml") or die("Error: Cannot create object");
-	$i = intval($_POST["CleanInterval"]);
-	$xml->CleaningInterval[$i]->Start = $_POST["StartTime"];
-	$xml->CleaningInterval[$i]->Stop = $_POST["StopTime"];
-	$xml->CleaningInterval[$i]->Periode = $_POST["CleanIntervalPeriode"];
-	echo $xml->asXML("VDF.xml");
+	$returnDataFinal = array(
+		'writeVeryData' => $returnDataValues[0],
+		'veryCodeVerification' => $returnDataValues[1],
+		'email' => $email,
+		'username' => $username
+		);
+
+	echo json_encode($returnDataFinal);	
 }
- */
+
+
 if (($_POST['OwnerRegistration'] == $set) && ($adminstatus)){
 	databaseIfAlreadyRegistered();
 	echo json_encode($error_Log);
@@ -121,7 +129,7 @@ function databaseTransferOwnerRegistration(){
 	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
 	$return = curl_exec($ch);
 	curl_close($ch);
-	
+
 	DatabaseRegistration_return($return);
 }
 

@@ -79,10 +79,58 @@ function Verification_return($return,$email,$username){
 }
 
 
-if (($_POST['OwnerRegistration'] == $set) && ($adminstatus)){
-	databaseIfAlreadyRegistered();
-	echo json_encode($error_Log);
+if (($_POST['CheckRegistrationStatus'] == "RS") && ($adminstatus)){
+	$deviceIDval = trim(getDeviceID());
+	unset ($data_string, $data);
+
+	$data = array(
+		'deviceID' => $deviceIDval,
+		'progkey' => "RS"
+		);
+	$data_string="";
+	foreach($data as $key=>$value) 
+	{
+	 $data_string = $data_string.'&'.$key.'='.$value; 
+	}
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, 'https://www.strasys.at/dns/getRegistrationData.php');
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+	curl_setopt($ch, CURLOPT_POST, count($data));
+	//curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+	$return = curl_exec($ch);
+	curl_close($ch);
+
+	DatabaseRegistrationStatus_return($return);
 }
+
+function DatabaseRegistrationStatus_return($return){
+
+	$returnData = explode("&", $return);
+	$returnDataValues = array();
+	for ($i=0;$i<8;$i++){
+		$temp = explode(":", $returnData[$i]);
+		$returnDataValues[$i] = $temp[1];
+	}
+
+	$returnDataFinal = array(
+		'RegistrationStatus' => $returnDataValues[0],
+		'AccountActivation' => $returnDataValues[1],
+		'dataBaseError' => $returnDataValues[2],
+		'email' => $returnDataValues[3],
+		'gender' => $returnDataValues[4],
+		'firstName' => $returnDataValues[5],
+		'FamilyName' => $returnDataValues[6],
+		'userName' => $returnDataValues[7]
+	);
+
+	echo json_encode($returnDataFinal);	
+}
+
 
 if (($_POST['OwnerRegistration'] == $write) && $adminstatus){
 	databaseTransferOwnerRegistration();
@@ -170,49 +218,6 @@ function writeRegXML($email, $username){
 }
 
 
-function databaseIfAlreadyRegistered(){
-	//open mySQL - Database
-	/* Open a connection */
-/*	$db = mysqli_init();
-	$db->ssl_set(NULL, NULL, '../sql/sqlca.pem', NULL, NULL);
-	$link = mysqli_real_connect ($db, 'sql458.your-server.de', 'strajoha_r', '3lCwz58UW6wN00RK', 'product_database', 3306, NULL, MYSQLI_CLIENT_SSL);
-//	$customer_r = new mysqli("https://sql458.strasys.at", "strajoha_r", "3lCwz58UW6wN00RK", "product_database");
-	/* check connection */
-/*
-	echo  "hier";
-	if (mysqli_connect_errno()) {
-		$error_Log['databaseconnection'] = "Connect failed: ".mysqli_connect_error;
-	    exit();
-	} else {
-		$error_Log['databaseconnection'] = 0;
-	}
-	echo "hier1";
-	$email = $_POST['email'];
-	$result = $link->query("SELECT * FROM customer_registration WHERE e-mail='$email'");
-	$row = $result->fetch_array(MYSQL_ASSOC);
-	//$row["password"]."<br>";
-	if (!(isset($row))){
-
-		$error_Log['owner_reg'] = "owner not registered";
-	}
-
-	$result->close();
-	$link->close();
-*/
-}
-
-/*
-	"gender="+gender+
-	"&firstName="+firstName_str+
-	"&FamilyName="+FamilyName_str+
-	"&street="+street_str+
-	"&number="+number_str+
-	"&PLZ="+PLZ_str+
-	"&City="+City_str+
-	"&Country="+Country_str+
-	"&email="+email_str+
-	"&OwnerRegistration=set"
- */
 function transfer_javascript($loginstatus, $adminstatus)	
 {
 	$arr = array(

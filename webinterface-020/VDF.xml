@@ -50,24 +50,24 @@
 	<PT1000Name>Rücklauf</PT1000Name>
 </PT1000>
 <CleaningInterval>
-	<Start>08:00</Start>
-	<Stop>09:00</Stop>
-	<Periode>01:00</Periode>
+	<Start>00:00</Start>
+	<Stop>00:00</Stop>
+	<Periode>00:00</Periode>
 </CleaningInterval>
 <CleaningInterval>
-	<Start>10:00</Start>
-	<Stop>11:00</Stop>
-	<Periode>01:00</Periode>
+	<Start>00:00</Start>
+	<Stop>00:00</Stop>
+	<Periode>00:00</Periode>
 </CleaningInterval>
 <CleaningInterval>
-	<Start>13:45</Start>
-	<Stop>14:45</Stop>
-	<Periode>01:00</Periode>
+	<Start>00:00</Start>
+	<Stop>00:00</Stop>
+	<Periode>00:00</Periode>
 </CleaningInterval>
 <CleaningInterval>
-	<Start>18:00</Start>
-	<Stop>19:00</Stop>
-	<Periode>01:00</Periode>
+	<Start>00:00</Start>
+	<Stop>00:00</Stop>
+	<Periode>00:00</Periode>
 </CleaningInterval>
 <CleaningSetting>
 	<OperationMode>OFF</OperationMode>
@@ -87,10 +87,10 @@
 	<SensorONTime>2</SensorONTime>
 </LevelControl>
 <Owner>
-	<email>strajoha@gmail.com</email>
-	<userName>strajoha</userName>
+	<email></email>
+	<userName></userName>
 </Owner>
 <DeviceInfo>
-	<DeviceID>14724111802896HwtGhV6vRQDwG9ApHRsmfnMTrph7xnQ6eJyLd21XxRGcz1</DeviceID>
+	<DeviceID>1472412911K682chlWCZBKqZZBd1SoBHl7JGXEEY6NY53dJ3XXxuvPKc72fr</DeviceID>
 </DeviceInfo>
 </wistcon-pool>

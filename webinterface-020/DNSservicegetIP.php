@@ -1,8 +1,8 @@
 <?php
 // Gibt an welche PHP-Fehler �berhaupt angezeigt werden
-//error_reporting(E_ALL | E_STRICT);
+error_reporting(E_ALL | E_STRICT);
 // Um die Fehler auch auszugeben, aktivieren wir die Ausgabe
-//ini_set('display_errors', 1);
+ini_set('display_errors', 1);
 //ini_set('display_startup_errors', 1);
 // Da man in einem Produktivsystem �blicherweise keine Fehler ausgeben
 // will sondern sie nur mitloggen will, bietet es sich an dort die
@@ -33,7 +33,7 @@ foreach($data as $key=>$value)
 
 $trimmed = rtrim($data_string, '&');
 //echo $trimmed."<br>";
-	
+echo $loopstatus;	
 //To lock the service for the user a lock key must be set as well in the password file.
 //echo http_build_query($data) . "\n";
 while ($loopstatus)
@@ -50,7 +50,7 @@ while ($loopstatus)
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 	$return = curl_exec($ch);
 	curl_close($ch);
-	
+//	echo $return;
 	/*
 	//start request
 

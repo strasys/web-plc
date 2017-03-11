@@ -519,14 +519,60 @@ function checkProductRegistrationEntry(){
 	}
 }
 
-	// load functions ad webpage opening
+// Submit data to server => checkRegistrationStatus()
+function checkRegistrationStatus(callback){
+	$("#waitProcessIndication").modal('show');
+	
+	getData("post","deviceOwnerRegistration.php",function()
+	{
+		if (xhttp.readyState==4 && xhttp.status==200)
+		{
+			var getData = JSON.parse(xhttp.responseText);
+			ownerRegisterStatus_check = [
+				(getData.RegistrationStatus),
+				(getData.AccountActivation),
+				(getData.dataBaseError),
+				(getData.email),
+				(getData.gender),
+				(getData.firstName),
+				(getData.FamilyName),
+				(getData.userName)
+				];
+			$("#waitProcessIndication").modal('toggle');
+
+			if(callback){
+				callback();
+			}
+		}
+	},
+	"CheckRegistrationStatus=RS"
+	);
+}
+
+
+// load functions ad webpage opening
 function startatLoad(){
 	loadNavbar(function(){
-		emptyinputfields(function(){
-			setSelectMenuesValues(function(){
-//				getSetXMLData(function(){
-//				});
-			});
+		checkRegistrationStatus(function(){ 
+			if(ownerRegisterStatus_check[0] != null){
+			if ((ownerRegisterStatus_check[0] == 1) && (ownerRegisterStatus_check[1] == 1)){
+				$("#reg_owner_answer_header").html("<strong>Ihr Produkt ist registriert!</strong>");
+				$("#reg_owner_answer_p").html("Dieses Produkt ist registriert für: <strong>"+ownerRegisterStatus_check[4]+" "+ownerRegisterStatus_check[5]+" "+ownerRegisterStatus_check[6]+"</strong><br>");	
+				$("#reg_owner_email_p").html("Benutzer Name: <strong>"+ownerRegisterStatus_check[7]+"</strong><br>");
+				$("#reg_owner_username_p").html("Registrierte e-mail Adresse: <strong>"+ownerRegisterStatus_check[3]+"</strong><br>");
+				$("#reg_owner_answer_positiv").show();
+			} else if ((ownerRegisterStatus_check[0] == 1) && (ownerRegisterStatus_check[1] == -1)){
+				$("#reg_owner_answer_header").html("<strong>Registrierungs - Verifizierung ausstehend!</strong>");
+				$("#reg_owner_answer_positiv").show();
+			}  
+			}else	{
+				emptyinputfields(function(){
+					$("#reg_form_owner").show();
+					$("#SubmitProductReg").show();
+					setSelectMenuesValues(function(){
+					});
+				});
+			}
 		});
 	});
 }
@@ -548,8 +594,10 @@ function loadNavbar(callback1){
 						$("#navbarSet").show();
 						$("#navbarSet").addClass("active");
 						$("#navbarItemdeviceOwnerRegistration").addClass("active");
-						$("#reg_form_owner").show();
+						$("#reg_form_owner").hide();
 						$("#reg_owner_answer_positiv").hide();
+						$("#veri_code_div").hide();
+						$("#SubmitProductReg").hide();
 					}
 				});	
 			});

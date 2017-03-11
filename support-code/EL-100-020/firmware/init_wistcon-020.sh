@@ -10,3 +10,5 @@ echo strasys-wistcon >$slots
 
 /usr/lib/cgi-bin/firmware
 
+php /var/www/startupSetting.php
+

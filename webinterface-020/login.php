@@ -11,9 +11,9 @@ $rememberlogin = $_POST["rememberlogin"];
 $passwordEncrypt = md5($password); 
 unset($arr);
 unset($errorFile, $errorUsername, $errorPasswordRepeat);
-$errorFile = 0; //If errorFile variable = -1 than fopen is False
-$errorUsername = 0; //If username does not exist variable = -1
-$errorPassword = 0; //If password is wrong value = -1
+$errorFile = 1; //If errorFile variable = -1 than fopen is False
+$errorUsername = 1; //If username does not exist variable = -1
+$errorPassword = 1; //If password is wrong value = -1
 
 $userfile = fopen("user.txt","r"); 
 

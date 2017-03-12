@@ -11,7 +11,7 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    
+    <link href="css/strasys-custom.css" rel="stylesheet">
     <!-- Slider -->
     <link href="css/ion.rangeSlider.css" rel="stylesheet">
     <link href="css/ion.rangeSlider.skinHTML5.css" rel="stylesheet">
@@ -29,25 +29,26 @@
 	</div>
    	<div style = "padding-top:70px;" class="container">  
 		<div class="row>">
-			<div class="col-xs-2 col-sm-4 col-md-4"></div>
-			<div class="col-xs-8 col-sm-4 col-md-4">
-			<div id="alertlogin" class="" role="alert"></div>
-		  		<form class="form-signin" action="login.php" method="post">
-					<h2 class="form-signin-heading">Login</h2>
-					<label class="sr-only" for="inputUsername">Benutzername</label>
-					<input id="inputUsername" class="form-control" type="text" autofocus="" required="" placeholder="Benutzername">
-					<label class="sr-only" for="inputPassword">Passwort</label>
-					<input id="inputPassword" class="form-control" type="password" required="" placeholder="Passwort">
-					<div class="checkbox">
-						<label>
-							<input id="checkboxstaylogedin" type="checkbox">
-							angemeldet bleiben
-						</label>
-					</div>
-					<button class="btn btn-lg btn-primary btn-block" type="button" id="btnloginsubmit" onclick="submitUserData()">Einloggen</button>
-				</form> 
-			</div>
-			<div class="col-xs-2 col-sm-4 col-md-4"></div>
+			<div class="col-xs-0 col-sm-4 col-md-4"></div>
+			<div class="col-xs-12 col-sm-4 col-md-4">
+				<div id="div-login-msg-customer" class="login-msg">
+                                	<div id="icon-login-msg" class="login-icon glyphicon glyphicon-chevron-right"></div>
+                                	<span id="text-login-msg">Eingabe Benutzernamen und Passwort</span>
+			   	</div>
+				<br>
+			    	<input id="login_username" class="form-control" type="text" placeholder="Benutzername" required>
+				<br>
+				<input id="login_password" class="form-control" type="password" placeholder="Passwort" required>
+				<br>
+                            	<div class="checkbox">
+                                	<label>
+                                    		<input id="login_checkbox" type="checkbox"> Remember me
+                                	</label>
+				</div>
+				<div>
+                                	<button id="login_button_submit_customer" type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+				</div>	
+			<div class="col-xs-0 col-sm-4 col-md-4"></div>
 		</div>			
  	</div>  
 

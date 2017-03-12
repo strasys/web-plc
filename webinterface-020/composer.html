@@ -35,19 +35,23 @@
 				<h3><b>Composer Script</b></h3>
 			</div>
 			<div class="panel-body">
-				<div class="row">	
-					<div class = "col-md-6">
-						<h3>
-						<button class="btn " type="button" id="buttonComposerOnOff" onclick="ButtonComposerAction(0)" style = "width:100%;">
-							<h4> 
-								<strong>Start/Stop Script</strong>
-								<span class="badge" id="badgebuttonComposerScriptOnOff"></span>
-							</h4>
-						</button>
-						</h3>
-					</div>
-				</div>		
-			</div>
+				<div class="row">
+					<div class="clo-xs-12 col-sm-6 col-md5">
+						<div class="radio">
+ 						<label>
+      						<input type="radio" id="radioComposerStop" name="OptionsRadios" value="0" onclick="setgetStatusComposerProcess('s',0)">
+						<h4><b>stop</b></h4>
+   						</label>
+						</div>
+						<div class="radio">
+ 						<label>
+      						<input type="radio" id="radioComposerRun" name="OptionsRadios" value="1" onclick="setgetStatusComposerProcess('s',1)">
+						<h4><b>run</b></h4>
+						</label>
+						</div>
+					</div>	
+				</div>
+			</div>	
 		</div>
 	</div>
 

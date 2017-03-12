@@ -33,35 +33,22 @@
 				<h3><b>DNS Service set up</b></h3>
 			</div>
 			<div class="panel-body">
-		<!--	<div class="row">
+			<div class="row">
 					<div class="clo-xs-12 col-sm-6 col-md5" id="DNSCheckboxesOperationmode">
 						<div class="radio">
  						<label>
-      						<input type="radio" id="radioDNSServiceOFF" name="OptionsRadios" value="OFF" onclick="setNiveauModeXML('radioNiveauOFF')">
-						<h4><b>AUS</b></h4>
+      						<input type="radio" id="radioDNSServiceOFF" name="OptionsRadios" value="OFF" onclick="setgetStatusDNSservice('s',0)">
+						<h4><b>stop</b></h4>
    						</label>
 						</div>
 						<div class="radio">
  						<label>
-      						<input type="radio" id="radioDNSServiceON" name="OptionsRadios" value="AUTO" onclick="setNiveauModeXML('radioNiveauAUTO')">
-						<h4><b>EIN</b></h4>
+      						<input type="radio" id="radioDNSServiceON" name="OptionsRadios" value="AUTO" onclick="setgetStatusDNSservice('s',1)">
+						<h4><b>run</b></h4>
 						</label>
 						</div>
 					</div>	
-				</div>  -->
-
-				<div class="row">	
-					<div class = "col-md-6">
-						<h3>
-						<button class="btn " type="button" id="buttonDNSserviceOnOff" onclick="ButtonDNSserviceAction(0)" style = "width:100%;">
-							<h4> 
-								<strong>Start/Stop Script</strong>
-								<span class="badge" id="badgebuttonDNSserviceOnOff"></span>
-							</h4>
-						</button>
-						</h3>
-					</div>
-				</div>		
+				</div> 	
 			</div>
 		</div>
 	</div>

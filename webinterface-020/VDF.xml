@@ -50,9 +50,9 @@
 	<PT1000Name>Rücklauf</PT1000Name>
 </PT1000>
 <CleaningInterval>
-	<Start>00:00</Start>
-	<Stop>00:00</Stop>
-	<Periode>00:00</Periode>
+	<Start>22:10</Start>
+	<Stop>22:20</Stop>
+	<Periode>00:10</Periode>
 </CleaningInterval>
 <CleaningInterval>
 	<Start>00:00</Start>
@@ -86,11 +86,15 @@
 	<Overtraveltime>7</Overtraveltime>
 	<SensorONTime>2</SensorONTime>
 </LevelControl>
+<OperationModeDevice>
+	<AutomaticHand>stop</AutomaticHand>
+	<DNSService>run</DNSService>
+</OperationModeDevice>
 <Owner>
-	<email></email>
-	<userName></userName>
+	<email>strajoha@gmail.com</email>
+	<userName>strajoha</userName>
 </Owner>
 <DeviceInfo>
-	<DeviceID>1472412911K682chlWCZBKqZZBd1SoBHl7JGXEEY6NY53dJ3XXxuvPKc72fr</DeviceID>
+	<DeviceID>14724111802896HwtGhV6vRQDwG9ApHRsmfnMTrph7xnQ6eJyLd21XxRGcz1</DeviceID>
 </DeviceInfo>
 </wistcon-pool>

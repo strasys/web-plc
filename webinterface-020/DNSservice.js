@@ -56,43 +56,14 @@ function setgetStatusDNSservice(setget,setrunstopStatus, callback2){
 			},"setgetDNSserviceStatus="+setget+"&setrunstopStatus="+setrunstopStatus);		
 }
 
-/*
- * This function sets the color and the badge description of the ComposerProcessStatus button.
- */
-function setButtonColorBadge(ButtonNumber){
-	 switch (ButtonNumber){
-	 case 0:
-			if(StatusDNSservice[0] == 1){
-				span = document.getElementById("badgebuttonDNSserviceOnOff");
-				span.textContent = "RUN";
-				button = document.getElementById("buttonDNSserviceOnOff");
-				button.getAttributeNode("class").value = "btn btn-success";
-			}
-			if(StatusDNSservice[0] == 0) {
-				span = document.getElementById("badgebuttonDNSserviceOnOff");
-				span.textContent = "STOP";
-				button = document.getElementById("buttonDNSserviceOnOff");
-				button.getAttributeNode("class").value = "btn btn-danger";
-			}
-			break;
-	 }
-	 
-}
-
-function ButtonDNSserviceAction(ButtonNumber){
-	switch (ButtonNumber){
-	case 0:
-		if(StatusDNSservice[0] == 1){
-			setgetStatusDNSservice("s","0", function(){
-				setButtonColorBadge(0);
-			})
-		}
-		if(StatusDNSservice[0] == 0){
-			setgetStatusDNSservice("s","1", function(){
-				setButtonColorBadge(0);
-			})
-		}
-		break;
+function setModeStatus(){
+	if(StatusDNSservice[0] == 1){
+		document.getElementById("radioDNSServiceON").checked = true;
+		document.getElementById("radioDNSServiceOFF").checked = false;
+	}
+	else if (StatusDNSservice[0] == 0){
+		document.getElementById("radioDNSServiceON").checked = false;
+		document.getElementById("radioDNSServiceOFF").checked = true;
 	}
 }
 
@@ -139,7 +110,7 @@ window.onload=startatLoad();
   */
  function refreshStatus(){
 	 	setgetStatusDNSservice("g","", function(){
-			setButtonColorBadge(0);
+			setModeStatus();
 		});
 		setTimeout(function(){refreshStatus()}, 2000);
 	}

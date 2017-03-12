@@ -2,7 +2,7 @@
  * Composer JavaScript code
  * 
  * Johannes Strasser
- * 11.10.2015
+ * 25.02.2017
  * www.strasys.at
  * 
  */
@@ -56,45 +56,18 @@ function setgetStatusComposerProcess(setget,setrunstopStatus, callback2){
 			},"setgetComposerProcessStatus="+setget+"&setrunstopStatus="+setrunstopStatus);		
 }
 
-/*
- * This function sets the color and the badge description of the ComposerProcessStatus button.
- */
-function setButtonColorBadge(ButtonNumber){
-	 switch (ButtonNumber){
-	 case 0:
-			if(StatusComposerProcess[0] == 1){
-				span = document.getElementById("badgebuttonComposerScriptOnOff");
-				span.textContent = "RUN";
-				button = document.getElementById("buttonComposerOnOff");
-				button.getAttributeNode("class").value = "btn btn-success";
-			}
-			if(StatusComposerProcess[0] == 0) {
-				span = document.getElementById("badgebuttonComposerScriptOnOff");
-				span.textContent = "STOP";
-				button = document.getElementById("buttonComposerOnOff");
-				button.getAttributeNode("class").value = "btn btn-danger";
-			}
-			break;
-	 }
-	 
-}
-
-function ButtonComposerAction(ButtonNumber){
-	switch (ButtonNumber){
-	case 0:
-		if(StatusComposerProcess[0] == 1){
-			setgetStatusComposerProcess("s","0", function(){
-				setButtonColorBadge(0);
-			})
-		}
-		if(StatusComposerProcess[0] == 0){
-			setgetStatusComposerProcess("s","1", function(){
-				setButtonColorBadge(0);
-			})
-		}
-		break;
+function setModeStatus(){
+	if(StatusComposerProcess[0] == 1){
+		document.getElementById("radioComposerRun").checked = true;
+		document.getElementById("radioComposerStop").checked = false;
+	}
+	else if (StatusComposerProcess[0] == 0){
+		document.getElementById("radioComposerRun").checked = false;
+		document.getElementById("radioComposerStop").checked = true;
 	}
 }
+
+
 
 // load functions ad webpage opening
 function startatLoad(){
@@ -139,7 +112,7 @@ window.onload=startatLoad();
   */
  function refreshStatus(){
 	 	setgetStatusComposerProcess("g","", function(){
-			setButtonColorBadge(0);
+			setModeStatus();
 		});
 		setTimeout(function(){refreshStatus()}, 10000);
 	}

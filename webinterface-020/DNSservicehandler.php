@@ -43,7 +43,7 @@ if ($setgetDNSserviceStatus == $get)
 	transfer_javascript($loginstatus, $adminstatus, $runstop);
 }
 
-if ($setgetDNSserviceStatus == $set)
+if (($setgetDNSserviceStatus == $set) && ($adminstatus == true))
 {
 	$statusFile = fopen("/tmp/DNSservicestatus.txt", "w");
 	if ($statusFile == false)
@@ -70,6 +70,11 @@ if ($setgetDNSserviceStatus == $set)
 		rewind($statusFile);
 		fwrite($statusFile, $statusWord, 5);
 		fclose($statusFile);
+
+		$xml=simplexml_load_file("VDF.xml") or die("Error: Cannot create object");
+		$xml->OperationModeDevice[0]->DNSService = $statusWord;
+		$xml->asXML("VDF.xml");
+
 	}
 	transfer_javascript($loginstatus, $adminstatus, $runstop, $errorMsg);
 }

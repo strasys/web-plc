@@ -217,7 +217,7 @@ function loadNavbar(callback3){
 		else
 		{
 			$(document).ready(function(){
-				$("#mainNavbar").load("navbar.html", function(){
+				$("#mainNavbar").load("navbar.html?ver=0", function(){
 					$("#navbarHome").addClass("active");
 					$("#navbarlogout").hide();
 					$("#navbarFunction").hide();

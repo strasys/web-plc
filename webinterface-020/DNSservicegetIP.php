@@ -18,7 +18,7 @@ $dnsloop = new dnsloopcontrol();
 
 $loopstatus = true;
 //The device ID shall be stored in the final basic setup *.xml.
-$xml = simplexml_load_file("VDF.xml");
+$xml = simplexml_load_file("/var/www/VDF.xml");
 $deviceIDinfo = (string) $xml->DeviceInfo[0]->DeviceID;
 echo $deviceIDinfo;
 

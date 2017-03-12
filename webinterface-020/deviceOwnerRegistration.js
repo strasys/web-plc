@@ -145,9 +145,9 @@ function submit_very_code(){
 			$("#veriCode").val('');
 			$("#reg_owner_answer_header").addClass("text-sucess");
 			$("#reg_owner_answer_header").html("<strong>Erfolgreich Registriert</strong>");
-			$("#reg_owner_answer_p").html("Sie können sich nun über <a href=\"www.wistcon.de\">www.wistcon.de</a> anmelden	und erweitere Funktionen für ihr Produkt nutzen.<br>Eine wesentliche Funktion ist der Zugriff auf Ihr Produkt von außerhalb Ihres Heimnetzwerks.<br><strong>Achtung:<strong> Hierfür müssen Sie Ihre DNS Funktion auf dem Gerät aktivieren.");
-			$("#reg_owner_email_p").html("Registrierungs e-mail: "+email+"<br>");
-			$("#reg_owner_username_p").html("Folgender Benutzername wurde Ihnen zugewiesen.<br>Benutzername: "+username);
+			$("#reg_owner_answer_p").html("Sie können sich nun über <a href=\"http://www.wistcon.de\">www.wistcon.de</a> anmelden	und erweitere Funktionen für ihr Produkt nutzen.<br>Eine wesentliche Funktion ist der Zugriff auf Ihr Produkt von außerhalb Ihres Heimnetzwerks.<br><strong>Achtung:<strong> Hierfür müssen Sie Ihre DNS Funktion auf dem Gerät aktivieren.");
+			$("#reg_owner_email_p").html("Registrierungs e-mail: <strong>"+email+"</strong><br>");
+			$("#reg_owner_username_p").html("Folgender Benutzername wurde Ihnen zugewiesen.<br>Benutzername: <strong>"+username+"</strong>");
 		} else if ((ownerRegisterStatus_very[0] == -1) && (ownerRegisterStatus_very[1] == 1))
        			{
 			$("#veriCode").val('');
@@ -496,7 +496,7 @@ function checkProductRegistrationEntry(){
 				//Information über Login
 				$("#reg_owner_answer_header").addClass("text-success");
 				$("#reg_owner_answer_header").html("<strong>Nur noch ein Schritt zur erfolgreichen Registrierung</strong>");
-				$("#reg_owner_answer_p").html("Wir haben Ihnen eine Bestätigungs<br>e-mail an: "+ownerRegisterStatus[7]+"<br> gesendet.<br>Bitte tragen Sie den 5 - stelligen Code zur Bestätigung der Registrierung in das untere Feld ein<br> clicken Sie \"Registrierung abschliessen\"");
+				$("#reg_owner_answer_p").html("Wir haben Ihnen eine Bestätigungs<br>e-mail an: <strong>"+ownerRegisterStatus[7]+"</strong><br> gesendet.<br>Bitte tragen Sie den 5 - stelligen Code zur Bestätigung der Registrierung in das untere Feld ein<br> klicken Sie \"Registrierung abschliessen\"");
 			//	$("#reg_owner_email_p").html("<br><strong>Registrierte e-mail: "+ownerRegisterStatus[7]+"<strong>");
 				//	$("#reg_owner_username_p").html("<strong>Benutzername: "+ownerRegisterStatus[8]+"<strong>");
 				//empty input field

@@ -12,3 +12,6 @@ echo strasys-wistcon >$slots
 
 php /var/www/startupSetting.php
 
+chown www-data:root /tmp/DNSservicestatus.txt
+chown www-data:root /tmp/composerstatus.txt
+

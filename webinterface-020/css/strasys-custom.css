@@ -63,3 +63,48 @@ border-color: #cbd9fb;
   background-color: #efefef;
 }
 
+.login-msg
+{
+	color: black;
+	border: 1px solid #dadfe1;
+    	height: 30px;
+    	line-height: 28px;
+    	transition: all ease-in-out 500ms;
+}
+
+.login-msg.success
+{
+	border: 1px solid #68c3a3;
+	background-color: #c8f7c5;
+}
+
+.login-msg.error
+{
+	border: 1px solid #eb575b;
+	background-color: #ffcad1;
+}
+
+.login-icon
+{
+	color: black;
+	width: 30px;
+    	float: left;
+    	line-height: 28px;
+    	text-align: center;
+    	background-color: #dadfe1;
+    	margin-right: 5px;
+	top: 0px;
+	bottom: 0px;
+    	transition: all ease-in-out 500ms;	
+}
+
+.login-icon.success
+{
+	background-color: #68c3a3 !important;
+}
+
+.login-icon.error
+{
+	background-color: #eb575b !important;
+}
+

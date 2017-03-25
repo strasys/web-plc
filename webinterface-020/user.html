@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>wistcon</title>
 
-    <!-- Bootstrap -->
+    <!-- Bootstrap --> 
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    
+    <link href="css/strasys-custom.css" rel="stylesheet">
+
     <!-- Slider -->
     <link href="css/ion.rangeSlider.css" rel="stylesheet">
     <link href="css/ion.rangeSlider.skinHTML5.css" rel="stylesheet">
@@ -24,13 +25,22 @@
 <!-- Fixed Navbar -->
 	<div id="mainNavbar">
 	</div>
-  	<div style = "padding-top:70px;" class="container">	
-		
-		<div class="row>">
+	<div style = "padding-top:70px;" class="container">
+		<div id="alert_user" class="row" style="margin-top:15px; margin-bottom:25px;">
+			<div class="col-xs-2 col-sm-4 col-md-4"></div>
+			<div class="col-xs-8 col-sm-4 col-md-4">
+				<div id="alert_msg" class="login-msg" style="width:100%;">
+	      				<div id="alert_icon" class="login-icon glyphicon glyphicon-chevron-right"></div>
+					<span id="alert_text-msg"></span>
+				</div>
+			</div>
+			<div class="col-xs-2 col-sm-4 col-md-4"></div>	
+		</div>		
+		<div id="adduser" class="row">
 				<div class="col-xs-2 col-sm-4 col-md-4"></div>
 				<div class="col-xs-8 col-sm-4 col-md-4">
 					<div id="alertusername" class="" role="alert"></div>
-			  		<form id="formuser" class="form-signin">
+			  			<form id="formuser" class="form-signin">
 						<h2 class="form-signin-heading">Benutzer anlegen</h2>
 						<div id="validationinputusername">
 							<label class="sr-only" for="forminputusername">Benutzername</label>
@@ -51,7 +61,44 @@
 					</form> 
 				</div>
 				<div class="col-xs-2 col-sm-4 col-md-4"></div>
-		</div>			
+		</div>
+		
+		<div id="userlist" class="row">
+			<div class="col-xs-0 col-sm-2 col-md-4"></div>
+			<div class="col-xs-12 col-sm-8 col-md-4">
+				<table class="table table-striped">
+					<thead id="userlist_head"></thead>
+					<tbody id="userlist_body"></tbody>
+				</table>
+				
+				<input class="btn btn-primary btn-lg" type="button" id="ButtonChangeSelectedUser" style="width:100%;" value="Auswahl Bearbeiten" >
+				
+				<input class="btn btn-warning btn-lg" type="button" id="ButtonChangeSelectedUser" style="width:100%; margin-top:25px;" value="Neuer Benutzer">
+			</div>
+			<div class="col-xs-0 col-sm-2 col-md-4"></div>
+		</div>
+		
+		<div id="changeuserlist" class="row">
+			<div class="col-xs-0 col-sm-2 col-md-4"></div>
+			<div class="col-xs-12 col-sm-8 col-md-4">
+				<div class="form-group">
+					<label for="inputchangeuser">Benutzer Name</label>
+					<input class="form-control" type="text" id="inputchangeuser">
+				</div>				
+				<label>Benutzer Rechte</label><br>
+				<label class="radio-inline"><input id="radiochange_user" type="radio" name="changeright">user</label>
+				<label class="radio-inline"><input id="radiochange_admin" type="radio" name="changeright">admin</label>
+					
+				<div class="form-group" style="margin-top:25px;">
+					<label for="changepassword">Neues Passwort</label>
+					<input id="changepassword" class="form-control" style="width:100%;" type="password" required="" placeholder="Passwort">
+					<input id="changepasswordrepeat" class="form-control" style="width:100%; margin-top:15px;" type="password" required="" placeholder="Passwort wiederholen">
+				</div>
+				<input id="ButtonChangeUserList" class="btn btn-primary btn-lg" type="button" style="width:100%; margin-top:15px;" value="Speichern">
+			</div>
+			<div class="col-xs-0 col-sm-2 col-md-4"></div>
+		</div>
+
 	</div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

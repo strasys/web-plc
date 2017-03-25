@@ -39,39 +39,6 @@ function getloginstatus(callback1){
 }
 
 
-function getSetXMLData(callback4){
-	getData("GET","VDF.xml?sortoutcache="+sortoutcache.valueOf(),function(){
-		if (xhttp.readyState==4 && xhttp.status==200){
-			var getXMLData = xhttp.responseXML;
-			var w = getXMLData.getElementsByTagName("CleaningInterval");
-			var z = getXMLData.getElementsByTagName("CleaningSetting");
-			var operationMode = z[0].getElementsByTagName("OperationMode")[0].childNodes[0].nodeValue;
-		
-			if(operationMode =='OFF'){
-			document.getElementById("radioFilterOFF").checked = true;
-			document.getElementById("radioFilterAUTO").checked = false;
-			}
-			if(operationMode =='AUTO'){
-			document.getElementById("radioFilterAUTO").checked = true;
-			document.getElementById("radioFilterOFF").checked = false;
-			}
-
-			var z = w.length;
-			var i=0;
-			for (i=0; i<z; i++){
-				j=i+1
-				document.getElementById("StartTime"+j).value = w[i].getElementsByTagName("Start")[0].childNodes[0].nodeValue;
-				document.getElementById("StopTime"+j).value = w[i].getElementsByTagName("Stop")[0].childNodes[0].nodeValue;
-				document.getElementById("CleanTimePeriode"+j).innerHTML = w[i].getElementsByTagName("Periode")[0].childNodes[0].nodeValue;				
-			}
-			if (callback4){
-				callback4();
-			}
-
-		}
-		});
-			
-	}	
 		
 // Register owner user at wistcon - server and start verification process
 function RegisterOwnerUser(gender, firstName_str, FamilyName_str, street_str, number_str, PLZ_str, City_str, Country_str, email_str, password_str, callback3){	

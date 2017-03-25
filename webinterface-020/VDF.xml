@@ -50,9 +50,9 @@
 	<PT1000Name>Rücklauf</PT1000Name>
 </PT1000>
 <CleaningInterval>
-	<Start>22:10</Start>
-	<Stop>22:20</Stop>
-	<Periode>00:10</Periode>
+	<Start>00:00</Start>
+	<Stop>00:00</Stop>
+	<Periode>00:00</Periode>
 </CleaningInterval>
 <CleaningInterval>
 	<Start>00:00</Start>
@@ -75,7 +75,7 @@
 </CleaningSetting>
 <SolarSetting>
 	<operationMode>OFF</operationMode>
-	<backWaterTemp>24</backWaterTemp>
+	<backWaterTemp>30</backWaterTemp>
 	<diffONTemp>7</diffONTemp>
 	<diffOFFTemp>5</diffOFFTemp>
 	<SwitchOFFdelay>2</SwitchOFFdelay>
@@ -95,6 +95,6 @@
 	<userName>strajoha</userName>
 </Owner>
 <DeviceInfo>
-	<DeviceID>1472412911K682chlWCZBKqZZBd1SoBHl7JGXEEY6NY53dJ3XXxuvPKc72fr</DeviceID>
+	<DeviceID>14724111802896HwtGhV6vRQDwG9ApHRsmfnMTrph7xnQ6eJyLd21XxRGcz1</DeviceID>
 </DeviceInfo>
 </wistcon-pool>

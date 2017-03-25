@@ -1,13 +1,14 @@
 /**
  * user and user rights management
  * 
- * 10.06.2015
+ * 23.03.2017
  * Johannes Strasser
  * 
  * www.strasys.at
  */
 
- 
+var selecteduser;
+
 function setgetuser(setget, url, cfunc, senddata){
 	xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = cfunc;
@@ -52,93 +53,98 @@ function getloginstatus(callback1){
 							callback1();
 						}
 					}
-			});
+			},"loginstatus=get");
 }
 
 function submitUserData(){
-	var inputUsername = document.getElementById("forminputusername").value;
-	var inputPassword = document.getElementById("forminputpassword").value;
-	var inputPasswordRepeat = document.getElementById("forminputpasswordrepeat").value;
-	var inputAdminright = document.getElementById("forminputcheckboxadmin").checked;
-	 
-		setgetUserPassword(inputUsername, inputPassword, inputPasswordRepeat, inputAdminright, function()
-		{
-			 if (statusSetUsername[0] == -1)
-				{
-					DisplayAlertInformation("danger", 
-						"Benutzerverwaltung File !!"); 
-				}
-				else
-				{
-					if (statusSetUsername[1] == -1)
-					{
-						DisplayAlertInformation("warning",
-						"Der von Ihnen eingegebene Benutzername existiert bereits.");
-					}
-					else
-					{
-						if (statusSetUsername[2] == -1)
-						{
-							DisplayAlertInformation("danger",
-							"Ihre eingegebenen Passwörter stimmen nicht Überein.");
-						}
-						else
-						{
-							DisplayAlertInformation("success",
-							"Neuer Benutzer wurde angelegt.");
-							setTimeout(function() {
-								window.location.replace("user.html");
-							}, 2000);
-						}
-					}	
-				}
-			
-		});
- }
+
+}
 
 
  
  //Alert information
- function DisplayAlertInformation(status, statusText){
-	var statusClass, strongText;
+function DisplayAlertInformation(status, statusText){
+
+}
+
+function getuserList(callback1){
+	setgetuser("post","user.php",function()
+		{
+		if (xhttp.readyState==4 && xhttp.status==200)
+			{
+			userList = JSON.parse(xhttp.responseText);
+				
+				if (callback1){
+					callback1();
+				}
+			}
+	},"setget=get");
+}
+
+//Alert information
+function DisplayAlertInformation(msg, status, callback3){
 	switch (status){
-		case "success":
-			statusClass = "alert alert-success";
-			strongText = "Erfolgreich: ";
+		case 0:
+			$("#alert_icon").removeClass();
+			$("#alert_icon").addClass("login-icon glyphicon glyphicon-chevron-right");
+			$("#alert_text-msg").html(msg);
+			$("#alert_msg").removeClass();
+			$("#alert_msg").addClass("login-msg");
+			break
+		case -1:
+			$("#alert_icon").removeClass();
+			$("#alert_icon").addClass("login-icon glyphicon glyphicon-remove error");
+			$("#alert_text-msg").html(msg);
+			$("#alert_msg").removeClass();
+			$("#alert_msg").addClass("login-msg error");
 			break;
-		case "warning":
-			statusClass = "alert alert-warning";
-			strongText = "Warnung: ";
-			break;
-		case "danger":
-			statusClass = "alert alert-danger";
-			strongText = "Fehler: ";
+		case 1:
+			$("#alert_icon").removeClass();
+			$("#alert_icon").addClass("login-icon glyphicon glyphicon-ok success");
+			$("#alert_text-msg").html(msg);
+			$("#alert_msg").removeClass();
+			$("#alert_msg").addClass("login-msg success");
 			break;
 	}
+
+	if (callback3){
+		callback3();
+	}
 	
-		var setgetalertusername = document.getElementById("alertusername");
-		setgetalertusername.getAttributeNode("class").value = statusClass;
-		
-		var addparagraph = document.createElement("p");
-		var addstrong = document.createElement("strong");
-		var addtextnode = document.createTextNode(statusText);
-		var addtextstrong = document.createTextNode(strongText);
-		
-		addparagraph.appendChild(addtextnode);
-		addstrong.appendChild(addtextstrong);
-		setgetalertusername.appendChild(addstrong);
-		setgetalertusername.appendChild(addparagraph);
+}
+
+
+//display user list
+ function writeuserList(){
+	 getuserList(function(){
+		 var test = userList[0];
+	//	$("#userlist_head").focus();
+		$("<th>Auswahl</th><th>Bentutzer Name</th><th>Rechte</th>").appendTo("#userlist_head");
+		var n=0;
+		for (i=1;i<((userList[0])-1);i=i+2){
+			n++
+			$("<tr><td><label><input type=\"radio\" name=\"user\" value=\""+n+"\"></label></td><td>"+userList[i]+"</td><td>"+userList[i+1]+"</td></tr>").appendTo("#userlist_body");
+			}	
+	});
  }
- 
+
 //load functions at webpage opening
-function startatLoad(){
-	loadNavbar();
+ function startatLoad(){
+	 $("#alert_user").hide();
+	 $("#adduser").hide();
+	 $("#userlist").hide();
+	 $("#changeuserlist").hide();
+	 $("#inputchangeuser_help").hide();
+	 $("#ButtonChangeSelectedUser").prop('disabled', true);
+	loadNavbar(function(){
+		writeuserList();
+	});
 }
 window.onload=startatLoad();
 
 //Load the top fixed navigation bar and highlight the 
 //active site roots.
-function loadNavbar(){
+function loadNavbar(callback){
 	getloginstatus(function(){
 		if (LogInStatusCheck[0])
 		{
@@ -152,9 +158,14 @@ function loadNavbar(){
 					if (LogInStatusCheck[1])
 					{
 						$("#navbarSet").show();
+						$("#userlist").show();
 					}
 				});
 			});
+
+			if (callback) {
+				callback();
+			}
 		}
 		else
 		{
@@ -162,6 +173,35 @@ function loadNavbar(){
 		}
 	});
 }
+
+// select user line
+$("#userlist_body").on('change', function(){
+	selecteduser = $('input[name=user]:checked', '#userlist_body').val();
+	$("#ButtonChangeSelectedUser").prop('disabled', false);
+});
+
+// change selected user line
+$("#ButtonChangeSelectedUser").on('click', function(){
+	$("#userlist").hide();
+	var selector = 2 * selecteduser -1;
+	$("#inputchangeuser").val(userList[selector]);
+	
+	if(userList[selector + 1] == 'admin'){
+		$("#radiochange_admin").prop('checked', true);
+	} else {
+		$("#radiochange_user").prop('checked', true);	
+	}
+	$("#changeuserlist").show();
+	DisplayAlertInformation("\"user\" Daten anpassen", 0, function(){
+		$("#alert_user").show();	
+	});
+});
+
+//Save changed user data and check entry
+$("#ButtonChangeUserList").on('click', function(){
+	
+});
+
 
 
 

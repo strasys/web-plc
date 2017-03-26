@@ -188,7 +188,7 @@ function emptyinputfields(callback){
 function passwordstrength(){
 	var password_str = document.getElementById("password1");
 	var password_span = document.getElementById("password1_span");
-	var password_patt = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[\_\?\!\#])(?=.*[A-Z]).{6,15}$/);
+	var password_patt = new RegExp(/^(?=.*[a-z])(?=.*[\_\?\!\#])(?=.*[A-Z]).{6,15}$/);
 	var password_str_res = password_patt.test(password_str.value);
 
 	$("#password1_div").removeClass();

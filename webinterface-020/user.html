@@ -37,30 +37,49 @@
 			<div class="col-xs-0 col-sm-4 col-md-4"></div>	
 		</div>		
 		<div id="adduser" class="row">
-				<div class="col-xs-2 col-sm-4 col-md-4"></div>
-				<div class="col-xs-8 col-sm-4 col-md-4">
-					<div id="alertusername" class="" role="alert"></div>
-			  			<form id="formuser" class="form-signin">
-						<h2 class="form-signin-heading">Benutzer anlegen</h2>
-						<div id="validationinputusername">
-							<label class="sr-only" for="forminputusername">Benutzername</label>
-							<input id="forminputusername" class="form-control" type="text" autofocus="" required="" placeholder="Benutzername">
-							<span id="validationiconusername"></span>
-						</div>
-						<label class="sr-only" for="inputNewPassword">Passwort</label>
-						<input id="forminputpassword" class="form-control" type="password" required="" placeholder="Passwort">
-						<label class="sr-only" for="inputNewPasswordRepeat">Passwort wiederholen</label>
-						<input id="forminputpasswordrepeat" class="form-control" type="password" required="" placeholder="Passwort wiederholen">
-						<div class="checkbox">
-							<label>
-							<input id="forminputcheckboxadmin" type="checkbox">
-							Administrationsrechte gewähren
-							</label>
-						</div>
-						<button class="btn btn-lg btn-primary btn-block" onclick="submitUserData()" type="button">Speichern</button>
-					</form> 
+			<div class="col-xs-0 col-sm-4 col-md-4"></div>
+			<div class="col-xs-12 col-sm-4 col-md-4">
+				<label for="inputadduser">Benutzer Name</label>
+				<div id="adduser_help" style="margin-bottom:15px; border:1px solid #dadfe1;">
+					<p class="text-default"><small><strong>Benutzername - Regeln:</strong></small></p>
+					<p class="text-default"><small> Darf nicht vorkommen: Ä ä Ö ö Ü ü ß [Leerzeichen]</small><span class=""></span></p>
+					<p class="text-default"><small> Länge: 3 - 10 Zeichen  </small><span class=""></span></p>
 				</div>
-				<div class="col-xs-2 col-sm-4 col-md-4"></div>
+				<div class="form-group" id="addusername">
+					<input class="form-control" type="text" id="inputadduser">
+					<span class=""></span>
+				</div>				
+				
+				<label>Benutzer Rechte</label><br>
+				<div class="input-group" id="adduserright">
+					<label class="radio-inline"><input type="radio" name="right" value="user" checked>user</label>
+					<label class="radio-inline"><input type="radio" name="right" value="admin">admin</label>
+				</div>
+				<p style="margin-top:15px;"><strong>Passwort</strong></p>
+				<div id="addpassword_help" style="margin-bottom:15px; border:1px solid #dadfe1;">
+					<p class="text-default"><small><strong>Passwort - Regeln:</strong></small></p>
+					<p class="text-default"><small> Groß- und Kleinbuchstaben: A-Z a-z  </small><span class=""></span></p>
+					<p class="text-default"><small> Sonderzeichen: #_!?  </small><span class=""></span></p>
+					<p class="text-default"><small> Länge: 6 - 15 Zeichen  </small><span class=""></span></p>
+				</div>
+				
+				<div id="addpassword1" class="input-group">
+					<div class="input-group-btn">
+						<button class="btn btn-default">
+							<i class="glyphicon glyphicon-eye-close"></i>
+						</button>
+					</div>
+					<input class="form-control" type="password" id="addpassword1_input" placeholder="Passwort">
+					<span class=""></span>
+				</div>
+				<div id="addpassword2" class="form-group" style="padding-top:10px">
+					<input class="form-control" type="password" id="addpassword2_input" placeholder="Passwort wiederholen">
+					<span class="" style="padding-top:10px;"></span>
+				</div>
+								
+				<input id="ButtonSaveNewUser" class="btn btn-primary btn-lg" type="button" style="width:100%; margin-top:15px;" value="Speichern">	
+			</div>
+			<div class="col-xs-0 col-sm-4 col-md-4"></div>
 		</div>
 		
 		<div id="userlist" class="row">
@@ -71,8 +90,9 @@
 					<tbody id="userlist_body"></tbody>
 				</table>
 				
-				<input class="btn btn-primary btn-lg" type="button" id="ButtonChangeSelectedUser" style="width:100%;" value="Auswahl Bearbeiten" >			
-				<input class="btn btn-warning btn-lg" type="button" id="ButtonChangeSelectedUser" style="width:100%; margin-top:25px;" value="Neuer Benutzer">
+				<input class="btn btn-primary btn-lg" id="ButtonChangeSelectedUser" type="button" style="width:100%;" value="Auswahl Bearbeiten">
+				<input class="btn btn-danger btn-lg" id="ButtonDeletSelectedUser" type="button" style="width:100%; margin-top:15px;" value="Auswahl löschen">
+				<input class="btn btn-warning btn-lg" id="ButtonaddUser" type="button" style="width:100%; margin-top:25px;" value="Neuen Benutzer anlegen">
 			</div>
 			<div class="col-xs-0 col-sm-2 col-md-4"></div>
 		</div>
@@ -87,11 +107,16 @@
 						<p class="text-default"><small> Darf nicht vorkommen: Ä ä Ö ö Ü ü ß [Leerzeichen]</small><span class=""></span></p>
 						<p class="text-default"><small> Länge: 3 - 10 Zeichen  </small><span class=""></span></p>
 					</div>
-					<input class="form-control" type="text" id="inputchangeuser">
+					<div class="form-group" id="changeusername">
+						<input class="form-control" type="text" id="inputchangeuser" disabled>
+						<span class=""></span>
+					</div>	
 				</div>				
 				<label>Benutzer Rechte</label><br>
-				<label class="radio-inline"><input id="radiochange_user" type="radio" name="changeright">user</label>
-				<label class="radio-inline"><input id="radiochange_admin" type="radio" name="changeright">admin</label>
+				<div class="input-group" id="changeuserright">
+					<label class="radio-inline"><input type="radio" name="changeright" value="user">user</label>
+					<label class="radio-inline"><input type="radio" name="changeright" value="admin">admin</label>
+				</div>
 
 				<p style="margin-top:15px;"><strong>Neues Passwort</strong></p>
 				<div id="changepassword_help" style="margin-bottom:15px; border:1px solid #dadfe1;">

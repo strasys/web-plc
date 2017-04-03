@@ -1,4 +1,10 @@
 <?php
+//error_reporting(E_ALL | E_STRICT);
+// Um die Fehler auch auszugeben, aktivieren wir die Ausgabe
+//ddini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+//
+
 include_once ('privateplc_php.ini.php');
 session_start();
 include_once ('authentification.inc.php');
@@ -52,56 +58,138 @@ if (($_POST["setget"] == 'get') && ($adminstatus == true)){
 }
 
 if (($_POST["setget"] == 'set')&&($adminstatus == true)){ 
-	if ($password == $password2)
-		{
-		$user_existing = array();
-		//TODO: upgrade to PHP 5.5.x necessary to use $passwordEncrypt = password_hash($password, PASSWORD_DEFAULT); 
-		$passwordEncrypt = md5($password);
-	
-		$userfile = fopen("user.txt","r");
-		if ($userfile == FALSE)
-		{
-		$errorFile = -1;
-		}
-		else
-		{
-		while (!feof($userfile))
-			{
-			$line = fgets($userfile,500);
-			$userdata = explode("|", $line);
-			array_push ($user_existing,$userdata[0]);
-			}
-		fclose($userfile);
-	
-		if (in_array($username,$user_existing))
-			{
-			$errorUsername = -1;
-			}
-		else
-			{
-			$userfile = fopen ("user.txt","a");
-			fwrite($userfile, $username);
-			fwrite($userfile, "|");
-			fwrite($userfile, $passwordEncrypt);
-			fwrite($userfile, "|");
-			fwrite($userfile, $adminmarker);
-			fwrite($userfile, "\n");
-			fclose($userfile);
-			}
-		}
-	}
-	else 
+	$user_existing = array();
+	//TODO: upgrade to PHP 5.5.x necessary to use $passwordEncrypt = password_hash($password, PASSWORD_DEFAULT); 
+	$passwordEncrypt = md5($password);
+
+	$userfile = fopen("user.txt","r");
+	if ($userfile == FALSE)
 	{
-	$errorPasswordRepeat = -1;
+	$errorFile = -1;
 	}
+	else
+	{
+	while (!feof($userfile))
+		{
+		$line = fgets($userfile,500);
+		$userdata = explode("|", $line);
+		array_push ($user_existing,$userdata[0]);
+		}
+	fclose($userfile);
+
+	if (in_array($username, $user_existing))
+	{
+		$errorUsername = -1;
+	}
+	else
+	{
+		$userfile = fopen ("user.txt","a");
+		fwrite($userfile, $username);
+		fwrite($userfile, "|");
+		fwrite($userfile, $passwordEncrypt);
+		fwrite($userfile, "|");
+		fwrite($userfile, $adminright);
+		fwrite($userfile, "\n");
+		fclose($userfile);
+	}
+	}
+	$arr = array( 	
+		'errorFile' => $errorFile,
+		'errorUsername' => $errorUsername,
+		'loginstatus' => $loginstatus,
+		'adminstatus' => $adminstatus
+	);
+
+		echo json_encode($arr);
+}
+
+if (($_POST["setget"] == 'change')&&($adminstatus == true)){ 
+	$user_existing = array();
+	//TODO: upgrade to PHP 5.5.x necessary to use $passwordEncrypt = password_hash($password, PASSWORD_DEFAULT); 
+	$passwordEncrypt = md5($password);
 	
-	$arr = array( 	'errorFile' => $errorFile,
-					'errorUsername' => $errorUsername,
-					'errorPasswordRepeat' => $errorPasswordRepeat,
-					'username' => $username,
-					'loginstatus' => $loginstatus,
-					'adminstatus' => $adminstatus
-				);
+	// read entire lines and delet selected
+	$data = file_get_contents("user.txt");
+	$lines = explode(PHP_EOL, $data);
+        $lineNo = 1;
+	foreach($lines as $line)
+	{
+		$linesArray[$lineNo] = $line;
+		$lineNo++;
+	}
+	unset($linesArray[$_POST["lineNumber"]]);
+	$newData = implode("\n", $linesArray);
+	
+	if($fp = fopen("user.txt", 'w'))
+	{
+		if(fwrite($fp, $newData))
+                {
+                    fclose($fp);
+                }
+                else
+                {
+                    die("Could not write data to file");    
+                }
+        } else {
+		die("Could not open file");        
+	}
+     	
+	//write changed data in new line
+	$userfile = fopen ("user.txt","a");
+	fwrite($userfile, $username);
+	fwrite($userfile, "|");
+	fwrite($userfile, $passwordEncrypt);
+	fwrite($userfile, "|");
+	fwrite($userfile, $adminright);
+	fwrite($userfile, "\n");
+	fclose($userfile);
+	
+	$arr = array( 	
+		'errorUsername' => $errorUsername,
+		'loginstatus' => $loginstatus,
+		'adminstatus' => $adminstatus
+	);
+
+		echo json_encode($arr);
+}
+
+if (($_POST["setget"] == 'delete')&&($adminstatus == true)){ 
+	$user_existing = array();
+	//TODO: upgrade to PHP 5.5.x necessary to use $passwordEncrypt = password_hash($password, PASSWORD_DEFAULT); 
+	$passwordEncrypt = md5($password);
+	
+	// read entire lines and delet selected
+	$data = file_get_contents("user.txt");
+	$lines = explode(PHP_EOL, $data);
+        $lineNo = 1;
+	foreach($lines as $line)
+	{
+		$linesArray[$lineNo] = $line;
+		$lineNo++;
+	}
+	unset($linesArray[$_POST["lineNumber"]]);
+	$newData = implode("\n", $linesArray);
+	
+	if($fp = fopen("user.txt", 'w'))
+	{
+		if(fwrite($fp, $newData))
+                {
+                    fclose($fp);
+                }
+                else
+                {
+                    die("Could not write data to file");    
+                }
+        } else {
+		die("Could not open file");        
+	}
+     	
+	$arr = array( 	
+		'loginstatus' => $loginstatus,
+		'adminstatus' => $adminstatus
+	);
+
+		echo json_encode($arr);
 }
 
 ?>

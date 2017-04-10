@@ -58,6 +58,7 @@ function submitUserData(callback){
 
 //Alert information
 function DisplayLoginInformation(callback3){
+	$(window).scrollTop(0);
 	switch (statusSetUsername[1]){
 		case -1:
 			$("#icon-login-msg").removeClass();

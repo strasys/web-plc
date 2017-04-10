@@ -8,6 +8,7 @@
  */
 
 sortoutcache = new Date();
+var positionPanelCurrent;
 
 function setgetrequestServer(setget, url, cfunc, senddata){
 	xhttp = new XMLHttpRequest();
@@ -124,19 +125,29 @@ function setValues(callback6){
 	}
 
 	var TextOut = new Array();
+	var GraphikBadgeOut = new Array();
+	var GraphikShadowOut = new Array();
 	var a = 0;
 	for (i=6; i<10; i++){	
 		if (StatusData[i] == 1){
-			TextOut[a] = "EIN"; 
+			TextOut[a] = "EIN";
+			GraphikBadgeOut[a] = "badge switch-on";
+			GraphikShadowOut[a] = "databox switch-on";	
 			}
 		else if (StatusData[i] == 0){
 			TextOut[a] = "AUS";
+			GraphikBadgeOut[a] = "badge switch-off";
+			GraphikShadowOut[a] = "databox switch-off";	
 		}
 		a++;
 	}
 	document.getElementById("badgeStatusPump").innerHTML = TextOut[0];
 	document.getElementById("badgeOut2").innerHTML = TextOut[1];
+	$("#badgeOut2").removeClass().addClass(GraphikBadgeOut[1]);
+	$("#buttonOut2").removeClass().addClass(GraphikShadowOut[1]);	
 	document.getElementById("badgeOut3").innerHTML = TextOut[2];
+	$("#badgeOut3").removeClass().addClass(GraphikBadgeOut[2]);
+	$("#buttonOut3").removeClass().addClass(GraphikShadowOut[2]);	
 	document.getElementById("badgeStatusWaterValve").innerHTML = TextOut[3];
 	//status Niveausensor
 	if (StatusData[10] == 1){
@@ -177,20 +188,86 @@ function setOutstatus(Number){
 function refresh(){
 	getServerData(function(){
 		setValues(function(){
-			setTimeout(function(){refresh()}, 10000);
+			if ((StatusData[0] == false) && (positionPanelCurrent > 1)){
+				window.location.replace("index.html");
+			}
+			setTimeout(function(){
+				refresh();
+			}, 10000);
 		});
 	});
 }
 
+//View function
+function ViewatLoad(callback){
+	$("#panelQuickView").hide();
+	$("#panelStatusActuators").hide();
+	$("#panelAdditionalFunctions").hide();
+	$("#panelPager").hide();
+
+	if (callback){
+		callback();
+	}	
+}
+
+//set panel View
+function PanelView(position, callback){
+
+	switch(position) {
+		case 1:
+			$("#panelStatusActuators").hide(function(){
+				$("#panelQuickView").show(function(){
+					$("#panelPager a:first").hide();
+					$("#panelPager a:last").show(function(){
+						$("#panelPager a:last").html("Anlagen Status<span aria-hidden=\"true\">  &rarr\;</span>");
+					});
+				});
+			});
+			positionPanelCurrent = 1;
+			break;
+		case 2: 
+			$("#panelQuickView").hide(function(){
+				$("#panelAdditionalFunctions").hide(function(){
+					$("#panelStatusActuators").show(function(){
+						$("#panelPager a:first").show(function(){
+							$("#panelPager a:first").html("<span aria-hidden=\"true\">&larr\;</span>  Schnellansicht");
+							$("#panelPager a:last").html("Sonderfunktionen<span aria-hidden=\"true\">  &rarr\;</span>");
+							$("#panelPager a:last").show();
+						});
+					});
+				});
+			});
+			positionPanelCurrent = 2;
+			break;
+		case 3: 
+			$("#panelStatusActuators").hide(function(){
+				$("#panelAdditionalFunctions").show(function(){
+					$("#panelPager a:first").html("<span aria-hidden=\"true\">&larr\;</span>  Anlagen Status");
+					$("#panelPager a:last").hide();
+				});
+			});
+			positionPanelCurrent = 3;
+			break;
+	}
+
+	if (callback){
+		callback();
+	}
+
+
+}
+
 // load functions ad webpage opening
 function startatLoad(){
-	loadNavbar(function(){
-		getXMLData(function(){
-			getServerData(function(){
-				refresh();	
+	ViewatLoad(function(){
+		loadNavbar(function(){
+			getXMLData(function(){
+				getServerData(function(){
+					refresh();	
+				});
 			});
 		});
-	});		
+	});
 }
 
 window.onload=startatLoad();
@@ -202,15 +279,17 @@ function loadNavbar(callback3){
 	getStatusLogin(function(){
 		if(LoginStatus[0]){	
 			$(document).ready(function(){
-				$("#mainNavbar").load("navbar.html", function(){
+				$("#mainNavbar").load("navbar.html?v=2", function(){
 					$("#navbarHome").addClass("active");
 					$("#navbarlogin").hide();
-					$("#panelAdditionalFunctions").hide();
-
-					if (!LoginStatus[1])
-						{
-						$("#navbarSet").hide();
-						}
+					$("#panelQuickView").show();
+					PanelView(1, function(){
+						$("#panelPager").show();
+						if (LoginStatus[1]==false)
+							{
+							$("#navbarSet").hide();
+							}
+					});
 				 });
 			});
 		}
@@ -226,6 +305,7 @@ function loadNavbar(callback3){
 					$("#panelStatusOperation").hide();
 					$("#panelStatusActuators").hide();
 					$("#panelAdditionalFunctions").hide();
+					$("#panelQuickView").show();
 				});
 			});
 
@@ -235,4 +315,12 @@ function loadNavbar(callback3){
 		}
 	});
 }
+
+$("#panelPager a:last").on('click', function(){
+	PanelView(positionPanelCurrent + 1);
+});
+
+$("#panelPager a:first").on('click', function(){
+	PanelView(positionPanelCurrent - 1);
+});
 

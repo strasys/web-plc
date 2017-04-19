@@ -553,7 +553,7 @@ function loadNavbar(callback1){
 		if (LogData[0])
 		{
 			$(document).ready(function(){
-				$("#mainNavbar").load("navbar.html", function(){
+				$("#mainNavbar").load("navbar.html?ver=2", function(){
 					$("#navbarlogin").hide();
 					$("#navbarSet").hide();			
 					if (LogData[1])

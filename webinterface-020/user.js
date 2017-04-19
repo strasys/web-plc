@@ -215,7 +215,7 @@ function loadNavbar(callback){
 		if (LogInStatusCheck[0])
 		{
 			$(document).ready(function(){
-				$("#mainNavbar").load("navbar.html", function(){
+				$("#mainNavbar").load("navbar.html?ver=2", function(){
 					$("#navbarSet").addClass("active");
 					$("#navbarItemUser").addClass("active");
 					$("#navbarlogin").hide();

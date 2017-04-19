@@ -279,7 +279,7 @@ function loadNavbar(callback3){
 	getStatusLogin(function(){
 		if(LoginStatus[0]){	
 			$(document).ready(function(){
-				$("#mainNavbar").load("navbar.html?v=2", function(){
+				$("#mainNavbar").load("navbar.html?ver=2", function(){
 					$("#navbarHome").addClass("active");
 					$("#navbarlogin").hide();
 					$("#panelQuickView").show();
@@ -296,7 +296,7 @@ function loadNavbar(callback3){
 		else
 		{
 			$(document).ready(function(){
-				$("#mainNavbar").load("navbar.html?ver=0", function(){
+				$("#mainNavbar").load("navbar.html?ver=2", function(){
 					$("#navbarHome").addClass("active");
 					$("#navbarlogout").hide();
 					$("#navbarFunction").hide();

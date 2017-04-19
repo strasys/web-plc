@@ -1,63 +1,42 @@
   <!-- Fixed navbar -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-	    <span class="icon-bar"></span>
-        		<span class="icon-bar"></span>
-          </button>
+	<div class="nav navbar-header">
+	<a class="navbar-brand" href="#"><img class="img-responsive" src="images/logo_wistcon_pool_2_0.png" width="107" height="40"
+           style="margin-top: -12px; margin-left: 0px; margin-right: 0px;"></a>
 
-          <a class="navbar-brand" href="#"><img class="img-responsive" src="images/logo_wistcon_pool_2_0.png" width="107" height="40"
-           style="margin-top: -9px; margin-left: 15px; margin-right: -15px;"></a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" style="margin-top: 8px; margin-bottom: 8px; margin-left: 1px; margin-right: 15px; padding-top: 6px; padding-bottom: 6px; padding-left: 10px; padding-right: 10px; border:0; font-size:18px;">
+            <span id="navbar_collapse_button_glyphicon" class="glyphicon glyphicon-option-vertical" style="color:white;"></span>
+          </button>
+	  <button id="navbar_login" type="button" class="navbar-toggle" data-toggle="modal" data-target="#customer-login-modal" style="margin-top: 8px; margin-bottom: 8px; margin-left: 1px; margin-right: 1px; padding-top: 6px; padding-bottom: 6px; padding-left: 10px; padding-right: 10px; border:0; font-size:18px;">
+		<span class="glyphicon glyphicon-log-in" style="color:white;"></span>
+          </button>
+	  <button id="navbar_logout" onclick="logoutCustomer()" type="button" class="navbar-toggle" style="margin-top: 8px; margin-bottom: 8px; margin-left: 1px; margin-right: 1px; padding-top: 6px; padding-bottom: 6px; padding-left: 10px; padding-right: 10px; border:0; font-size:18px;">
+		<span class="glyphicon glyphicon-question-sign" style="color:white;" ></span>
+	</button>
+	<button id="navbar_logout" onclick="logoutCustomer()" type="button" class="navbar-toggle" style="margin-top: 8px; margin-bottom: 8px; margin-left: 1px; margin-right: 1px; padding-top: 6px; padding-bottom: 6px; padding-left: 10px; padding-right: 10px; border:0; font-size:18px;">
+		<span class="glyphicon glyphicon-cog" style="color:white;" ></span>
+	</button>
+	<button id="navbar_logout" onclick="logoutCustomer()" type="button" class="navbar-toggle" style="margin-top: 8px; margin-bottom: 8px; margin-left: 1px; margin-right: 1px; padding-top: 6px; padding-bottom: 6px; padding-left: 10px; padding-right: 10px; border:0; font-size:18px;">
+		<span class="glyphicon glyphicon-th" style="color:white;" ></span>
+        </button>
+
         </div>
 
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li id="navbarHome"><a href="index.html?ver=1"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-			<li id="navbarFunction" class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					<span class="glyphicon glyphicon-th"></span> Funktionen<span class="caret"></span>
-				</a>
-              <ul class="dropdown-menu" role="menu">
-		      	<li id="navbarItemDigiOut"><a href="gpioOut.html?ver=0">Digitale Ausgänge</a></li>
-			<li id="navbarItemDigiIn"><a href="gpioIN.html?ver=0">Digitale Eingänge</a></li>
-			<li id="navbarItemPT100"><a href="PT1000.html?ver=1">Temperatur PT1000</a></li>
-			<li id="navbarItemCleaningInterval"><a href="CleaningInterval.html?ver=0">Filter Zeiten</a></li>
-			<li id="navbarItemSolarSetting"><a href="SolarSetting.html?ver=0">Solar Einstellung</a></li>
-			<li id="navbarItemNiveauControl"><a href="NiveauControl.html?ver=0">Niveau Einstellung</a></li>
-              </ul>
-            </li>
-			<li id="navbarSet" class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					<span class="glyphicon glyphicon-cog"></span> Set <span class="caret"></span>
-				</a>
-              <ul class="dropdown-menu" role="menu">
-                <li id="navbarItemTimeDate"><a href="timeanddate.html?ver=0"> Zeit/Datum</a></li>
-                <li id="navbarItemIP"><a href="#">IP-Addresse</a></li>
-				<li id="navbarItemName"><a href="#">Gerätename</a></li>
-				<li id="navbarItemUser"><a href="user.html?ver=0">Benutzer</a></li>
-				<li id="navbarItemComposer"><a href="composer.html?ver=1">Composer</a></li>
-				<li id ="navbarItempushButtenSensing"><a href="pushButtonSensing.html?ver=0">Eingang Taster Funktion</a></li>
-				<li id ="navbarItemDNSservice"><a href="DNSservice.html?ver=1">DNS Service</a></li>
-				<li id = "navbarItemdeviceOwnerRegistration"><a href="deviceOwnerRegistration.html?ver=1">Registrierung</a></li>
-              </ul>
-            </li>	
-            <li id="navbarHelp" class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					<span class="glyphicon glyphicon-question-sign"></span> Hilfe<span class="caret"></span>
-				</a>
-              <ul class="dropdown-menu" role="menu">
-                <li id="navbarItemDocumentation"><a href="#">Dokumentation</a></li>
-                <li id="navbarItemInfo"><a href="#">Info</a></li>
-              </ul>
-            </li>
-            <li id="navbarlogin"><a href="login.html?ver=1"><span class="glyphicon glyphicon-log-in"></span> login</a></li>
-            <li id="navbarlogout"><a href="logout.php?ver=1"><span class="glyphicon glyphicon-log-out"></span> logout</a></li>
-          </ul>
+        <ul class="nav navbar-nav">
+		<li id="navbarHome"><a href="index.html?ver=1"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+		<li id="navbarFunction"><a href="poolfunctions.html?ver=0"><span class="glyphicon glyphicon-th"></span> Funktionen</a></li>
+		<li id="navbarSet"><a href="poolset.html?ver=0"><span class="glyphicon glyphicon-cog"></span> Set </a></li>	
+	        <li id="navbarHelp"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-question-sign"></span> Hilfe</a></li>
+        	<li id="navbarlogin"><a href="login.html?ver=1"><span class="glyphicon glyphicon-log-in"></span> login</a></li>
+	        <li id="navbarlogout"><a href="logout.php?ver=1"><span class="glyphicon glyphicon-log-out"></span> logout</a></li>
+        </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
+    <!-- Navabar function script -->
+<script src="navbar.js?ver=0"></script>
+
     
   

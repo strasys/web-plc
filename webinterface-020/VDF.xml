@@ -50,24 +50,24 @@
 	<PT1000Name>Rücklauf</PT1000Name>
 </PT1000>
 <CleaningInterval>
-	<Start>00:00</Start>
-	<Stop>00:00</Stop>
-	<Periode>00:00</Periode>
+	<Start>07:00</Start>
+	<Stop>08:30</Stop>
+	<Periode>01:30</Periode>
 </CleaningInterval>
 <CleaningInterval>
-	<Start>00:00</Start>
-	<Stop>00:00</Stop>
-	<Periode>00:00</Periode>
+	<Start>11:00</Start>
+	<Stop>12:00</Stop>
+	<Periode>01:00</Periode>
 </CleaningInterval>
 <CleaningInterval>
-	<Start>00:00</Start>
-	<Stop>00:00</Stop>
-	<Periode>00:00</Periode>
+	<Start>16:00</Start>
+	<Stop>17:00</Stop>
+	<Periode>01:00</Periode>
 </CleaningInterval>
 <CleaningInterval>
-	<Start>00:00</Start>
-	<Stop>00:00</Stop>
-	<Periode>00:00</Periode>
+	<Start>18:00</Start>
+	<Stop>19:00</Stop>
+	<Periode>01:00</Periode>
 </CleaningInterval>
 <CleaningSetting>
 	<OperationMode>OFF</OperationMode>
@@ -84,7 +84,7 @@
 <LevelControl>
 	<operationMode>OFF</operationMode>
 	<Overtraveltime>7</Overtraveltime>
-	<SensorONTime>2</SensorONTime>
+	<SensorONTime>5</SensorONTime>
 </LevelControl>
 <OperationModeDevice>
 	<AutomaticHand>stop</AutomaticHand>

@@ -83,7 +83,7 @@ window.onload=startatLoad();
 				if (LoginStatus[0])
 				{
 					$(document).ready(function(){
-						$("#mainNavbar").load("navbar.html", function(){
+						$("#mainNavbar").load("navbar.html?ver=2", function(){
 							$("#navbarSet").addClass("active");
 							$("#navbarItemDNSservice").addClass("active");
 							$("#navbarlogin").hide();

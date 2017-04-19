@@ -26,10 +26,10 @@ function setgetuser(setget, url, cfunc, senddata){
 				var statusUsernamePassword = JSON.parse(xhttp.responseText); 
 				
 				statusSetUsername = [(statusUsernamePassword.errorFile),
-									(statusUsernamePassword.errorUsername),
-									(statusUsernamePassword.errorPassword),
-									(statusUsernamePassword.username)
-									];
+							(statusUsernamePassword.errorUsername),
+							(statusUsernamePassword.errorPassword),
+							(statusUsernamePassword.username)
+						];
 					if (callback1){
 						callback1();
 					}
@@ -59,7 +59,7 @@ function submitUserData(callback){
 //Alert information
 function DisplayLoginInformation(callback3){
 	$(window).scrollTop(0);
-	switch (statusSetUsername[1]){
+	switch (statusSetUsername[2]){
 		case -1:
 			$("#icon-login-msg").removeClass();
 			$("#icon-login-msg").addClass("login-icon glyphicon glyphicon-remove error");
@@ -82,8 +82,7 @@ function DisplayLoginInformation(callback3){
 	
  }
 
-
-$("#login_button_submit_customer").click(function(){
+function submitLoginData(){
 	submitUserData(function(){
 		setgetUserPassword(inputUsername, inputPassword, inputrememberlogin, function(){
 			DisplayLoginInformation( function(){
@@ -91,6 +90,17 @@ $("#login_button_submit_customer").click(function(){
 			});	
 		});			
 	});
+}
+
+$("#login_button_submit_customer").click(function(){
+	submitLoginData();
+});
+
+$("#login_password").on('keydown', function(event){
+	if (event.keyCode == 13){
+		submitLoginData();
+		return false;
+	}
 });
 
 function LoginEvaluation(){

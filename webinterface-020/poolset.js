@@ -36,43 +36,10 @@ function getStatusLogin(callback1){
 			}
 		},"getLoginStatus=g");		
 }
-/*
- * This function set's and get's the status of the composer process.
- * If the composer script is running StatusComposerProcess = 1 else 0.
- */
-function setgetStatusComposerProcess(setget,setrunstopStatus, callback2){
-		setgetServer("post","composerhandler.php",function()
-			{
-				if (xhttp.readyState==4 && xhttp.status==200)
-				{
-				var setgetComposerProcessStatus = JSON.parse(xhttp.responseText); 
-				
-				StatusComposerProcess = [(setgetComposerProcessStatus.runstop)
-				                         ];
-					if (callback2){
-					callback2();
-					}
-				}
-			},"setgetComposerProcessStatus="+setget+"&setrunstopStatus="+setrunstopStatus);		
-}
-
-function setModeStatus(){
-	if(StatusComposerProcess[0] == 1){
-		document.getElementById("radioComposerRun").checked = true;
-		document.getElementById("radioComposerStop").checked = false;
-	}
-	else if (StatusComposerProcess[0] == 0){
-		document.getElementById("radioComposerRun").checked = false;
-		document.getElementById("radioComposerStop").checked = true;
-	}
-}
-
-
 
 // load functions ad webpage opening
 function startatLoad(){
 	loadNavbar(function(){
-			refreshStatus();
 		});
 }
 window.onload=startatLoad();
@@ -85,7 +52,7 @@ window.onload=startatLoad();
 				if (LoginStatus[0])
 				{
 					$(document).ready(function(){
-						$("#mainNavbar").load("navbar.html?ver=2", function(){
+						$("#mainNavbar").load("navbar.html?ver=0", function(){
 							$("#navbarSet").addClass("active");
 							$("#navbarItemComposer").addClass("active");
 							$("#navbarlogin").hide();
@@ -106,13 +73,25 @@ window.onload=startatLoad();
 					callback1();
 				}
 			});
-		 }
- /*
-  * Refresh status of composer information's.
-  */
- function refreshStatus(){
-	 	setgetStatusComposerProcess("g","", function(){
-			setModeStatus();
-		});
-		setTimeout(function(){refreshStatus()}, 10000);
-	}
+ }
+
+$("#Time_Date").on('click', function(){
+	window.location = "timeanddate.html?ver=0";
+});
+
+$("#UserOrg").on('click', function(){
+	window.location = "user.html?ver=0";
+});
+
+$("#RegisterDevice").on('click', function(){
+	window.location = "deviceOwnerRegistration.html?ver=0";
+});
+
+$("#Parametrisation").on('click', function(){
+	window.location = "parametrisation.html?ver=0";
+});
+
+$("#hardware").on('click', function(){
+	window.location = "hardware.html?ver=0";
+});
+

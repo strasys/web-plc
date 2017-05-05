@@ -7,8 +7,6 @@
  * www.strasys.at
  */
 
-var sortoutcache = new Date();
-
 function getData(setget, url, cfunc, senddata){
 	xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = cfunc;
@@ -51,16 +49,14 @@ function loadNavbar(callback1){
 		if (LogData[0])
 		{
 			$(document).ready(function(){
-				$("#mainNavbar").load("navbar.html?ver=2", function(){
+				$("#mainNavbar").load("navbar.html?ver=9", function(){
 					$("#navbarFunction").addClass("active");
-					$("#navbarItemSolarSetting").addClass("active");
-					$("#navbarlogin").hide();
-					$("#navbarSet").hide();
-					
-					if (LogData[1])
+					$("#navbar_function span").toggleClass("nav_notactive nav_active");
+					$("#navbarlogin").hide();							
+					if (LogData[1] == false)
 					{
-						$("#navbarSet").show();
-						$("#showSetTime").show();
+						$("#navbarSet").hide();
+						$("#navbar_set").hide();
 					}
 					});	
 			});

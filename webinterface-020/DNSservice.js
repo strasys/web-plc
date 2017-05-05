@@ -6,6 +6,9 @@
  * www.strasys.at
  * 
  */
+sortoutcache = new Date();
+
+
 /*
  * Asynchron server send function.
  */
@@ -83,22 +86,17 @@ window.onload=startatLoad();
 				if (LoginStatus[0])
 				{
 					$(document).ready(function(){
-						$("#mainNavbar").load("navbar.html?ver=2", function(){
+						$("#mainNavbar").load("navbar.html?ver=sortoutcache", function(){
 							$("#navbarSet").addClass("active");
-							$("#navbarItemDNSservice").addClass("active");
+							$("#navbar_set span").toggleClass("nav_notactive nav_active");
 							$("#navbarlogin").hide();
-							$("#navbarSet").hide();
-							
-							if (LoginStatus[1])
-							{
-								$("#navbarSet").show();
-							}
+							$("#navbarSet").show();							
 						});
 					});
 				}
 				else
 				{
-					window.location.replace("login.html");
+					window.location.replace("index.html");
 				}
 				if (callback1){
 					callback1();

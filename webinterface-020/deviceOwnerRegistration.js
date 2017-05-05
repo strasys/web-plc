@@ -553,18 +553,20 @@ function loadNavbar(callback1){
 		if (LogData[0])
 		{
 			$(document).ready(function(){
-				$("#mainNavbar").load("navbar.html?ver=2", function(){
+				$("#mainNavbar").load("navbar.html?ver=sortoutcache", function(){
 					$("#navbarlogin").hide();
-					$("#navbarSet").hide();			
-					if (LogData[1])
+					$("#navbarSet").addClass("active");
+					$("#navbarSet").show();
+					$("#navbar_set span").toggleClass("nav_notactive nav_active")
+					$("#reg_form_owner").hide();
+					$("#reg_owner_answer_positiv").hide();
+					$("#veri_code_div").hide();
+					$("#SubmitProductReg").hide();
+		
+					if (LogData[1] == false)
 					{
-						$("#navbarSet").show();
-						$("#navbarSet").addClass("active");
-						$("#navbarItemdeviceOwnerRegistration").addClass("active");
-						$("#reg_form_owner").hide();
-						$("#reg_owner_answer_positiv").hide();
-						$("#veri_code_div").hide();
-						$("#SubmitProductReg").hide();
+						$("#navbarSet").hide();
+						$("#navbar_set").hide();
 					}
 				});	
 			});

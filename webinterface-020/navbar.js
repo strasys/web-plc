@@ -16,9 +16,17 @@ $('#navbar').on('hidden.bs.collapse', function () {
        $("#navbar_collapse_button_glyphicon").removeClass("glyphicon-remove").addClass("glyphicon-option-vertical");
     });
 
+$("#navbar_function").on('click', function(){
+	window.location.replace("poolfunctions.html");
+});
 
+$("#navbar_set").on('click', function(){
+	window.location.replace("poolset.html?ver=1");
+});
 
-
+$("#navbar_home").on('click', function(){
+	window.location.replace("index.html?ver=1");
+});
 
 
 

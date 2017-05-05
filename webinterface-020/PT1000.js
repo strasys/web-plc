@@ -166,26 +166,20 @@ window.onload=startatLoad();
 //Check of the operater is already loged on the system.
 function loadNavbar(callback1){
 	getPT1000values(function(){
-		if (PT1000temperaturevalues[4])
+		if (PT1000temperaturevalues[5])
 		{
 			$(document).ready(function(){
-				$("#mainNavbar").load("navbar.html", function(){
-					$("#navbarFunction").addClass("active");
-					$("#navbarItemPT100").addClass("active");
+				$("#mainNavbar").load("navbar.html?ver=sortoutcache", function(){
+					$("#navbarSet").addClass("active");
+					$("#navbar_set span").toggleClass("nav_notactive nav_active");
 					$("#navbarlogin").hide();
-					$("#navbarSet").hide();
-					
-					if (PT1000temperaturevalues[5])
-					{
 					$("#navbarSet").show();
-					}
-					
-					});	
+				});	
 			});
 		}
 		else
 		{
-		window.location.replace("login.html");
+		window.location.replace("index.html");
 		}
 		if (callback1){
 			callback1();

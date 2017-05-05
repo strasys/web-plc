@@ -72,6 +72,13 @@ body
 	background-color: #999;
 }
 
+.nav_active {
+	color: white;
+}
+.nav_notactive {
+	color: #999;
+}
+
 .led-yellow {
     margin: 20px auto;
     width: 25px;

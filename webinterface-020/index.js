@@ -279,15 +279,17 @@ function loadNavbar(callback3){
 	getStatusLogin(function(){
 		if(LoginStatus[0]){	
 			$(document).ready(function(){
-				$("#mainNavbar").load("navbar.html?ver=2", function(){
+				$("#mainNavbar").load("navbar.html?ver=sortoutcache", function(){
 					$("#navbarHome").addClass("active");
+					$("#navbar_home span").toggleClass("nav_notactive nav_active");
 					$("#navbarlogin").hide();
 					$("#panelQuickView").show();
 					PanelView(1, function(){
 						$("#panelPager").show();
 						if (LoginStatus[1]==false)
 							{
-							$("#navbarSet").hide();
+								$("#navbarSet").hide();
+								$("#navbar_set").hide();
 							}
 					});
 				 });
@@ -296,12 +298,16 @@ function loadNavbar(callback3){
 		else
 		{
 			$(document).ready(function(){
-				$("#mainNavbar").load("navbar.html?ver=2", function(){
+				$("#mainNavbar").load("navbar.html?ver=sortoutcache", function(){
 					$("#navbarHome").addClass("active");
+					$("#navbar_home span").toggleClass("nav_notactive nav_active");
 					$("#navbarlogout").hide();
 					$("#navbarFunction").hide();
+					$("#navbar_function").hide();
 					$("#navbarSet").hide();
+					$("#navbar_set").hide();
 					$("#navbarHelp").hide();
+					$("#navbar_help").hide();
 					$("#panelStatusOperation").hide();
 					$("#panelStatusActuators").hide();
 					$("#panelAdditionalFunctions").hide();

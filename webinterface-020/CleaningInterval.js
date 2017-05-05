@@ -352,25 +352,26 @@ function loadNavbar(callback1){
 		if (LogData[0])
 		{
 			$(document).ready(function(){
-				$("#mainNavbar").load("navbar.html?ver=2", function(){
+				$("#mainNavbar").load("navbar.html?ver=sortoutcache", function(){
 					$("#navbarFunction").addClass("active");
-					$("navbarItemCleaningInterval").addClass("active");
+					$("#navbar_function span").toggleClass("nav_notactive nav_active")
 					$("#navbarlogin").hide();
-					$("#navbarSet").hide();
+					$("#navbarSet").show();
 					$("#inputhh").prop("disabled", true);
-				
+					$("#showSetTime").show();
 					
-					if (LogData[1])
+					if (LogData[1]==false)
 					{
-						$("#navbarSet").show();
-						$("#showSetTime").show();
+						$("#navbarSet").hide();
+						$("#showSetTime").hide();
+						$("#navbar_set").hide();
 					}
-					});	
+				});	
 			});
 		}
 		else
 		{
-		window.location.replace("login.html");
+		window.location.replace("index.html");
 		}
 		if (callback1){
 			callback1();

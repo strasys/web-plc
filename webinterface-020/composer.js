@@ -6,6 +6,8 @@
  * www.strasys.at
  * 
  */
+sortoutcache = new Date();
+
 /*
  * Asynchron server send function.
  */
@@ -82,19 +84,14 @@ window.onload=startatLoad();
 //Check if the operater is already loged on the system as admin.
  function loadNavbar(callback1){
 			getStatusLogin(function(){
-				if (LoginStatus[0])
+				if (LoginStatus[1])
 				{
 					$(document).ready(function(){
-						$("#mainNavbar").load("navbar.html?ver=2", function(){
+						$("#mainNavbar").load("navbar.html?ver=sortoutcache", function(){
 							$("#navbarSet").addClass("active");
-							$("#navbarItemComposer").addClass("active");
+							$("#navbar_set span").toggleClass("nav_notactive nav_active");
 							$("#navbarlogin").hide();
-							$("#navbarSet").hide();
-							
-							if (LoginStatus[1])
-							{
-								$("#navbarSet").show();
-							}
+							$("#navbarSet").show();
 						});
 					});
 				}

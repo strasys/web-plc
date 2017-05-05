@@ -6,6 +6,8 @@
  * www.strasys.at
  * 
  */
+sortoutcache = new Date();
+
 /*
  * Asynchron server send function.
  */
@@ -21,20 +23,20 @@ function setgetServer(setget, url, cfunc, senddata){
  */
 
 function getStatusLogin(callback1){
-		setgetServer("post","userLogStatus.php",function()
+	setgetServer("post","userLogStatus.php",function()
+	{
+		if (xhttp.readyState==4 && xhttp.status==200)
 		{
-			if (xhttp.readyState==4 && xhttp.status==200)
-			{
-			var LogStatus = JSON.parse(xhttp.responseText); 
-			
-			Log = [	(LogStatus.loginstatus),
-				(LogStatus.adminstatus)
-			               ];
-				if (callback1){
-				callback1();
-				}
+		var LogStatus = JSON.parse(xhttp.responseText); 
+		
+		Log = [	(LogStatus.loginstatus),
+			(LogStatus.adminstatus)
+		               ];
+			if (callback1){
+			callback1();
 			}
-		});		
+		}
+	});		
 }
 
 // load functions ad webpage opening
@@ -53,14 +55,16 @@ function loadNavbar(callback1){
 				if (Log[0])
 				{
 					$(document).ready(function(){
-						$("#mainNavbar").load("navbar.html?ver=0", function(){
+						$("#mainNavbar").load("navbar.html?ver=sortoutcache", function(){
 							$("#navbarSet").addClass("active");
+							$("#navbar_set span").toggleClass("nav_notactive nav_active");
 							$("#navbarlogin").hide();
-							$("#navbarSet").hide();
+							$("#navbarSet").show();
 							
-							if (Log[1])
+							if (Log[1]==false)
 							{
-								$("#navbarSet").show();
+								$("#navbarSet").hide();
+								$("#navbar_set").hide();
 							}
 						});
 					});

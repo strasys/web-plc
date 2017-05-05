@@ -3,6 +3,7 @@
  * the strahome controller
  */
 
+sortoutcache = new Date();
 var offsetTime;
 
 function getlogindata(setget, url, cfunc, senddata){
@@ -172,15 +173,14 @@ function getloginstatus(callback1){
 				if (LogInStatusCheck[0])
 				{
 					$(document).ready(function(){
-						$("#mainNavbar").load("navbar.html", function(){
+						$("#mainNavbar").load("navbar.html?ver=sortoutcache", function(){
 							$("#navbarSet").addClass("active");
-							$("#navbarItemTimeDate").addClass("active");
+							$("#navbar_set span").toggleClass("nav_notactive nav_active");
 							$("#navbarlogin").hide();
-							$("#navbarSet").hide();
-							
-							if (LogInStatusCheck[1])
+							if (LogInStatusCheck[1]==false)
 							{
-								$("#navbarSet").show();
+								$("#navbarSet").hide();
+								$("#navbar_set").hide();
 							}
 						});
 					});

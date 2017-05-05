@@ -215,29 +215,23 @@ function loadNavbar(callback1)
 {
 	getOutstatus(function()
 	{
-		if (OUT[8])
+		if (OUT[9])
 		{
 			$(document).ready(function()
 			{
-				$("#mainNavbar").load("navbar.html?ver=1", function()
+				$("#mainNavbar").load("navbar.html?ver=sortoutcache", function()
 				{
-					$("#navbarFunction").addClass("active");
-					$("#navbarItemDigiOut").addClass("active");
+					$("#navbarSet").addClass("active");
+					$("#navbar_set span").toggleClass("nav_notactive nav_active");
 					$("#navbarlogin").hide();
-					$("#showSetButtonName").hide();
-					$("#navbarSet").hide();
-				
-					if(OUT[9])
-					{
-						$("#navbarSet").show();
-						$("#showSetButtonName").show();	
-					}
+					$("#showSetButtonName").show();
+					$("#navbarSet").show();
 				});
 			});
 		}
 		else
 		{
-			window.location.replace("login.html");
+			window.location.replace("index.html");
 		}
 		if (callback1)
 		{

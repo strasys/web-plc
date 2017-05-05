@@ -140,18 +140,18 @@ function loadNavbar(callback1){
 		if (LogData[0])
 		{
 			$(document).ready(function(){
-				$("#mainNavbar").load("navbar.html", function(){
+				$("#mainNavbar").load("navbar.html?ver=sortoutcache", function(){
 					$("#navbarFunction").addClass("active");
-					$("#navbarItemSolarSetting").addClass("active");
+					$("#navbar_function span").toggleClass("nav_notactive nav_active");
 					$("#navbarlogin").hide();
-					$("#navbarSet").hide();
+					$("#navbarSet").show();
 					$("#inputhh").prop("disabled", true);
 				
 					
-					if (LogData[1])
+					if (LogData[1]==false)
 					{
-						$("#navbarSet").show();
-						$("#showSetTime").show();
+						$("#navbarSet").hide();
+						$("#navbar_set").hide();
 					}
 					});	
 			});

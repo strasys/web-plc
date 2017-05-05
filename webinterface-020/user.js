@@ -7,6 +7,7 @@
  * www.strasys.at
  */
 
+sortoutcache = new Date();
 var selecteduser;
 
 function setgetuser(setget, url, cfunc, senddata){
@@ -24,7 +25,7 @@ function setgetuser(setget, url, cfunc, senddata){
 			{
 			var statusUsernamePassword = JSON.parse(xhttp.responseText); 
 		
-			statusChangeUsername = [(statusUsernamePassword.errorUsername),
+			statusSetUsername = [(statusUsernamePassword.errorUsername),
 						(statusUsernamePassword.loginstatus),
 						(statusUsernamePassword.adminstatus)
 						];
@@ -215,16 +216,16 @@ function loadNavbar(callback){
 		if (LogInStatusCheck[0])
 		{
 			$(document).ready(function(){
-				$("#mainNavbar").load("navbar.html?ver=2", function(){
+				$("#mainNavbar").load("navbar.html?ver=sortoutcache", function(){
 					$("#navbarSet").addClass("active");
-					$("#navbarItemUser").addClass("active");
+					$("#navbar_set span").toggleClass("nav_notactive nav_active");
 					$("#navbarlogin").hide();
-					$("#navbarSet").hide();
+					$("#userlist").show();
 					
-					if (LogInStatusCheck[1])
+					if (LogInStatusCheck[1]==false)
 					{
-						$("#navbarSet").show();
-						$("#userlist").show();
+						$("#navbarSet").hide();
+						$("#userlist").hide();
 					}
 				});
 			});
@@ -381,7 +382,6 @@ $("#addpassword1 button").click(function(){
 		document.getElementById("addpassword1_input").type = "text";
 	}
 });
-
 
 //user-Name: show helper
 $("#inputchangeuser").focusin(function(){
@@ -554,6 +554,7 @@ $("#ButtonSaveNewUser").on('click', function(){
 					$(window).scrollTop(0);	
 				});
 			} else if (statusSetUsername[0] == 0){
+				$(window).scrollTop(0);
 				DisplayAlertInformation("Benutzer erfolgreich gespeichert!", 1, function(){
 					setTimeout(function(){
 						window.location.replace("user.html");
@@ -640,6 +641,7 @@ $("#ButtonChangeUserList").on('click', function(){
 
 $("#ButtonDeletSelectedUser").on('click', function(){
 	DeleteSelectedUser(selecteduser, function(){
+		$(window).scrollTop(0);
 		DisplayAlertInformation("Ausgewählter Benutzer gelöscht!", 1, function(){
 			setTimeout(function(){
 				window.location.replace("user.html");

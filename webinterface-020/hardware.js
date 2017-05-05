@@ -6,6 +6,8 @@
  * www.strasys.at
  * 
  */
+sortoutcache = new Date();
+
 /*
  * Asynchron server send function.
  */
@@ -53,14 +55,15 @@ function loadNavbar(callback1){
 				if (Log[0])
 				{
 					$(document).ready(function(){
-						$("#mainNavbar").load("navbar.html?ver=0", function(){
+						$("#mainNavbar").load("navbar.html?ver=sortoutcache", function(){
 							$("#navbarSet").addClass("active");
+							$("#navbar_set span").toggleClass("nav_notactive nav_active")
 							$("#navbarlogin").hide();
-							$("#navbarSet").hide();
 							
-							if (Log[1])
+							if (Log[1]==false)
 							{
-								$("#navbarSet").show();
+								$("#navbarSet").hide();
+								$("#navbar_set").hide();
 							}
 						});
 					});

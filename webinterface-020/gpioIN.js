@@ -165,29 +165,23 @@ function loadNavbar(callback1)
 {
 	setInputStatusHMI(function()
 	{
-		if(IN[4])
+		if(IN[5])
 		{
 			$(document).ready(function()
 			{
-				$("#mainNavbar").load("navbar.html", function()
+				$("#mainNavbar").load("navbar.html?ver=sortoutcache", function()
 				{
-					$("#navbarFunction").addClass("active");
-					$("#navbarItemDigiIn").addClass("active");
+					$("#navbarSet").addClass("active");
+					$("#navbar_set span").toggleClass("nav_notactive nav_active");
 					$("#navbarlogin").hide();
-					$("#showSetInputName").hide();
-					$("#navbarSet").hide();
-					
-					if(IN[5])
-					{
-						$("#navbarSet").show();
-						$("#showSetInputName").show();
-					}
+					$("#showSetInputName").show();
+					$("#navbarSet").show();
 				});
 			});	
 		}
 		else
 		{
-			window.location.replace("login.html");
+			window.location.replace("index.html");
 		}
 		if (callback1)
 		{

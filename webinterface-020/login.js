@@ -6,6 +6,8 @@
  * 
  */
 
+sortoutcache = new Date();
+
 var inputUsername;
 var inputPassword;
 var inputrememberlogin;
@@ -128,12 +130,15 @@ window.onload=startatLoad();
 //active site roots.
 function loadNavbar(){
 $(document).ready(function(){
-	$("#mainNavbar").load("navbar.html", function(){
+	$("#mainNavbar").load("navbar.html?ver=sortoutcache", function(){
 		$("#navbarlogin").addClass("active");
 		$("#navbarlogout").hide();
 		$("#navbarFunction").hide();
+		$("#navbar_function").hide();
 		$("#navbarSet").hide();
+		$("#navbar_set").hide();
 		$("#navbarHelp").hide();
-	  });
+		$("#navbar_help").hide();
 	});
+});
 }

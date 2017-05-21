@@ -1,9 +1,15 @@
 <?php
+//error_reporting(E_ALL | E_STRICT);
+// Um die Fehler auch auszugeben, aktivieren wir die Ausgabe
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+//
 include_once ('privateplc_php.ini.php');
 session_start();
 include_once ('authentification.inc.php');
 
 unset($arr);
+unset($i);
 $setgetAnalog = $_POST["setgetAnalog"];
 $inout = $_POST["InOut"];
 $AOUTvalue = $_POST["AOUTvalue"]; //0 - 1023
@@ -20,15 +26,17 @@ if ($flag)
 	{
 		if (($inout == $IN) && $loginstatus)
 		{
-			for ($i=2; $i<4; $i++){
+			for ($i=0; $i<4; $i++){
 			//we are looking at AIN channels 2 and 3 
 			$channel = $i;
 			exec(" /usr/lib/cgi-bin/AINOUThandler g I $channel", $output);
 			}
 			$arr = array(	'INvalue1' => $output[0],
-					 		'INvalue2' => $output[1],
-							'loginstatus' => $loginstatus,
-							'adminstatus' => $adminstatus
+					'INvalue2' => $output[1],
+					'INvalue3' => $output[2],
+					'INvalue4' => $output[3],
+					'loginstatus' => $loginstatus,
+					'adminstatus' => $adminstatus
 						);
 		}
 		elseif (($inout == $Out) && $loginstatus)
@@ -54,7 +62,7 @@ if ($flag)
 else
 {
 	$arr = array(	'loginstatus' => $loginstatus,
-					'adminstatus' => $adminstatus
+			'adminstatus' => $adminstatus
 				);
 }
 

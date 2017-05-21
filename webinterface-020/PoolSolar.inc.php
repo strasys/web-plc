@@ -20,7 +20,7 @@ class Solar
 	 */
 	function getSolarFlag()
 	{			
-		$xml = simplexml_load_file("VDF.xml");
+		$xml = simplexml_load_file("/var/www/VDF.xml");
 		$Temp = new PT1000();
 		$RTC = new RTC();
 		(bool) $SolarFlag = false;
@@ -121,7 +121,7 @@ class Solar
 	 */
 	function getopModeFlag()
 	{
-		$xml = simplexml_load_file("VDF.xml");		
+		$xml = simplexml_load_file("/var/www/VDF.xml");		
 		(bool) $OperationFlag = false;
 
 		$strOperationMode = (string) $xml->SolarSetting[0]->operationMode;

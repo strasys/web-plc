@@ -83,7 +83,7 @@ void AOUT_set_internal_reference() {
 	buf[0] = 0b01101111; //The first 4 bit in byte 1 are relevant to set to internal reference.
 	buf[1] = 0;
 	buf[2] = 0;
-	file = i2c_open(I2C2_path, addr_AOUT_LTC2635);
+	file = i2c_open(I2C1_path, addr_AOUT_LTC2635);
 	i2c_write(file, buf, 3);
 	//printf("AOUT Number of bytes written: %d\n", numByte);
 	i2c_close(file);
@@ -116,7 +116,7 @@ void AOUT_set_value_DACn(int DACchl, int value) {
 		//printf("buf 2 %x\n",buf[2]);
 	}
 
-	file = i2c_open(I2C2_path, addr_AOUT_LTC2635);
+	file = i2c_open(I2C1_path, addr_AOUT_LTC2635);
 	i2c_write(file, buf, 3);
 	//printf("AOUT Number of bytes written: %d\n", numByte);
 	i2c_close(file);

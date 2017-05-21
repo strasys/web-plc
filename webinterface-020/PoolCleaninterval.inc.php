@@ -21,7 +21,7 @@ class CleaningInterval
 	function getTimeFlag()
 	{
 				
-		$xml = simplexml_load_file("VDF.xml");
+		$xml = simplexml_load_file("/var/www/VDF.xml");
 		
 		$RTC = new RTC();
 		(bool) $TimeFlag = false;
@@ -46,7 +46,7 @@ class CleaningInterval
 	 */
 	function getopModeFlag()
 	{
-		$xml = simplexml_load_file("VDF.xml");		
+		$xml = simplexml_load_file("/var/www/VDF.xml");		
 		(bool) $OperationFlag = false;
 
 		$strOperationMode = (string) $xml->CleaningSetting[0]->OperationMode;

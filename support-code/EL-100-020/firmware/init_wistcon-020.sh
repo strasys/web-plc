@@ -10,8 +10,3 @@ echo strasys-wistcon >$slots
 
 /usr/lib/cgi-bin/firmware
 
-php /var/www/startupSetting.php
-
-chown www-data:root /tmp/DNSservicestatus.txt
-chown www-data:root /tmp/composerstatus.txt
-

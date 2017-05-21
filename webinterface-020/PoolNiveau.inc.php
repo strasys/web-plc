@@ -19,7 +19,7 @@ class Niveau
 	 */
 	function getNiveauFlag()
 	{
-		$xml = simplexml_load_file("VDF.xml");
+		$xml = simplexml_load_file("/var/www/VDF.xml");
 		$DIGI = new GPIO();
 		$RTC = new RTC();
 		(bool) $NiveauFlag = false;
@@ -36,6 +36,7 @@ class Niveau
 			$NiveauControlFile = fopen("/tmp/PoolNiveauControlFile.txt", "r");
 			if ($NiveauControlFile == false){
 				$NiveauControlFile = fopen("/tmp/PoolNiveauControlFile.txt","w");
+				exec("chown www-data:root /tmp/PoolNiveauControlFile.txt");
 				fwrite($NiveauControlFile,"timeStampaddWater:0\r\n");
 				fwrite($NiveauControlFile,"timeStampNiveau:0\r\n");
 				fwrite($NiveauControlFile,"sensorOnFlag:0\r\n");
@@ -122,7 +123,7 @@ class Niveau
 	 */
 	function getopModeFlag()
 	{
-		$xml = simplexml_load_file("VDF.xml");		
+		$xml = simplexml_load_file("/var/www/VDF.xml");		
 		(bool) $OperationFlag = false;
 
 		$strOperationMode = (string) $xml->LevelControl[0]->operationMode;

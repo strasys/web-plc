@@ -23,7 +23,9 @@ function getAIn(callback1){
 				var getAIn = JSON.parse(xhttp.responseText); 
 				
 				AnalogIN = [(getAIn.INvalue1),
-				            (getAIn.INvalue2),
+					(getAIn.INvalue2),
+					(getAIn.INvalue3),
+					(getAIn.INvalue4),
 				            (getAIn.loginstatus),
 				            (getAIn.adminstatus)
 				               ];
@@ -54,9 +56,9 @@ function getAOUT(callback4){
 				var getAOUT = JSON.parse(xhttp.responseText); 
 				
 				AnalogOUT = [(getAOUT.OUTvalue1),
-				             (getAOUT.OUTvalue2),
-				             (getAOUT.loginstatus),
-				             (getAOUT.adminstatus)
+					(getAOUT.OUTvalue2),
+				        (getAOUT.loginstatus),
+				        (getAOUT.adminstatus)
 				               ];
 				if (callback4){
 					callback4();

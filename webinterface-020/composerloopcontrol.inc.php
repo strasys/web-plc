@@ -11,6 +11,7 @@ class composerloopcontrol
 
 function runstop()
 {
+$statusbool = true;
 $statusFile = fopen("/tmp/composerstatus.txt","r");
 if ($statusFile == false)
 {

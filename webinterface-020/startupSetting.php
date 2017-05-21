@@ -1,8 +1,8 @@
 <?php
 // Gibt an welche PHP-Fehler �berhaupt angezeigt werden
-error_reporting(E_ALL | E_STRICT);
+//error_reporting(E_ALL | E_STRICT);
 // Um die Fehler auch auszugeben, aktivieren wir die Ausgabe
-ini_set('display_errors', 1);
+//ini_set('display_errors', 1);
 //ini_set('display_startup_errors', 1);
 // Da man in einem Produktivsystem �blicherweise keine Fehler ausgeben
 // will sondern sie nur mitloggen will, bietet es sich an dort die
@@ -28,6 +28,7 @@ $ComposerService = $xml->OperationModeDevice[0]->AutomaticHand;
 	}
 	elseif ($statusFile)
 	{
+		exec("chown www-data:root /tmp/DNSservicestatus.txt");
 		switch (($DNSService)){
 			case 'stop':
 				$statusWord = "stop";
@@ -54,7 +55,8 @@ $ComposerService = $xml->OperationModeDevice[0]->AutomaticHand;
 	}
 	elseif ($statusFile)
 	{
-		switch (intval($ComposerService)){
+		exec("chown www-data:root /tmp/composerstatus.txt");
+		switch (($ComposerService)){
 			case 'stop':
 				$statusWord = "stop";
 				break;

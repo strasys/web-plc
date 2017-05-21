@@ -7,5 +7,3 @@ SyslogIdentifier=init_wistcon-020
 
 [Install]
 WantedBy=multi-user.target
-
-
